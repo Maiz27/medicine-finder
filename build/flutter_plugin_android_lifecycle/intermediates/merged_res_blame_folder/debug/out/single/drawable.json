@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "D:\\CODE\\Visual Studio Code\\medicine\\build\\flutter_plugin_android_lifecycle\\intermediates\\res\\merged\\debug\\drawable\\notification_bg.xml",
+        "source": "C:\\Users\\mgmag\\.gradle\\caches\\transforms-2\\files-2.1\\d3e1b0ce2104a200aac33aab8ca78f1b\\core-1.1.0\\res\\drawable\\notification_bg.xml"
+    },
+    {
+        "merged": "D:\\CODE\\Visual Studio Code\\medicine\\build\\flutter_plugin_android_lifecycle\\intermediates\\res\\merged\\debug\\drawable\\notification_icon_background.xml",
+        "source": "C:\\Users\\mgmag\\.gradle\\caches\\transforms-2\\files-2.1\\d3e1b0ce2104a200aac33aab8ca78f1b\\core-1.1.0\\res\\drawable\\notification_icon_background.xml"
+    },
+    {
+        "merged": "D:\\CODE\\Visual Studio Code\\medicine\\build\\flutter_plugin_android_lifecycle\\intermediates\\res\\merged\\debug\\drawable\\notification_bg_low.xml",
+        "source": "C:\\Users\\mgmag\\.gradle\\caches\\transforms-2\\files-2.1\\d3e1b0ce2104a200aac33aab8ca78f1b\\core-1.1.0\\res\\drawable\\notification_bg_low.xml"
+    },
+    {
+        "merged": "D:\\CODE\\Visual Studio Code\\medicine\\build\\flutter_plugin_android_lifecycle\\intermediates\\res\\merged\\debug\\drawable\\notification_tile_bg.xml",
+        "source": "C:\\Users\\mgmag\\.gradle\\caches\\transforms-2\\files-2.1\\d3e1b0ce2104a200aac33aab8ca78f1b\\core-1.1.0\\res\\drawable\\notification_tile_bg.xml"
+    }
+]

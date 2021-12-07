@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "789283030759",
+    "project_id": "medicine-8903f",
+    "storage_bucket": "medicine-8903f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:789283030759:android:501bcbbe106b1f38a48442",
+        "android_client_info": {
+          "package_name": "com.maiz.medicine"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "789283030759-4m13rp6bdfc6lc9dv94u7rrlv1of8mln.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.maiz.medicine",
+            "certificate_hash": "3b5e143c4bdd355f9ccd5bd1f5ef2a13c82aed0d"
+          }
+        },
+        {
+          "client_id": "789283030759-1v4o6eisu4karhgjv52jotdrcrhpq6kp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDK5AAc3ZlpHqcOwy-jDAYlyl92wNMs9nc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "789283030759-1v4o6eisu4karhgjv52jotdrcrhpq6kp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
