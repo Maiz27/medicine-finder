@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:medicine/helpers/deviceDimensions.dart';
-import 'package:medicine/pages/main/mapPage.dart';
+import 'package:medicine/pages/main/pharmacyMapPage.dart';
+
 import 'package:medicine/pages/registrations/phoneSignInPage.dart';
 import 'package:medicine/pages/registrations/signInPage.dart';
 import 'package:medicine/pages/splachPage.dart';
@@ -58,7 +59,7 @@ Future<void> main() async {
               '/login': (context) => SignInPage(),
               '/EmailRegister': (context) => SignUpPage(),
               '/PhoneRegister': (context) => PhoneSignInPage(),
-              '/map': (context) => MapPage(),
+              '/map': (context) => PharmacyMapPage(),
             },
 
             //use slef created Splashpage as the first page that appears

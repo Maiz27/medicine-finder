@@ -125,8 +125,7 @@ class SearchPage extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) =>
-                                ResultsPage(searchController.text)));
+                            builder: (context) => ResultMapPage()));
                   } else {
                     //TODO: Make brand name search method
                   }

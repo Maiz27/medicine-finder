@@ -3,7 +3,7 @@ import 'package:medicine/helpers/appColors.dart';
 import 'package:medicine/helpers/deviceDimensions.dart';
 import 'package:medicine/helpers/iconHelper.dart';
 import 'package:medicine/pages/main/homePage.dart';
-import 'package:medicine/pages/main/mapPage.dart';
+import 'package:medicine/pages/main/pharmacyMapPage.dart';
 import 'package:medicine/pages/main/reminderPage.dart';
 import 'package:medicine/pages/main/userPage.dart';
 import 'package:provider/provider.dart';
@@ -74,7 +74,7 @@ class CustomAppBar extends StatelessWidget {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => MapPage()));
+                                  builder: (context) => PharmacyMapPage()));
                         },
                       ),
                     ),
