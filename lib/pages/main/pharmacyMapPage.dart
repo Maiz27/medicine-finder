@@ -132,7 +132,7 @@ class _PharmacyMapPageState extends State<PharmacyMapPage> {
                 ],
               ),
             )),
-        CustomAppBar()
+        CustomBottomBar()
       ]),
     );
   }

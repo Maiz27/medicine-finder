@@ -20,8 +20,8 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // initialize firbase before the app starts
   await Firebase.initializeApp();
-  // To hide Status bar, set setEnabledSystemUIMode as immersive
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+  // To hide Status bar, set setEnabledSystemUIMode to immersive
+  // SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
 
   Dimension(window.devicePixelRatio.toDouble());
   runApp(

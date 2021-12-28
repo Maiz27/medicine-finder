@@ -12,8 +12,8 @@ import 'IconFont.dart';
 
 //double currentpage = 1;
 
-class CustomAppBar extends StatelessWidget {
-  const CustomAppBar({
+class CustomBottomBar extends StatelessWidget {
+  const CustomBottomBar({
     Key? key,
   }) : super(key: key);
 

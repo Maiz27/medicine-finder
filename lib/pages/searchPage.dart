@@ -18,7 +18,7 @@ class SearchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // To hide Status bar, set setEnabledSystemUIMode as immersive
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+    //SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
 
     final TextEditingController searchController = TextEditingController();
     String mainText = 'Searching for medicine by their $hintText';
@@ -146,7 +146,7 @@ class SearchPage extends StatelessWidget {
                 height: height * 0.3,
               )
             ]),
-            CustomAppBar(),
+            CustomBottomBar(),
           ]),
         ));
   }

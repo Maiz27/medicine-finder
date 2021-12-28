@@ -40,7 +40,7 @@ class _ReminderPageState extends State<ReminderPage> {
                     ))
               ],
             ),
-            CustomAppBar()
+            CustomBottomBar()
           ],
         ),
       ),

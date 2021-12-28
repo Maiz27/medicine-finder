@@ -1,4 +1,4 @@
-#Sun Dec 19 21:02:12 GMT+02:00 2021
+#Tue Dec 28 17:17:31 GMT+02:00 2021
 base.2=D\:\\CODE\\Visual Studio Code\\medicine\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes3.dex
 path.2=classes3.dex
 base.1=D\:\\CODE\\Visual Studio Code\\medicine\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes2.dex

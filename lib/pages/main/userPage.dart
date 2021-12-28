@@ -48,7 +48,7 @@ class UserPage extends StatelessWidget {
               ),
             ),
           ]),
-          CustomAppBar(),
+          CustomBottomBar(),
         ],
       ),
     );

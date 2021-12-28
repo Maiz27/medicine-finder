@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:flutter/material.dart';
+
 class Dimension {
   late double deviceHeight;
   late double deviceWidth;
@@ -26,7 +28,7 @@ class Dimension {
 
 //Safe area in logical pixels
     var safeWidth = logicalWidth - paddingLeft - paddingRight;
-    var safeHeight = logicalHeight - paddingTop - paddingBottom;
+    var safeHeight = logicalHeight - paddingTop + kToolbarHeight;
 
     this.deviceHeight = safeHeight;
     this.deviceWidth = safeWidth;

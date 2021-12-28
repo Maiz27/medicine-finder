@@ -26,7 +26,7 @@ class SearchCategory extends StatelessWidget {
       },
       child: Container(
         margin: EdgeInsets.all(20),
-        height: height * 0.23,
+        height: height * 0.20,
         child: Stack(
           children: [
             Positioned.fill(

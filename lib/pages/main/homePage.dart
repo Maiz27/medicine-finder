@@ -50,7 +50,7 @@ class HomePage extends StatelessWidget {
             ],
           ),
         ),
-        CustomAppBar()
+        CustomBottomBar()
       ],
     ));
   }

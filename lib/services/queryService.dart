@@ -5,11 +5,12 @@ import 'package:medicine/models/searchResultModel.dart';
 class QueryService {
   final rootRef = FirebaseFirestore.instance;
   List<Pharmacy> _pharmacies = [];
-  List<Results> _results = [];
+  List<SearchResults> _results = [];
+  List<FinalResult> _finalResult = [];
 
-  //Getters for pharmacies & search results
-  List<Results> getResults() {
-    return _results;
+  //Getters for pharmacies & search SearchResults
+  List<FinalResult> getResults() {
+    return _finalResult;
   }
 
   List<Pharmacy> getPharmacy() {
@@ -53,8 +54,30 @@ class QueryService {
     }
     results.forEach((element) {
       //Convert list of results to model dart models
-      Results r = Results.fromJson(element);
+      SearchResults r = SearchResults.fromJson(element);
       _results.add(r);
+    });
+    combine();
+  }
+
+  //Method to combine the two lists into one Final Search results lists
+  void combine() {
+    if (_finalResult.isNotEmpty) {
+      _finalResult.clear();
+    }
+    _pharmacies.forEach((element) {
+      _results.forEach((e) {
+        if (e.Pname == element.name) {
+          _finalResult.add(FinalResult(
+            element.name,
+            element.tele,
+            element.lat,
+            element.lng,
+            e.Mname.toString(),
+            e.price.toString(),
+          ));
+        }
+      });
     });
   }
 }
