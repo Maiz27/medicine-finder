@@ -120,8 +120,8 @@ class SearchPage extends StatelessWidget {
               // Search button
               ElevatedButton(
                 onPressed: () async {
-                  if (hintText == 'Generic names') {
-                    await queryService.scientificSearch(searchController.text);
+                  if (hintText == 'Generic name') {
+                    await queryService.genericSearch(searchController.text);
                     Navigator.push(
                         context,
                         MaterialPageRoute(

@@ -14,5 +14,6 @@ class IConFontHelper {
   static const String USER = 'm';
   static const String CLOCK = 'n';
   static const String PHARM_lOC = 'o';
-  static const String email = 'p';
+  static const String EMAIL = 'p';
+  static const String HISTORY = 'q';
 }

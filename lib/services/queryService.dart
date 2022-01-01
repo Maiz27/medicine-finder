@@ -37,10 +37,10 @@ class QueryService {
   }
 
   //search for medicine by scientific name
-  Future scientificSearch(String name) async {
+  Future genericSearch(String name) async {
     var query = (await rootRef
         .collectionGroup("medicine")
-        .where("name", isEqualTo: name)
+        .where("generic name", isEqualTo: name)
         .where("inStock", isEqualTo: true)
         .get());
 

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:medicine/helpers/appColors.dart';
 import 'package:medicine/helpers/deviceDimensions.dart';
@@ -14,6 +15,12 @@ import 'package:url_launcher/url_launcher.dart';
 List _pharmacies = [];
 const double PHARMACY_CARD_VISIBLE = 100;
 const double PHARMACY_CARD_INVISIBLE = -500;
+
+double currPharmacyLat = 0.0;
+double currPharmacyLon = 0.0;
+
+double userLat = 0.0;
+double userLon = 0.0;
 
 class PharmacyMapPage extends StatefulWidget {
   const PharmacyMapPage({Key? key}) : super(key: key);
@@ -66,38 +73,39 @@ class _PharmacyMapPageState extends State<PharmacyMapPage> {
     double width = deviceDimensions.getDeviceWidth();
 
     return Scaffold(
-      body: Stack(children: [
-        Positioned.fill(
-          child: GoogleMap(
-            myLocationButtonEnabled: true,
-            myLocationEnabled: true,
-            compassEnabled: false,
-            tiltGesturesEnabled: false,
-            zoomControlsEnabled: false,
-            markers: _markers,
-            initialCameraPosition: _initialCameraPosition,
-            onTap: (LatLng loc) {
-              //Tap to dismiss pharmacy card
-              setState(() {
-                pharmacyCardVis = PHARMACY_CARD_INVISIBLE;
-              });
-            },
-            onMapCreated: (GoogleMapController controller) {
-              _controller.complete(controller);
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: GoogleMap(
+              myLocationButtonEnabled: true,
+              myLocationEnabled: true,
+              compassEnabled: false,
+              tiltGesturesEnabled: false,
+              zoomControlsEnabled: false,
+              markers: _markers,
+              initialCameraPosition: _initialCameraPosition,
+              onTap: (LatLng loc) {
+                //Tap to dismiss pharmacy card
+                setState(() {
+                  pharmacyCardVis = PHARMACY_CARD_INVISIBLE;
+                });
+              },
+              onMapCreated: (GoogleMapController controller) {
+                _controller.complete(controller);
 
-              showPharmaciesOnMap();
-            },
+                showPharmaciesOnMap();
+              },
+            ),
           ),
-        ),
-        AnimatedPositioned(
+          AnimatedPositioned(
             duration: const Duration(milliseconds: 500),
             curve: Curves.easeInOut,
-            left: 10,
+            left: 0,
             right: 0,
             bottom: this.pharmacyCardVis,
             child: Container(
-              width: width * 0.1,
-              height: height * 0.1,
+              width: width * 0.2,
+              height: height * 0.2,
               margin: EdgeInsets.all(30),
               padding: EdgeInsets.all(15),
               decoration: BoxDecoration(
@@ -110,37 +118,63 @@ class _PharmacyMapPageState extends State<PharmacyMapPage> {
                       offset: Offset.zero,
                     )
                   ]),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              child: Column(
                 children: [
-                  IconFont(
-                      color: AppColors.MAIN_COLOR,
-                      size: 0.05,
-                      iconName: IConFontHelper.PHARM_lOC),
-                  Text(
-                    currPharmacyName,
-                    style: TextStyle(fontSize: height * 0.02),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(
+                            top: height * 0.02, bottom: height * 0.02),
+                        child: Text(
+                          currPharmacyName,
+                          style: TextStyle(fontSize: height * 0.02),
+                        ),
+                      ),
+                    ],
                   ),
-                  IconButton(
-                    onPressed: () => {launch("tel:$currPharmacyNum")},
-                    icon: Icon(
-                      Icons.call,
-                      size: 35,
-                      color: AppColors.MAIN_COLOR,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      IconButton(
+                        onPressed: () => {
+                          launch(
+                              "https://www.google.com/maps/dir/?api=1&origin=$userLat,$userLon&destination=$currPharmacyLat,$currPharmacyLon")
+                        },
+                        icon: Icon(
+                          Icons.directions,
+                          size: height * 0.05,
+                          color: AppColors.MAIN_COLOR,
+                        ),
+                        tooltip: "Directions",
+                      ),
+                      IconButton(
+                        onPressed: () => {launch("tel:$currPharmacyNum")},
+                        icon: Icon(
+                          Icons.call,
+                          size: height * 0.05,
+                          color: AppColors.MAIN_COLOR,
+                        ),
+                        tooltip: "Call",
+                      ),
+                    ],
                   )
                 ],
               ),
-            )),
-        CustomBottomBar()
-      ]),
+            ),
+          ),
+          CustomBottomBar(),
+        ],
+      ),
     );
   }
 
   showPharmaciesOnMap() {
     setState(() {
       _pharmacies.forEach((element) {
-        LatLng pin = new LatLng(element.lat, element.lng);
+        currPharmacyLat = element.lat;
+        currPharmacyLon = element.lng;
+        LatLng pin = new LatLng(currPharmacyLat, currPharmacyLon);
         _markers.add(Marker(
             markerId: MarkerId(element.name),
             position: pin,
@@ -154,6 +188,14 @@ class _PharmacyMapPageState extends State<PharmacyMapPage> {
             }));
       });
     });
+  }
+
+  void getCurrLoc() async {
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+
+    userLat = position.latitude;
+    userLon = position.longitude;
   }
 }
 

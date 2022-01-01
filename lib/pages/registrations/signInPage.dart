@@ -155,86 +155,80 @@ class _SignInPageState extends State<SignInPage> {
 
                       // Button section
                       Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: FlatButton(
-                          color: AppColors.MAIN_COLOR,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                          //add padding to provide space between text and button borders
-                          padding: EdgeInsets.all(25),
+                        padding: const EdgeInsets.only(
+                          top: 20,
+                          left: 20,
+                          right: 20,
+                        ),
+                        child: ElevatedButton(
                           onPressed: () async {
                             await authService.signInWithEmailAndPassword(
                                 emailController.text, passwordController.text);
                             Navigator.pushReplacementNamed(context, '/wrapper');
                           },
-
-                          child: Text(
-                            'SIGN IN',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: height * 0.02,
-                              fontWeight: FontWeight.bold,
+                          style: ElevatedButton.styleFrom(
+                            primary: AppColors.MAIN_COLOR,
+                            onPrimary: AppColors.ACCENT,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(
+                                  Radius.circular(width * 0.5)),
                             ),
                           ),
-                        ),
-                      ),
-                      Container(
-                        margin:
-                            EdgeInsets.only(left: 20, right: 20, bottom: 20),
-
-                        // by defual, material widgets adds edges to any container
-                        // to avoid that, use 'ClipRRect' to chop off the edges
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(50),
-                          child: Material(
-                            color: Colors.transparent,
-                            child: InkWell(
-                              //Provide the splash color, highlight color and the action when tapped
-                              //Splash & Highligh
-                              splashColor:
-                                  AppColors.MAIN_COLOR.withOpacity(0.2),
-                              highlightColor:
-                                  AppColors.MAIN_COLOR.withOpacity(0.2),
-
-                              // Use 'onTap' for onPressed Capabilities
-                              onTap: () {
-                                // ignore: unnecessary_statements
-                                Navigator.pushReplacementNamed(
-                                    context, '/EmailRegister');
-                              },
-                              //Wrapping section end
-
-                              child: Container(
-                                padding: EdgeInsets.all(20),
-                                child: Text(
-                                  'Register here',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: AppColors.ACCENT,
-                                    fontFamily: 'Roboto',
-                                    fontSize: height * 0.02,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-
-                                // Use decoration to customize the container
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(50),
-                                  //color transparent property to make the button look transparent with only the border showing
-                                  color: Colors.transparent,
-                                  // provide color for the border
-                                  border: Border.all(
-                                    //the color argument in boder takes const color values so use hexa-code
-                                    color: AppColors.MAIN_COLOR,
-                                    width: 4,
-                                  ),
-                                ),
+                          //add padding to provide space between text
+                          //and button borders
+                          child: Padding(
+                            padding: EdgeInsets.all(height * 0.03),
+                            child: Text(
+                              'SIGN IN',
+                              style: TextStyle(
+                                color: AppColors.ACCENT,
+                                fontFamily: 'Roboto',
+                                fontSize: height * 0.02,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
                         ),
-                      )
+                      ),
+
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          top: 20,
+                          left: 20,
+                          right: 20,
+                        ),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.pushReplacementNamed(
+                                context, '/EmailRegister');
+                          },
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.transparent,
+                            shadowColor: Colors.transparent,
+                            onPrimary: AppColors.MAIN_COLOR,
+                            shape: RoundedRectangleBorder(
+                              side: BorderSide(
+                                  width: 5, color: AppColors.MAIN_COLOR),
+                              borderRadius: BorderRadius.all(
+                                  Radius.circular(width * 0.5)),
+                            ),
+                          ),
+                          //add padding to provide space between text
+                          //and button borders
+                          child: Padding(
+                            padding: EdgeInsets.all(height * 0.03),
+                            child: Text(
+                              'Register here',
+                              style: TextStyle(
+                                color: AppColors.ACCENT,
+                                fontFamily: 'Roboto',
+                                fontSize: height * 0.02,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                     ]),
               )
             ])));

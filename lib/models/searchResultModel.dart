@@ -10,7 +10,9 @@ class SearchResults {
 
   factory SearchResults.fromJson(Map<String, dynamic> json) {
     return SearchResults(
-        Pname: json['PharmacyID'], Mname: json['name'], price: json['price']);
+        Pname: json['PharmacyID'],
+        Mname: json['generic name'],
+        price: json['price']);
   }
 }
 

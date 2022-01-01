@@ -141,15 +141,14 @@ class _PhoneSignInPageState extends State<PhoneSignInPage> {
                   ),
 
                   // Button section
+
                   Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: FlatButton(
-                      color: AppColors.MAIN_COLOR,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                      //add padding to provide space between text and button borders
-                      padding: EdgeInsets.all(25),
+                    padding: const EdgeInsets.only(
+                      top: 20,
+                      left: 20,
+                      right: 20,
+                    ),
+                    child: ElevatedButton(
                       onPressed: () async {
                         if (otpVisibility) {
                           verifyOTP();
@@ -157,13 +156,26 @@ class _PhoneSignInPageState extends State<PhoneSignInPage> {
                           loginWithPhone();
                         }
                       },
-
-                      child: Text(
-                        otpVisibility ? "Verify" : "Login",
-                        style: TextStyle(
-                          color: AppColors.ACCENT,
-                          fontSize: height * 0.02,
-                          fontWeight: FontWeight.bold,
+                      style: ElevatedButton.styleFrom(
+                        primary: AppColors.MAIN_COLOR,
+                        onPrimary: AppColors.ACCENT,
+                        shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(width * 0.5)),
+                        ),
+                      ),
+                      //add padding to provide space between text
+                      //and button borders
+                      child: Padding(
+                        padding: EdgeInsets.all(height * 0.03),
+                        child: Text(
+                          otpVisibility ? "Verify" : "Login",
+                          style: TextStyle(
+                            color: AppColors.ACCENT,
+                            fontFamily: 'Roboto',
+                            fontSize: height * 0.02,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
