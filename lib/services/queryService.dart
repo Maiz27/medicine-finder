@@ -60,6 +60,30 @@ class QueryService {
     combine();
   }
 
+  // search for medicine by brand names
+  Future brandSearch(String name) async {
+    var query = (await rootRef
+        .collectionGroup("medicine")
+        .where("brand names", arrayContains: name)
+        .where("inStock", isEqualTo: true)
+        .get());
+
+    //Convert query result to a list to loop through them
+    List results = query.docs.map((e) => e.data()).toList();
+
+    //First check if the list is empty or not before converting
+    //results to dart models
+    if (_results.isNotEmpty) {
+      _results.clear();
+    }
+    results.forEach((element) {
+      //Convert list of results to model dart models
+      SearchResults r = SearchResults.fromJson(element);
+      _results.add(r);
+    });
+    combine();
+  }
+
   //Method to combine the two lists into one Final Search results lists
   void combine() {
     if (_finalResult.isNotEmpty) {
@@ -68,6 +92,10 @@ class QueryService {
     _pharmacies.forEach((element) {
       _results.forEach((e) {
         if (e.Pname == element.name) {
+//To avoid taking the complete list of brand names for all the pharmacies in
+//every instance, first find the index of the currently iterated element from
+//result then use it as an index to access each pharmacy's brand names separately
+          int x = _results.indexOf(e);
           _finalResult.add(FinalResult(
             element.name,
             element.tele,
@@ -75,6 +103,7 @@ class QueryService {
             element.lng,
             e.Mname.toString(),
             e.price.toString(),
+            e.brandNames[x],
           ));
         }
       });

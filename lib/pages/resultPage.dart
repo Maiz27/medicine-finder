@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:marquee/marquee.dart';
 import 'package:medicine/helpers/appColors.dart';
 import 'package:medicine/helpers/deviceDimensions.dart';
 import 'package:medicine/helpers/iconHelper.dart';
@@ -12,6 +13,7 @@ import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 List _finalResult = [];
+List _brandNames = [];
 const double RESULTS_CARD_VISIBLE = 100;
 const double RESULTS_CARD_INVISIBLE = -500;
 
@@ -26,9 +28,11 @@ double userLat = 0.0;
 double userLon = 0.0;
 
 class ResultMapPage extends StatefulWidget {
-  const ResultMapPage({
-    Key? key,
-  }) : super(key: key);
+  const ResultMapPage({Key? key}) : super(key: key);
+
+  // String getSearchType() {
+  //   return searchType;
+  // }
 
   @override
   _ResultMapPageState createState() => _ResultMapPageState();
@@ -146,9 +150,18 @@ class _ResultMapPageState extends State<ResultMapPage> {
                 bottom: this.resultsCardVis,
                 child: Container(
                   width: width * 0.2,
-                  height: height * 0.2,
-                  margin: EdgeInsets.all(30),
-                  padding: EdgeInsets.all(15),
+                  height: height * 0.25,
+                  margin: EdgeInsets.only(
+                    bottom: height * 0.02,
+                    left: width * 0.04,
+                    right: width * 0.04,
+                  ),
+                  padding: EdgeInsets.only(
+                    top: height * 0.02,
+                    bottom: height * 0.02,
+                    left: width * 0.02,
+                    right: width * 0.02,
+                  ),
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(30),
@@ -185,7 +198,7 @@ class _ResultMapPageState extends State<ResultMapPage> {
                       ],
                     ),
                     SizedBox(
-                      height: height * 0.03,
+                      height: height * 0.02,
                     ),
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -210,6 +223,32 @@ class _ResultMapPageState extends State<ResultMapPage> {
                             ),
                           ),
                         ]),
+                    SizedBox(
+                      height: height * 0.02,
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          "Brand names: ",
+                          style: TextStyle(
+                              fontSize: height * 0.02,
+                              color: AppColors.MAIN_COLOR),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(
+                            left: width * 0.01,
+                            right: width * 0.01,
+                          ),
+                          height: height * 0.03,
+                          width: width * 0.2,
+                          child: Marquee(
+                            text: _brandNames.toString(),
+                            style: TextStyle(fontSize: height * 0.02),
+                            blankSpace: width * 0.02,
+                          ),
+                        ),
+                      ],
+                    ),
                   ]),
                 ),
               ),
@@ -232,6 +271,12 @@ class _ResultMapPageState extends State<ResultMapPage> {
               currPharmacyNum = element.tele;
               searchedMedicine = element.medicine;
               currPharmacyPrice = element.price + " SDG";
+              if (_brandNames.isNotEmpty) {
+                _brandNames.clear();
+              }
+              element.brandNames.forEach((e) {
+                _brandNames.add(e);
+              });
 
               this.resultsCardVis = RESULTS_CARD_VISIBLE;
             });

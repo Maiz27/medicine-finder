@@ -127,7 +127,11 @@ class SearchPage extends StatelessWidget {
                         MaterialPageRoute(
                             builder: (context) => ResultMapPage()));
                   } else {
-                    //TODO: Make brand name search method
+                    await queryService.brandSearch(searchController.text);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ResultMapPage()));
                   }
                 },
                 child: Text(

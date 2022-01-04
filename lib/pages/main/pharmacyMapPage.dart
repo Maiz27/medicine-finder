@@ -4,9 +4,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:medicine/helpers/appColors.dart';
 import 'package:medicine/helpers/deviceDimensions.dart';
-import 'package:medicine/helpers/iconHelper.dart';
 import 'package:medicine/services/queryService.dart';
-import 'package:medicine/widgets/IconFont.dart';
 import 'package:medicine/widgets/appBar.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -106,8 +104,15 @@ class _PharmacyMapPageState extends State<PharmacyMapPage> {
             child: Container(
               width: width * 0.2,
               height: height * 0.2,
-              margin: EdgeInsets.all(30),
-              padding: EdgeInsets.all(15),
+              margin: EdgeInsets.only(
+                bottom: height * 0.02,
+                left: width * 0.06,
+                right: height * 0.06,
+              ),
+              padding: EdgeInsets.only(
+                top: height * 0.02,
+                bottom: height * 0.02,
+              ),
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(30),

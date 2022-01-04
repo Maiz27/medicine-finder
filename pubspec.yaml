@@ -41,6 +41,7 @@ dependencies:
   cloud_firestore: ^2.5.3
   permission_handler: ^8.1.6
   url_launcher: ^6.0.17
+  marquee: ^2.2.0
 
 
 dev_dependencies:
