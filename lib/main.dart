@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:medicine/helpers/deviceDimensions.dart';
+import 'package:medicine/helpers/utility.dart';
 import 'package:medicine/pages/main/pharmacyMapPage.dart';
 
 import 'package:medicine/pages/registrations/phoneSignInPage.dart';
@@ -38,6 +39,9 @@ Future<void> main() async {
         ),
         Provider<Dimension>(
           create: (_) => Dimension(window.devicePixelRatio.toDouble()),
+        ),
+        Provider<Utility>(
+          create: (_) => Utility(),
         ),
       ],
           child: MaterialApp(

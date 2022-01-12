@@ -1,9 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:medicine/pages/main/WelcomePage.dart';
 import 'package:medicine/pages/main/homePage.dart';
 import 'package:medicine/services/auth_services.dart';
 import 'package:provider/provider.dart';
-import '../models/userModel.dart';
 
 class Wrapper extends StatelessWidget {
   // void initState() {

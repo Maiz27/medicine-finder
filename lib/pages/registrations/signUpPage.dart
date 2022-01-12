@@ -11,6 +11,7 @@ class SignUpPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final TextEditingController emailController = TextEditingController();
     final TextEditingController passwordController = TextEditingController();
+    final TextEditingController fullnameController = TextEditingController();
 
     final authService = Provider.of<AuthService>(context);
     final deviceDimensions = Provider.of<Dimension>(context);
@@ -74,7 +75,38 @@ class SignUpPage extends StatelessWidget {
                             fontSize: height * 0.02,
                             fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(height: 20),
+
+                      SizedBox(
+                        height: 20,
+                      ),
+
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextField(
+                          controller: fullnameController,
+                          cursorColor: AppColors.ACCENT,
+                          style: TextStyle(
+                            color: Colors.white,
+                            letterSpacing: 1.5,
+                          ),
+                          keyboardType: TextInputType.name,
+                          decoration: InputDecoration(
+                            labelText: 'Full name',
+                            prefixIcon: Icon(
+                              Icons.person,
+                              color: AppColors.ACCENT,
+                            ),
+                            labelStyle: TextStyle(
+                              fontSize: height * 0.02,
+                              color: AppColors.ACCENT,
+                            ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                          ),
+                        ),
+                      ),
+
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: TextField(
@@ -101,7 +133,7 @@ class SignUpPage extends StatelessWidget {
                           ),
                         ),
                       ),
-                      SizedBox(height: 30),
+
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: TextField(
@@ -157,7 +189,9 @@ class SignUpPage extends StatelessWidget {
                         child: ElevatedButton(
                           onPressed: () async {
                             await authService.creatUserWithEmailAndPAssword(
-                                emailController.text, passwordController.text);
+                                emailController.text,
+                                passwordController.text,
+                                "Maged Faiz");
                             Navigator.pushReplacementNamed(context, '/wrapper');
                           },
                           style: ElevatedButton.styleFrom(
