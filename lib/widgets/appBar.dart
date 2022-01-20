@@ -6,6 +6,7 @@ import 'package:medicine/pages/main/homePage.dart';
 import 'package:medicine/pages/main/pharmacyMapPage.dart';
 import 'package:medicine/pages/main/searchHistoryPage.dart';
 import 'package:medicine/pages/main/userPage.dart';
+import 'package:medicine/services/database.dart';
 import 'package:provider/provider.dart';
 
 import 'IconFont.dart';
@@ -82,11 +83,13 @@ class CustomBottomBar extends StatelessWidget {
                     color: AppColors.MAIN_COLOR,
                     size: 0.045,
                     iconName: IConFontHelper.HISTORY),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => SearchHistoryPage()));
+                onPressed: () async {
+                  await Database().getUserHistory().then((value) {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SearchHistoryPage()));
+                  });
                 },
               ),
             ),

@@ -3,22 +3,21 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:medicine/helpers/deviceDimensions.dart';
-import 'package:medicine/helpers/utility.dart';
 import 'package:medicine/pages/main/pharmacyMapPage.dart';
 
 import 'package:medicine/pages/registrations/phoneSignInPage.dart';
-import 'package:medicine/pages/registrations/signInPage.dart';
 import 'package:medicine/pages/splachPage.dart';
 import 'package:medicine/pages/main/welcomePage.dart';
 import 'package:medicine/services/auth_services.dart';
 import 'package:medicine/helpers/wrapper.dart';
+import 'package:medicine/services/database.dart';
 import 'package:medicine/services/queryService.dart';
 import 'package:provider/provider.dart';
-import 'pages/registrations/signUpPage.dart';
+import 'pages/registrations/emailRegistration.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // initialize firbase before the app starts
+  // initialize firbase before the app startsx
   await Firebase.initializeApp();
   // To hide Status bar, set setEnabledSystemUIMode to immersive
   // SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
@@ -40,8 +39,8 @@ Future<void> main() async {
         Provider<Dimension>(
           create: (_) => Dimension(window.devicePixelRatio.toDouble()),
         ),
-        Provider<Utility>(
-          create: (_) => Utility(),
+        Provider<Database>(
+          create: (_) => Database(),
         ),
       ],
           child: MaterialApp(
@@ -59,8 +58,7 @@ Future<void> main() async {
               //'/': (context) => Wrapper(),
               '/wrapper': (context) => Wrapper(),
               '/welcome': (context) => WelcomePage(),
-              '/login': (context) => SignInPage(),
-              '/EmailRegister': (context) => SignUpPage(),
+              '/EmailRegister': (context) => EmailRegistration(),
               '/PhoneRegister': (context) => PhoneSignInPage(),
               '/map': (context) => PharmacyMapPage(),
             },

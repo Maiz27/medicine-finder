@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:medicine/pages/main/WelcomePage.dart';
 import 'package:medicine/pages/main/homePage.dart';
 import 'package:medicine/services/auth_services.dart';
+import 'package:medicine/services/database.dart';
 import 'package:provider/provider.dart';
 
 class Wrapper extends StatelessWidget {
@@ -17,8 +18,16 @@ class Wrapper extends StatelessWidget {
         stream: authService.user,
         builder: (_, AsyncSnapshot<User?> snapshot) {
           if (snapshot.connectionState == ConnectionState.active) {
-            final User? user = snapshot.data;
-            return user == null ? WelcomePage() : HomePage();
+            try {
+              final User? user = snapshot.data;
+              Database.getUserDoc(user!.uid);
+              Database.setSubCollectionRef(user.uid);
+              Database().getUserHistory();
+              return HomePage();
+            } catch (e) {
+              return WelcomePage();
+            }
+            // return user == null ? WelcomePage() : HomePage();
           } else {
             return Scaffold(
               body: Center(

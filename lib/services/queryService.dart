@@ -19,7 +19,7 @@ class QueryService {
 
 // Get the list of pharmacies using the app
   Future getPharmaciesFromFirestore() async {
-    var query = (await rootRef.collectionGroup("Pharmacies").get());
+    var query = (await rootRef.collection("Pharmacies").get());
 
     //Convert query result to a list to loop through them
     List results = query.docs.map((e) => e.data()).toList();
@@ -44,20 +44,24 @@ class QueryService {
         .where("inStock", isEqualTo: true)
         .get());
 
-    //Convert query result to a list to loop through them
-    List results = query.docs.map((e) => e.data()).toList();
-
-    //First check if the list is empty or not before converting
-    //results to dart models
-    if (_results.isNotEmpty) {
-      _results.clear();
+    if (query.size > 0) {
+      //Convert query result to a list to loop through them
+      List results = query.docs.map((e) => e.data()).toList();
+      //First check if the list is empty or not before converting
+      //results to dart models
+      if (_results.isNotEmpty) {
+        _results.clear();
+      }
+      results.forEach((element) {
+        //Convert list of results to model dart models
+        SearchResults r = SearchResults.fromJson(element);
+        _results.add(r);
+      });
+      combine();
+      return "Success";
+    } else {
+      return "Failure";
     }
-    results.forEach((element) {
-      //Convert list of results to model dart models
-      SearchResults r = SearchResults.fromJson(element);
-      _results.add(r);
-    });
-    combine();
   }
 
   // search for medicine by brand names
@@ -68,20 +72,24 @@ class QueryService {
         .where("inStock", isEqualTo: true)
         .get());
 
-    //Convert query result to a list to loop through them
-    List results = query.docs.map((e) => e.data()).toList();
-
-    //First check if the list is empty or not before converting
-    //results to dart models
-    if (_results.isNotEmpty) {
-      _results.clear();
+    if (query.size > 0) {
+      //Convert query result to a list to loop through them
+      List results = query.docs.map((e) => e.data()).toList();
+      //First check if the list is empty or not before converting
+      //results to dart models
+      if (_results.isNotEmpty) {
+        _results.clear();
+      }
+      results.forEach((element) {
+        //Convert list of results to model dart models
+        SearchResults r = SearchResults.fromJson(element);
+        _results.add(r);
+      });
+      combine();
+      return "Success";
+    } else {
+      return "Failure";
     }
-    results.forEach((element) {
-      //Convert list of results to model dart models
-      SearchResults r = SearchResults.fromJson(element);
-      _results.add(r);
-    });
-    combine();
   }
 
   //Method to combine the two lists into one Final Search results lists

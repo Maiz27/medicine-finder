@@ -30,10 +30,6 @@ double userLon = 0.0;
 class ResultMapPage extends StatefulWidget {
   const ResultMapPage({Key? key}) : super(key: key);
 
-  // String getSearchType() {
-  //   return searchType;
-  // }
-
   @override
   _ResultMapPageState createState() => _ResultMapPageState();
 }
@@ -113,145 +109,113 @@ class _ResultMapPageState extends State<ResultMapPage> {
             },
           ),
         ),
-// Before displaying any Result card, first check if the search for medication
-// was successfully or not then display the appropriate card
-        _finalResult.isEmpty
-            ? Center(
-                child: Container(
-                  width: width * 0.3,
-                  height: height * 0.17,
-                  margin: EdgeInsets.all(30),
-                  padding: EdgeInsets.all(15),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(30),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.3),
-                          blurRadius: 10,
-                          offset: Offset.zero,
-                        )
-                      ]),
-                  child: Text(
-                    "\nThe desired medicine is unavailable in all of the supported pharmacies!",
+        AnimatedPositioned(
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.easeInOut,
+          left: 0,
+          right: 0,
+          bottom: this.resultsCardVis,
+          child: Container(
+            width: width * 0.2,
+            height: height * 0.25,
+            margin: EdgeInsets.only(
+              bottom: height * 0.02,
+              left: width * 0.04,
+              right: width * 0.04,
+            ),
+            padding: EdgeInsets.only(
+              top: height * 0.02,
+              bottom: height * 0.02,
+              left: width * 0.02,
+              right: width * 0.02,
+            ),
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(30),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.3),
+                    blurRadius: 10,
+                    offset: Offset.zero,
+                  )
+                ]),
+            child: Column(children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  IconFont(
+                    color: AppColors.MAIN_COLOR,
+                    size: 0.05,
+                    iconName: IConFontHelper.PHARM_lOC,
+                  ),
+                  Text(
+                    currPharmacyName,
                     style: TextStyle(
                       fontSize: height * 0.02,
-                      letterSpacing: 1,
                     ),
-                    textAlign: TextAlign.center,
                   ),
-                ),
-              )
-            : AnimatedPositioned(
-                duration: const Duration(milliseconds: 500),
-                curve: Curves.easeInOut,
-                left: 0,
-                right: 0,
-                bottom: this.resultsCardVis,
-                child: Container(
-                  width: width * 0.2,
-                  height: height * 0.25,
-                  margin: EdgeInsets.only(
-                    bottom: height * 0.02,
-                    left: width * 0.04,
-                    right: width * 0.04,
+                  IconButton(
+                    onPressed: () => {launch("tel:$currPharmacyNum")},
+                    icon: Icon(
+                      Icons.call,
+                      size: 35,
+                      color: AppColors.MAIN_COLOR,
+                    ),
                   ),
-                  padding: EdgeInsets.only(
-                    top: height * 0.02,
-                    bottom: height * 0.02,
-                    left: width * 0.02,
-                    right: width * 0.02,
-                  ),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(30),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.3),
-                          blurRadius: 10,
-                          offset: Offset.zero,
-                        )
-                      ]),
-                  child: Column(children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        IconFont(
-                          color: AppColors.MAIN_COLOR,
-                          size: 0.05,
-                          iconName: IConFontHelper.PHARM_lOC,
-                        ),
-                        Text(
-                          currPharmacyName,
-                          style: TextStyle(
-                            fontSize: height * 0.02,
-                          ),
-                        ),
-                        IconButton(
-                          onPressed: () => {launch("tel:$currPharmacyNum")},
-                          icon: Icon(
-                            Icons.call,
-                            size: 35,
-                            color: AppColors.MAIN_COLOR,
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: height * 0.02,
-                    ),
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text(
-                            searchedMedicine,
-                            style: TextStyle(fontSize: height * 0.02),
-                          ),
-                          Text(
-                            currPharmacyPrice,
-                            style: TextStyle(fontSize: height * 0.02),
-                          ),
-                          IconButton(
-                            onPressed: () => {
-                              launch(
-                                  "https://www.google.com/maps/dir/?api=1&origin=$userLat,$userLon&destination=$currPharmacyLat,$currPharmacyLon")
-                            },
-                            icon: Icon(
-                              Icons.directions,
-                              size: 35,
-                              color: AppColors.MAIN_COLOR,
-                            ),
-                          ),
-                        ]),
-                    SizedBox(
-                      height: height * 0.02,
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          "Brand names: ",
-                          style: TextStyle(
-                              fontSize: height * 0.02,
-                              color: AppColors.MAIN_COLOR),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(
-                            left: width * 0.01,
-                            right: width * 0.01,
-                          ),
-                          height: height * 0.03,
-                          width: width * 0.2,
-                          child: Marquee(
-                            text: _brandNames.toString(),
-                            style: TextStyle(fontSize: height * 0.02),
-                            blankSpace: width * 0.02,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ]),
-                ),
+                ],
               ),
+              SizedBox(
+                height: height * 0.02,
+              ),
+              Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+                Text(
+                  searchedMedicine,
+                  style: TextStyle(fontSize: height * 0.02),
+                ),
+                Text(
+                  currPharmacyPrice,
+                  style: TextStyle(fontSize: height * 0.02),
+                ),
+                IconButton(
+                  onPressed: () => {
+                    launch(
+                        "https://www.google.com/maps/dir/?api=1&origin=$userLat,$userLon&destination=$currPharmacyLat,$currPharmacyLon")
+                  },
+                  icon: Icon(
+                    Icons.directions,
+                    size: 35,
+                    color: AppColors.MAIN_COLOR,
+                  ),
+                ),
+              ]),
+              SizedBox(
+                height: height * 0.02,
+              ),
+              Row(
+                children: [
+                  Text(
+                    "Brand names: ",
+                    style: TextStyle(
+                        fontSize: height * 0.02, color: AppColors.MAIN_COLOR),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(
+                      left: width * 0.01,
+                      right: width * 0.01,
+                    ),
+                    height: height * 0.03,
+                    width: width * 0.18,
+                    child: Marquee(
+                      text: _brandNames.toString(),
+                      style: TextStyle(fontSize: height * 0.02),
+                      blankSpace: width * 0.02,
+                    ),
+                  ),
+                ],
+              ),
+            ]),
+          ),
+        ),
         CustomBottomBar()
       ]),
     );

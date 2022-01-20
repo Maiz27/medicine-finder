@@ -9,14 +9,16 @@ class CurrUser {
   String? tele;
   Timestamp dateCreated;
   String accType;
+  String? imgURL;
 
   CurrUser({
     required this.uid,
     this.email,
     required this.fullName,
-    this.tele = "",
+    this.tele,
     required this.dateCreated,
     required this.accType,
+    required this.imgURL,
   });
 
   factory CurrUser.fromJson(Map<dynamic, dynamic> doc) {
@@ -26,6 +28,21 @@ class CurrUser {
         dateCreated: doc['createdOn'],
         accType: doc['accType'],
         email: doc['email'],
-        tele: doc['telephone']);
+        tele: doc['telephone'],
+        imgURL: doc['imgURL']);
+  }
+
+  bool isGoogleAcc() {
+    if (accType == "Google") {
+      return true;
+    }
+    return false;
+  }
+
+  bool isEmailAcc() {
+    if (accType == "Email") {
+      return true;
+    }
+    return false;
   }
 }

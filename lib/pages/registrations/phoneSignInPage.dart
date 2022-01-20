@@ -5,7 +5,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:medicine/helpers/appColors.dart';
 import 'package:medicine/helpers/deviceDimensions.dart';
 import 'package:medicine/helpers/iconHelper.dart';
-import 'package:medicine/helpers/utility.dart';
 import 'package:medicine/models/userModel.dart';
 import 'package:medicine/services/database.dart';
 import 'package:medicine/widgets/IconFont.dart';
@@ -33,6 +32,7 @@ class _PhoneSignInPageState extends State<PhoneSignInPage> {
 
   bool otpVisibility = false;
   String verificationID = "";
+  bool isNewUser = false;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,7 @@ class _PhoneSignInPageState extends State<PhoneSignInPage> {
     double width = deviceDimensions.getDeviceWidth();
 
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       body: Container(
         height: height,
         width: width,
@@ -62,46 +62,44 @@ class _PhoneSignInPageState extends State<PhoneSignInPage> {
             ),
           )),
           Center(
-            child: Column(
-                // align childern from the center
-                mainAxisAlignment: MainAxisAlignment.center,
-                //stech children across the y-axis
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  // logo with oval shape around it
-                  //Wrap clipoval in a center widget to prevent it from streching
-                  Center(
-                    child: ClipOval(
-                      child: Container(
-                        width: width * 0.22,
-                        height: height * 0.22,
-                        color: AppColors.MAIN_COLOR,
-                        alignment: Alignment.center,
+            child: SingleChildScrollView(
+              reverse: true,
+              child: Column(children: [
+                // logo with oval shape around it
+                //Wrap clipoval in a center widget to prevent it from streching
+                Center(
+                  child: ClipOval(
+                    child: Container(
+                      width: width * 0.22,
+                      height: height * 0.22,
+                      color: AppColors.MAIN_COLOR,
+                      alignment: Alignment.center,
 
-                        // use self created 'IconFont class' to get icon from specified font
-                        child: IconFont(
-                          color: Colors.white,
-                          iconName: IConFontHelper.LOGO,
-                          size: 0.15,
-                        ),
+                      // use self created 'IconFont class' to get icon from specified font
+                      child: IconFont(
+                        color: Colors.white,
+                        iconName: IConFontHelper.LOGO,
+                        size: 0.15,
                       ),
                     ),
                   ),
-                  // use SizedBox to fake spacing and give roon for the desgin elements
-                  SizedBox(
-                    height: 40,
-                  ),
-                  Text(
-                    'Sign In To Your Account!',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: AppColors.ACCENT,
-                        fontFamily: 'Roboto',
-                        fontSize: height * 0.02,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 30),
-                  Padding(
+                ),
+                // use SizedBox to fake spacing and give roon for the desgin elements
+                SizedBox(
+                  height: 40,
+                ),
+                Text(
+                  'Sign In To Your Account!',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: AppColors.ACCENT,
+                      fontFamily: 'Roboto',
+                      fontSize: height * 0.02,
+                      fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 30),
+                Visibility(
+                  child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextField(
                       controller: fullnameController,
@@ -127,100 +125,127 @@ class _PhoneSignInPageState extends State<PhoneSignInPage> {
                       ),
                     ),
                   ),
+                  visible: isNewUser,
+                ),
 
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextField(
-                      controller: phoneNumController,
-                      cursorColor: AppColors.ACCENT,
-                      keyboardType: TextInputType.phone,
-                      style: TextStyle(
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextField(
+                    controller: phoneNumController,
+                    cursorColor: AppColors.ACCENT,
+                    keyboardType: TextInputType.phone,
+                    style: TextStyle(
+                      color: AppColors.ACCENT,
+                      letterSpacing: 1.5,
+                    ),
+                    decoration: InputDecoration(
+                      labelText: 'Phone number',
+                      prefixIcon: Icon(
+                        Icons.phone_android,
                         color: AppColors.ACCENT,
-                        letterSpacing: 1.5,
                       ),
-                      decoration: InputDecoration(
-                        labelText: 'Phone number',
-                        prefixIcon: Icon(
-                          Icons.phone_android,
-                          color: AppColors.ACCENT,
-                        ),
-                        labelStyle: TextStyle(
-                          fontSize: height * 0.02,
-                          color: AppColors.ACCENT,
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(50),
-                        ),
+                      labelStyle: TextStyle(
+                        fontSize: height * 0.02,
+                        color: AppColors.ACCENT,
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(50),
                       ),
                     ),
                   ),
-                  Visibility(
-                    child: TextField(
-                      controller: otpController,
-                      cursorColor: AppColors.ACCENT,
-                      decoration: InputDecoration(
-                        labelText: 'OTP Code',
-                        prefixIcon: Icon(
-                          Icons.sms,
-                          color: AppColors.ACCENT,
-                        ),
-                        labelStyle: TextStyle(
-                          fontSize: height * 0.02,
-                          color: AppColors.ACCENT,
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(50),
-                        ),
+                ),
+                Visibility(
+                  child: TextField(
+                    controller: otpController,
+                    cursorColor: AppColors.ACCENT,
+                    decoration: InputDecoration(
+                      labelText: 'OTP Code',
+                      prefixIcon: Icon(
+                        Icons.sms,
+                        color: AppColors.ACCENT,
                       ),
-                      keyboardType: TextInputType.number,
+                      labelStyle: TextStyle(
+                        fontSize: height * 0.02,
+                        color: AppColors.ACCENT,
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(50),
+                      ),
                     ),
-                    visible: otpVisibility,
+                    keyboardType: TextInputType.number,
                   ),
-                  SizedBox(
-                    height: 30,
-                  ),
+                  visible: otpVisibility,
+                ),
+                SizedBox(
+                  height: 30,
+                ),
 
-                  // Button section
-
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      top: 20,
-                      left: 20,
-                      right: 20,
-                    ),
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        if (otpVisibility) {
-                          verifyOTP();
-                        } else {
-                          loginWithPhone();
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        primary: AppColors.MAIN_COLOR,
-                        onPrimary: AppColors.ACCENT,
-                        shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(width * 0.5)),
-                        ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(
+                      "New User : ",
+                      style: TextStyle(
+                        fontSize: width * 0.02,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: width * 0.0005,
+                        color: AppColors.ACCENT,
                       ),
-                      //add padding to provide space between text
-                      //and button borders
-                      child: Padding(
-                        padding: EdgeInsets.all(height * 0.03),
-                        child: Text(
-                          otpVisibility ? "Verify" : "Login",
-                          style: TextStyle(
-                            color: AppColors.ACCENT,
-                            fontFamily: 'Roboto',
-                            fontSize: height * 0.02,
-                            fontWeight: FontWeight.bold,
-                          ),
+                    ),
+                    Switch(
+                        activeColor: AppColors.ACCENT,
+                        activeTrackColor: AppColors.MAIN_COLOR,
+                        value: isNewUser,
+                        onChanged: (newValue) {
+                          setState(() {
+                            isNewUser = newValue;
+                          });
+                        }),
+                  ],
+                ),
+
+                // Button section
+
+                Padding(
+                  padding: const EdgeInsets.only(
+                    top: 20,
+                    left: 20,
+                    right: 20,
+                  ),
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      if (otpVisibility) {
+                        verifyOTP();
+                      } else {
+                        loginWithPhone();
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      primary: AppColors.MAIN_COLOR,
+                      onPrimary: AppColors.ACCENT,
+                      shape: RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.all(Radius.circular(width * 0.5)),
+                      ),
+                    ),
+                    //add padding to provide space between text
+                    //and button borders
+                    child: Padding(
+                      padding: EdgeInsets.all(height * 0.03),
+                      child: Text(
+                        otpVisibility ? "Verify" : "Login / Signup",
+                        style: TextStyle(
+                          color: AppColors.ACCENT,
+                          fontFamily: 'Roboto',
+                          fontSize: height * 0.02,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
                   ),
-                ]),
+                ),
+              ]),
+            ),
           )
         ]),
       ),
@@ -238,8 +263,9 @@ class _PhoneSignInPageState extends State<PhoneSignInPage> {
               uid: result.user!.uid,
               dateCreated: Timestamp.now(),
               fullName: fullnameController.text,
-              accType: 'tele',
+              accType: 'Telephone',
               tele: phoneNumController.text,
+              imgURL: null,
             );
             Database.createUser(currUser!);
           } else {
@@ -275,6 +301,7 @@ class _PhoneSignInPageState extends State<PhoneSignInPage> {
           fullName: fullnameController.text,
           accType: 'tele',
           tele: phoneNumController.text,
+          imgURL: null,
         );
         Database.createUser(currUser!);
       } else {
@@ -282,7 +309,7 @@ class _PhoneSignInPageState extends State<PhoneSignInPage> {
             .then((user) => {currUser = CurrUser.fromJson(user)});
       }
       print("You are logged in successfully");
-      Utility().setCurrUser(currUser!);
+      Database.setCurrUser(currUser!);
 
       Navigator.pushNamed(context, '/wrapper');
       Fluttertoast.showToast(

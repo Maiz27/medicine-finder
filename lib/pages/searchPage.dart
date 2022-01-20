@@ -4,24 +4,35 @@ import 'package:medicine/helpers/appColors.dart';
 import 'package:medicine/helpers/deviceDimensions.dart';
 import 'package:medicine/helpers/iconHelper.dart';
 import 'package:medicine/pages/resultPage.dart';
+import 'package:medicine/services/database.dart';
 import 'package:medicine/services/queryService.dart';
 import 'package:medicine/widgets/IconFont.dart';
 import 'package:medicine/widgets/appBar.dart';
+import 'package:medicine/widgets/messageWidget.dart';
 import 'package:provider/provider.dart';
 
+const double RESULTS_CARD_VISIBLE = 100;
+const double RESULTS_CARD_INVISIBLE = -500;
+
 // ignore: must_be_immutable
-class SearchPage extends StatelessWidget {
+class SearchPage extends StatefulWidget {
   String hintText = '';
 
   SearchPage(this.hintText);
 
+  @override
+  State<SearchPage> createState() => _SearchPageState();
+}
+
+class _SearchPageState extends State<SearchPage> {
+  double resultsCardVis = RESULTS_CARD_INVISIBLE;
   @override
   Widget build(BuildContext context) {
     // To hide Status bar, set setEnabledSystemUIMode as immersive
     //SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
 
     final TextEditingController searchController = TextEditingController();
-    String mainText = 'Searching for medicine by their $hintText';
+    String mainText = 'Searching for medicine by their ${widget.hintText}';
 
     final queryService = Provider.of<QueryService>(context, listen: false);
     final deviceDimensions = Provider.of<Dimension>(context);
@@ -96,7 +107,7 @@ class SearchPage extends StatelessWidget {
                   ),
                   keyboardType: TextInputType.name,
                   decoration: InputDecoration(
-                    labelText: hintText,
+                    labelText: widget.hintText,
                     prefixIcon: Padding(
                       padding: const EdgeInsets.all(10),
                       //using self created IconFont class to use pre made icons
@@ -120,18 +131,54 @@ class SearchPage extends StatelessWidget {
               // Search button
               ElevatedButton(
                 onPressed: () async {
-                  if (hintText == 'Generic name') {
-                    await queryService.genericSearch(searchController.text);
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ResultMapPage()));
+                  //First hide the onScreen KB to make the animated container visible
+                  FocusManager.instance.primaryFocus?.unfocus();
+                  if (widget.hintText == 'Generic name') {
+                    await queryService
+                        .genericSearch(searchController.text)
+                        .then((value) => {
+                              if (value == "Success")
+                                {
+                                  Database.addSearchHistory(
+                                      searchController.text, "Generic name"),
+                                  Database.updateMedicineSearchCounter(
+                                      searchController.text),
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              ResultMapPage()))
+                                }
+                              else
+                                {
+                                  setState(() {
+                                    resultsCardVis = RESULTS_CARD_VISIBLE;
+                                  })
+                                }
+                            });
                   } else {
-                    await queryService.brandSearch(searchController.text);
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ResultMapPage()));
+                    await queryService
+                        .brandSearch(searchController.text)
+                        .then((value) => {
+                              if (value == "Success")
+                                {
+                                  Database.addSearchHistory(
+                                      searchController.text, "Brand name"),
+                                  Database.updateMedicineSearchCounter(
+                                      searchController.text),
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              ResultMapPage()))
+                                }
+                              else
+                                {
+                                  setState(() {
+                                    resultsCardVis = RESULTS_CARD_VISIBLE;
+                                  })
+                                }
+                            });
                   }
                 },
                 child: Text(
@@ -148,8 +195,17 @@ class SearchPage extends StatelessWidget {
               ),
               SizedBox(
                 height: height * 0.3,
-              )
+              ),
             ]),
+            AnimatedPositioned(
+              duration: const Duration(milliseconds: 500),
+              curve: Curves.easeInOut,
+              bottom: resultsCardVis,
+              child: MessageWidget(
+                message:
+                    "\nThe desired medicine is unavailable in all of the supported pharmacies!",
+              ),
+            ),
             CustomBottomBar(),
           ]),
         ));

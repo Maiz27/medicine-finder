@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:medicine/helpers/utility.dart';
+
 import 'package:medicine/models/userModel.dart';
 import 'package:medicine/services/database.dart';
 
@@ -62,14 +62,16 @@ class AuthService {
             email: email, password: password);
 
         _currUser = CurrUser(
-            email: credential.user.email,
-            uid: credential.user.uid,
-            dateCreated: now,
-            fullName: '$fullName',
-            accType: 'Email');
+          email: credential.user.email,
+          uid: credential.user.uid,
+          dateCreated: now,
+          fullName: '$fullName',
+          accType: 'Email',
+          imgURL: null,
+        );
 
         Database.createUser(_currUser);
-        Utility().setCurrUser(_currUser);
+        Database.setCurrUser(_currUser);
       } catch (e) {
         Fluttertoast.showToast(msg: e.toString());
       }
@@ -106,9 +108,10 @@ class AuthService {
         fullName: result.user!.displayName.toString(),
         accType: 'Google',
         tele: result.user!.phoneNumber,
+        imgURL: result.user!.photoURL,
       );
       Database.createUser(_currUser);
-      Utility().setCurrUser(_currUser);
+      Database.setCurrUser(_currUser);
     } else {
       // Retrieve user info for old users
       Database.getUserDoc(result.user!.uid);
