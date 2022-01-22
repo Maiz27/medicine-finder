@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:medicine/helpers/appColors.dart';
 import 'package:medicine/helpers/deviceDimensions.dart';
 import 'package:medicine/helpers/iconHelper.dart';
-import 'package:medicine/pages/resultPage.dart';
+import 'package:medicine/screens/user/resultScreen.dart';
 import 'package:medicine/services/database.dart';
 import 'package:medicine/services/queryService.dart';
 import 'package:medicine/widgets/IconFont.dart';
@@ -15,16 +15,16 @@ const double RESULTS_CARD_VISIBLE = 100;
 const double RESULTS_CARD_INVISIBLE = -500;
 
 // ignore: must_be_immutable
-class SearchPage extends StatefulWidget {
+class SeacrhScreen extends StatefulWidget {
   String hintText = '';
 
-  SearchPage(this.hintText);
+  SeacrhScreen(this.hintText);
 
   @override
-  State<SearchPage> createState() => _SearchPageState();
+  State<SeacrhScreen> createState() => _SeacrhScreenState();
 }
 
-class _SearchPageState extends State<SearchPage> {
+class _SeacrhScreenState extends State<SeacrhScreen> {
   double resultsCardVis = RESULTS_CARD_INVISIBLE;
   @override
   Widget build(BuildContext context) {

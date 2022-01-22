@@ -13,18 +13,19 @@ import 'package:provider/provider.dart';
 CurrUser? currUser;
 String verificationID = "";
 
-class PhoneSignInPage extends StatefulWidget {
-  const PhoneSignInPage({Key? key}) : super(key: key);
+class PhoneRegistrationScreen extends StatefulWidget {
+  const PhoneRegistrationScreen({Key? key}) : super(key: key);
 
   @override
-  _PhoneSignInPageState createState() => _PhoneSignInPageState();
+  _PhoneRegistrationScreenState createState() =>
+      _PhoneRegistrationScreenState();
 
   CurrUser? getCurrUserInfo() {
     return currUser;
   }
 }
 
-class _PhoneSignInPageState extends State<PhoneSignInPage> {
+class _PhoneRegistrationScreenState extends State<PhoneRegistrationScreen> {
   FirebaseAuth auth = FirebaseAuth.instance;
   final TextEditingController phoneNumController = TextEditingController();
   TextEditingController otpController = TextEditingController();

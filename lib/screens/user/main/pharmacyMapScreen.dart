@@ -20,14 +20,14 @@ double currPharmacyLon = 0.0;
 double userLat = 0.0;
 double userLon = 0.0;
 
-class PharmacyMapPage extends StatefulWidget {
-  const PharmacyMapPage({Key? key}) : super(key: key);
+class PharmacyMapScreen extends StatefulWidget {
+  const PharmacyMapScreen({Key? key}) : super(key: key);
 
   @override
-  _PharmacyMapPageState createState() => _PharmacyMapPageState();
+  _PharmacyMapScreenState createState() => _PharmacyMapScreenState();
 }
 
-class _PharmacyMapPageState extends State<PharmacyMapPage> {
+class _PharmacyMapScreenState extends State<PharmacyMapScreen> {
   //setting the initial Camera position for the map view
   //Using project site's location coordinates 'Abeerna Pharmacy'
   static const _initialCameraPosition = CameraPosition(

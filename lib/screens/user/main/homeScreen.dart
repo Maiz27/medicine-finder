@@ -2,17 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:medicine/helpers/appColors.dart';
 import 'package:medicine/helpers/deviceDimensions.dart';
 import 'package:medicine/helpers/iconHelper.dart';
+import 'package:medicine/screens/user/searchScreen.dart';
+import 'package:medicine/services/authService.dart';
 import 'package:medicine/widgets/searchCategories.dart';
-import 'package:medicine/pages/searchPage.dart';
 import 'package:medicine/widgets/appBar.dart';
 import 'package:provider/provider.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final deviceDimensions = Provider.of<Dimension>(context);
+    final authService = Provider.of<AuthService>(context);
 
     double height = deviceDimensions.getDeviceHeight();
     double width = deviceDimensions.getDeviceWidth();
@@ -37,11 +39,31 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                   SearchCategory('Generic Name', 'scientificName',
-                      IConFontHelper.DR, SearchPage('Generic name')),
+                      IConFontHelper.DR, SeacrhScreen('Generic name')),
                   SearchCategory('Brand Name', 'commonName',
-                      IConFontHelper.LAB__BOTTLE, SearchPage('Brand name')),
-                  // SearchCategory('Common Diseases in Khartoum', 'khartoum',
-                  //     IConFontHelper.LOCATION, CommonDiseases()),
+                      IConFontHelper.LAB__BOTTLE, SeacrhScreen('Brand name')),
+                  Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        await authService.signOut();
+                        // Navigator.of(context).pushNamedAndRemoveUntil(
+                        //     '/wrapper', (Route<dynamic> route) => false);
+                        Navigator.pushReplacementNamed(context, '/wrapper');
+                      },
+                      child: Text(
+                        'Log out',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        primary: AppColors.MAIN_COLOR,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),

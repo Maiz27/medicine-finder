@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:medicine/helpers/appColors.dart';
 import 'package:medicine/helpers/deviceDimensions.dart';
 import 'package:medicine/helpers/iconHelper.dart';
-import 'package:medicine/pages/main/homePage.dart';
-import 'package:medicine/pages/main/pharmacyMapPage.dart';
-import 'package:medicine/pages/main/searchHistoryPage.dart';
-import 'package:medicine/pages/main/userPage.dart';
+import 'package:medicine/screens/user/main/homeScreen.dart';
+import 'package:medicine/screens/user/main/pharmacyMapScreen.dart';
+import 'package:medicine/screens/user/main/searchHistoryScreen.dart';
+import 'package:medicine/screens/user/main/userScreen.dart';
+
 import 'package:medicine/services/database.dart';
 import 'package:provider/provider.dart';
 
@@ -50,7 +51,7 @@ class CustomBottomBar extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => HomePage(),
+                        builder: (context) => HomeScreen(),
                       ));
                 },
               ),
@@ -69,7 +70,7 @@ class CustomBottomBar extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => PharmacyMapPage()));
+                          builder: (context) => PharmacyMapScreen()));
                 },
               ),
             ),
@@ -88,7 +89,7 @@ class CustomBottomBar extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => SearchHistoryPage()));
+                            builder: (context) => SearchHistoryScreen()));
                   });
                 },
               ),
@@ -105,7 +106,7 @@ class CustomBottomBar extends StatelessWidget {
                     iconName: IConFontHelper.USER),
                 onPressed: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => UserPage()));
+                      MaterialPageRoute(builder: (context) => UserScreen()));
                 },
               ),
             ),

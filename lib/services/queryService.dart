@@ -5,12 +5,12 @@ import 'package:medicine/models/searchResultModel.dart';
 class QueryService {
   final rootRef = FirebaseFirestore.instance;
   List<Pharmacy> _pharmacies = [];
-  List<SearchResults> _results = [];
-  List<FinalResult> _finalResult = [];
+  List<Medicine> _results = [];
+  List<FinalSearchResult> _finalSearchResult = [];
 
   //Getters for pharmacies & search SearchResults
-  List<FinalResult> getResults() {
-    return _finalResult;
+  List<FinalSearchResult> getResults() {
+    return _finalSearchResult;
   }
 
   List<Pharmacy> getPharmacy() {
@@ -54,7 +54,7 @@ class QueryService {
       }
       results.forEach((element) {
         //Convert list of results to model dart models
-        SearchResults r = SearchResults.fromJson(element);
+        Medicine r = Medicine.fromJson(element);
         _results.add(r);
       });
       combine();
@@ -82,7 +82,7 @@ class QueryService {
       }
       results.forEach((element) {
         //Convert list of results to model dart models
-        SearchResults r = SearchResults.fromJson(element);
+        Medicine r = Medicine.fromJson(element);
         _results.add(r);
       });
       combine();
@@ -94,8 +94,8 @@ class QueryService {
 
   //Method to combine the two lists into one Final Search results lists
   void combine() {
-    if (_finalResult.isNotEmpty) {
-      _finalResult.clear();
+    if (_finalSearchResult.isNotEmpty) {
+      _finalSearchResult.clear();
     }
     _pharmacies.forEach((element) {
       _results.forEach((e) {
@@ -104,7 +104,7 @@ class QueryService {
 //every instance, first find the index of the currently iterated element from
 //result then use it as an index to access each pharmacy's brand names separately
           int x = _results.indexOf(e);
-          _finalResult.add(FinalResult(
+          _finalSearchResult.add(FinalSearchResult(
             element.name,
             element.tele,
             element.lat,

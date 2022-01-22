@@ -13,14 +13,14 @@ import 'package:provider/provider.dart';
 
 List<SearchHistory> history = Database().getSearchHistory();
 
-class SearchHistoryPage extends StatefulWidget {
-  const SearchHistoryPage({Key? key}) : super(key: key);
+class SearchHistoryScreen extends StatefulWidget {
+  const SearchHistoryScreen({Key? key}) : super(key: key);
 
   @override
-  _SearchHistoryPageState createState() => _SearchHistoryPageState();
+  _SearchHistoryScreenState createState() => _SearchHistoryScreenState();
 }
 
-class _SearchHistoryPageState extends State<SearchHistoryPage> {
+class _SearchHistoryScreenState extends State<SearchHistoryScreen> {
   @override
   Widget build(BuildContext context) {
     final deviceDimensions = Provider.of<Dimension>(context);

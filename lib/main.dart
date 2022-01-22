@@ -3,17 +3,19 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:medicine/helpers/deviceDimensions.dart';
-import 'package:medicine/pages/main/pharmacyMapPage.dart';
-
-import 'package:medicine/pages/registrations/phoneSignInPage.dart';
-import 'package:medicine/pages/splachPage.dart';
-import 'package:medicine/pages/main/welcomePage.dart';
-import 'package:medicine/services/auth_services.dart';
+import 'package:medicine/screens/pharmacist/pharmacistSignin.dart';
+import 'package:medicine/screens/pharmacist/pharmacistSignup.dart';
+import 'package:medicine/screens/pharmacist/pharmacistWelcomeScreen.dart';
+import 'package:medicine/screens/splachScreen.dart';
+import 'package:medicine/screens/user/main/pharmacyMapScreen.dart';
+import 'package:medicine/screens/user/main/userWelcomeScreen.dart';
+import 'package:medicine/screens/user/registrations/emailRegistrationScreen.dart';
+import 'package:medicine/screens/user/registrations/phoneRegistrationScreen.dart';
+import 'package:medicine/services/authService.dart';
 import 'package:medicine/helpers/wrapper.dart';
 import 'package:medicine/services/database.dart';
 import 'package:medicine/services/queryService.dart';
 import 'package:provider/provider.dart';
-import 'pages/registrations/emailRegistration.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -48,7 +50,6 @@ Future<void> main() async {
             debugShowCheckedModeBanner: false,
             //To use custom text Fonts, call them in the material app using them
             theme: ThemeData(fontFamily: 'Roboto'),
-
             title: 'Medicine Finder',
 
             //Definig the apps inital route and other routes for easier
@@ -57,15 +58,19 @@ Future<void> main() async {
             routes: {
               //'/': (context) => Wrapper(),
               '/wrapper': (context) => Wrapper(),
-              '/welcome': (context) => WelcomePage(),
+              '/Userwelcome': (context) => UserWelcomeScreen(),
+              '/PharmacistWelcome': (context) => PharmacistWelcomeScreen(),
               '/EmailRegister': (context) => EmailRegistration(),
-              '/PhoneRegister': (context) => PhoneSignInPage(),
-              '/map': (context) => PharmacyMapPage(),
+              '/PhoneRegister': (context) => PhoneRegistrationScreen(),
+              '/PharmacistSignup': (context) => PharmacistSignup(),
+              '/PharmacistSignin': (context) => PharmacistSignin(),
+              '/map': (context) => PharmacyMapScreen(),
             },
 
             //use slef created Splashpage as the first page that appears
             //when starting the app
 
+            // home: PharmacistSignup(),
             home: SplachPage(
               duration: 2,
               goTopage: Wrapper(),

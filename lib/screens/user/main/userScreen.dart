@@ -4,14 +4,14 @@ import 'package:medicine/helpers/appColors.dart';
 import 'package:medicine/helpers/deviceDimensions.dart';
 import 'package:medicine/helpers/iconHelper.dart';
 import 'package:medicine/models/userModel.dart';
-import 'package:medicine/services/auth_services.dart';
+import 'package:medicine/services/authService.dart';
 import 'package:medicine/services/database.dart';
 import 'package:medicine/widgets/IconFont.dart';
 import 'package:medicine/widgets/appBar.dart';
 import 'package:provider/provider.dart';
 
-class UserPage extends StatelessWidget {
-  const UserPage({Key? key}) : super(key: key);
+class UserScreen extends StatelessWidget {
+  const UserScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

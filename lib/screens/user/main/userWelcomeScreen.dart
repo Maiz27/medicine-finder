@@ -1,31 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:location/location.dart';
 import 'package:medicine/helpers/appColors.dart';
 import 'package:medicine/helpers/deviceDimensions.dart';
 import 'package:medicine/helpers/iconHelper.dart';
-import 'package:medicine/services/auth_services.dart';
+import 'package:medicine/services/authService.dart';
 import 'package:medicine/widgets/IconFont.dart';
 import 'package:provider/provider.dart';
 
 // First page after splash, shows the login & register options and redirects accordingly
-class WelcomePage extends StatefulWidget {
-  const WelcomePage({Key? key}) : super(key: key);
-
-  @override
-  _WelcomePageState createState() => _WelcomePageState();
-}
-
-class _WelcomePageState extends State<WelcomePage> {
-  //Override the initial State of the widget to ask user for their location
-  //permission from the welcome page
-  @override
-  void initState() {
-    //call the getlocation function
-    _getLocationPermission();
-    //then resume the already defined state for Welcome using 'super' keyword
-    super.initState();
-  }
+class UserWelcomeScreen extends StatelessWidget {
+  const UserWelcomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -82,95 +65,101 @@ class _WelcomePageState extends State<WelcomePage> {
                   ),
                 ),
                 // use SizedBox to fake spacing and give roon for the desgin elements
-                SizedBox(
-                  height: 30,
-                ),
-                Text(
-                  'Medicine Finder',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      color: AppColors.ACCENT,
-                      fontFamily: 'Roboto',
-                      fontSize: height * 0.05,
-                      fontWeight: FontWeight.bold),
-                ),
-                //Another sixed box
-                SizedBox(
-                  height: 40,
-                ),
-                Text(
-                  'Finding your desired medication,\nhas never been easier!\nOne click away!',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: AppColors.ACCENT,
-                    fontSize: height * 0.02,
-                    fontFamily: 'Roboto',
+
+                Padding(
+                  padding: EdgeInsets.only(
+                    top: height * 0.05,
+                  ),
+                  child: Text(
+                    'Medicine Finder',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: AppColors.ACCENT,
+                        fontFamily: 'Roboto',
+                        fontSize: height * 0.05,
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
-                SizedBox(
-                  height: 50,
+                //Another sixed box
+
+                Padding(
+                  padding: EdgeInsets.only(
+                    top: height * 0.05,
+                  ),
+                  child: Text(
+                    'Sign in to your Account as a User\nto find your desired medicine',
+                    textAlign: TextAlign.center,
+                    softWrap: true,
+                    style: TextStyle(
+                      color: AppColors.ACCENT,
+                      fontSize: height * 0.02,
+                      fontFamily: 'Roboto',
+                    ),
+                  ),
                 ),
 
                 //Button Section
                 ////Google Signin button
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Column(
-                      children: [
-                        IconButton(
-                          onPressed: () async {
-                            await authService.signInWithGoogle();
-                            Navigator.pushReplacementNamed(context, '/wrapper');
-                          },
-                          iconSize: 50,
-                          icon: IconFont(
-                            color: AppColors.MAIN_COLOR,
-                            iconName: IConFontHelper.GOOGLE,
-                            size: 0.04,
-                          ),
-                        ),
-                        Text(
-                          'Sign in with Google',
-                          style: TextStyle(
-                            color: AppColors.ACCENT,
-                          ),
-                        ),
-                      ],
-                    ),
-                    //Sign in with email button
-                    Column(
-                      children: [
-                        IconButton(
-                          onPressed: () async {
-                            Navigator.pushNamed(context, '/EmailRegister');
-                          },
-                          iconSize: 50,
-                          icon: IconFont(
+                Padding(
+                  padding: EdgeInsets.only(
+                    top: height * 0.05,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Column(
+                        children: [
+                          IconButton(
+                            onPressed: () async {
+                              await authService.signInWithGoogle();
+                              Navigator.pushReplacementNamed(
+                                  context, '/wrapper');
+                            },
+                            iconSize: 50,
+                            icon: IconFont(
                               color: AppColors.MAIN_COLOR,
-                              size: 0.05,
-                              iconName: IConFontHelper.EMAIL),
-                        ),
-                        Text(
-                          'Sign in with Email',
-                          style: TextStyle(
-                            color: AppColors.ACCENT,
+                              iconName: IConFontHelper.GOOGLE,
+                              size: 0.04,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-
-                SizedBox(
-                  height: 50,
+                          Text(
+                            'Sign in with Google',
+                            style: TextStyle(
+                              color: AppColors.ACCENT,
+                            ),
+                          ),
+                        ],
+                      ),
+                      //Sign in with email button
+                      Column(
+                        children: [
+                          IconButton(
+                            onPressed: () async {
+                              Navigator.pushNamed(context, '/EmailRegister');
+                            },
+                            iconSize: 50,
+                            icon: IconFont(
+                                color: AppColors.MAIN_COLOR,
+                                size: 0.05,
+                                iconName: IConFontHelper.EMAIL),
+                          ),
+                          Text(
+                            'Sign in with Email',
+                            style: TextStyle(
+                              color: AppColors.ACCENT,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
 
                 Padding(
-                  padding: const EdgeInsets.only(
-                    top: 20,
-                    left: 20,
-                    right: 20,
+                  padding: EdgeInsets.only(
+                    top: height * 0.05,
+                    left: width * 0.03,
+                    right: width * 0.03,
                   ),
                   child: ElevatedButton(
                     onPressed: () {
@@ -208,18 +197,5 @@ class _WelcomePageState extends State<WelcomePage> {
         ),
       ),
     );
-  }
-}
-
-//Enable location permissions function
-void _getLocationPermission() async {
-  var location = new Location();
-  try {
-    location.requestPermission(); //to lunch location permission popup
-
-  } on PlatformException catch (e) {
-    if (e.code == 'PERMISSION_DENIED') {
-      print('Permission denied');
-    }
   }
 }

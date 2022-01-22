@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:medicine/helpers/appColors.dart';
 import 'package:medicine/helpers/deviceDimensions.dart';
 import 'package:medicine/helpers/iconHelper.dart';
-import 'package:medicine/pages/resultPage.dart';
+import 'package:medicine/screens/user/resultScreen.dart';
 import 'package:medicine/services/database.dart';
 import 'package:medicine/services/queryService.dart';
 import 'package:medicine/widgets/IconFont.dart';

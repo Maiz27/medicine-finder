@@ -1,20 +1,20 @@
 // ignore_for_file: non_constant_identifier_names
 
-class SearchResults {
+class Medicine {
   String? Pname;
 
   String? Mname;
   int? price;
   List brandNames;
 
-  SearchResults(
+  Medicine(
       {required this.Pname,
       required this.Mname,
       required this.price,
       required this.brandNames});
 
-  factory SearchResults.fromJson(Map<String, dynamic> json) {
-    return SearchResults(
+  factory Medicine.fromJson(Map<String, dynamic> json) {
+    return Medicine(
       Pname: json['PharmacyID'],
       Mname: json['generic name'],
       price: json['price'],
@@ -33,7 +33,7 @@ List fromJsonArr(List<dynamic> jsonArray) {
   return brandNames;
 }
 
-class FinalResult {
+class FinalSearchResult {
   String pharmacyName;
   String tele;
   double lat;
@@ -42,6 +42,6 @@ class FinalResult {
   String price;
   List brandNames;
 
-  FinalResult(this.pharmacyName, this.tele, this.lat, this.lng, this.medicine,
-      this.price, this.brandNames);
+  FinalSearchResult(this.pharmacyName, this.tele, this.lat, this.lng,
+      this.medicine, this.price, this.brandNames);
 }

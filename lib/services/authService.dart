@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:medicine/helpers/utility.dart';
+import 'package:medicine/models/pharmacyModel.dart';
 
 import 'package:medicine/models/userModel.dart';
 import 'package:medicine/services/database.dart';
@@ -9,13 +11,12 @@ import 'package:medicine/services/database.dart';
 class AuthService {
   final auth.FirebaseAuth _firebaseAuth = auth.FirebaseAuth.instance;
   final rootRef = FirebaseFirestore.instance;
-  String verifID = "";
 
   late CurrUser _currUser;
 
-  CurrUser getCurrUserInfo() {
-    return _currUser;
-  }
+  late Pharmacy _pharmacy;
+
+  Utility userType = new Utility();
 
   auth.User? _user(auth.User? user) {
     // ignore: unnecessary_null_comparison
@@ -41,6 +42,7 @@ class AuthService {
         credential = await _firebaseAuth.signInWithEmailAndPassword(
             email: email, password: password);
 
+        userType.setUserType(1);
         Database.getUserDoc(credential.user!.uid);
       } catch (e) {
         Fluttertoast.showToast(msg: e.toString());
@@ -69,7 +71,7 @@ class AuthService {
           accType: 'Email',
           imgURL: null,
         );
-
+        userType.setUserType(1);
         Database.createUser(_currUser);
         Database.setCurrUser(_currUser);
       } catch (e) {
@@ -110,81 +112,52 @@ class AuthService {
         tele: result.user!.phoneNumber,
         imgURL: result.user!.photoURL,
       );
+      userType.setUserType(1);
       Database.createUser(_currUser);
       Database.setCurrUser(_currUser);
     } else {
       // Retrieve user info for old users
+      userType.setUserType(1);
       Database.getUserDoc(result.user!.uid);
     }
   }
 
-  // Future<String> loginWithPhone(String name, String numb) async {
-  //   _firebaseAuth.verifyPhoneNumber(
-  //     phoneNumber: numb,
-  //     verificationCompleted: (auth.PhoneAuthCredential credential) async {
-  //       await _firebaseAuth.signInWithCredential(credential).then((result) {
-  //         if (result.additionalUserInfo!.isNewUser) {
-  //           _currUser = CurrUser(
-  //             email: result.user!.email,
-  //             uid: result.user!.uid,
-  //             dateCreated: Timestamp.now(),
-  //             fullName: name,
-  //             accType: 'tele',
-  //             tele: numb,
-  //           );
-  //           Database.createUser(_currUser);
-  //         } else {
-  //           Database.getUserDoc(result.user!.uid)
-  //               .then((user) => {_currUser = CurrUser.fromJson(user)});
-  //         }
+  Future createPharmacy(
+      {required String name,
+      required String email,
+      required String password,
+      required String phone,
+      required double lat,
+      required double lng}) async {
+    var credential;
+    Timestamp now = Timestamp.now();
+    if (email == '' || password == '' || phone == '' || lat == 0 || lng == 0) {
+      Fluttertoast.showToast(msg: 'Please fill out the entire form!');
+    } else {
+      try {
+        credential = await _firebaseAuth.createUserWithEmailAndPassword(
+            email: email, password: password);
 
-  //         print("You are logged in successfully");
-  //       });
-  //     },
-  //     verificationFailed: (auth.FirebaseAuthException e) {
-  //       print(e.message);
-  //     },
-  //     codeSent: (String verificationId, int? resendToken) {
-  //       verifID = verificationId;
-  //     },
-  //     codeAutoRetrievalTimeout: (String verificationId) {},
-  //   );
-
-  //   return verifID;
-  // }
-
-  // void verifyOTP(String name, String numb, String smsCode) async {
-  //   auth.PhoneAuthCredential credential = auth.PhoneAuthProvider.credential(
-  //       verificationId: verifID, smsCode: smsCode);
-
-  //   await _firebaseAuth.signInWithCredential(credential).then((result) {
-  //     if (result.additionalUserInfo!.isNewUser) {
-  //       _currUser = CurrUser(
-  //         email: result.user!.email,
-  //         uid: result.user!.uid,
-  //         dateCreated: Timestamp.now(),
-  //         fullName: name,
-  //         accType: 'tele',
-  //         tele: numb,
-  //       );
-  //       Database.createUser(_currUser);
-  //     } else {
-  //       Database.getUserDoc(result.user!.uid)
-  //           .then((user) => {_currUser = CurrUser.fromJson(user)});
-  //     }
-  //     print("You are logged in successfully");
-  //     // Navigator.pushReplacementNamed(context, '/wrapper');
-  //     Fluttertoast.showToast(
-  //         msg: "You are logged in successfully",
-  //         toastLength: Toast.LENGTH_SHORT,
-  //         gravity: ToastGravity.CENTER,
-  //         timeInSecForIosWeb: 1,
-  //         textColor: Colors.white,
-  //         fontSize: 16.0);
-  //   });
-  // }
+        _pharmacy = Pharmacy(
+          id: credential.user.uid,
+          email: email,
+          name: name,
+          lat: lat,
+          lng: lng,
+          tele: phone,
+          dateCreated: now,
+        );
+        userType.setUserType(2);
+        Database.createPharmacyDoc(pharmacy: _pharmacy);
+      } catch (e) {
+        Fluttertoast.showToast(msg: e.toString());
+      }
+      return _user(credential.user);
+    }
+  }
 
   Future<void> signOut() async {
+    userType.setUserType(0);
     return await _firebaseAuth.signOut();
   }
 }
