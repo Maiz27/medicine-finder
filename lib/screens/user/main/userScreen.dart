@@ -7,7 +7,7 @@ import 'package:medicine/models/userModel.dart';
 import 'package:medicine/services/authService.dart';
 import 'package:medicine/services/database.dart';
 import 'package:medicine/widgets/IconFont.dart';
-import 'package:medicine/widgets/appBar.dart';
+import 'package:medicine/widgets/bottomNavBar.dart';
 import 'package:provider/provider.dart';
 
 class UserScreen extends StatelessWidget {

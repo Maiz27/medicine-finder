@@ -86,15 +86,14 @@ class Database {
   static updateMedicineSearchCounter(String medicine) async {
     try {
       var snap = await _counterCollectionRef
-          .where('generic name', isEqualTo: medicine)
+          .where('medicine name', isEqualTo: medicine)
           .get();
 
       if (snap.size > 0) {
         String docID = snap.docs[0].id;
-        _counterCollectionRef.doc(docID).update({
-          'medicine name': medicine,
-          'search counter': FieldValue.increment(1)
-        });
+        _counterCollectionRef
+            .doc(docID)
+            .update({'search counter': FieldValue.increment(1)});
       } else {
         _counterCollectionRef.add({
           'medicine name': medicine,

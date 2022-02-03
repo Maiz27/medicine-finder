@@ -7,7 +7,6 @@ import 'package:medicine/screens/user/resultScreen.dart';
 import 'package:medicine/services/database.dart';
 import 'package:medicine/services/queryService.dart';
 import 'package:medicine/widgets/IconFont.dart';
-import 'package:medicine/widgets/appBar.dart';
 import 'package:medicine/widgets/messageWidget.dart';
 import 'package:provider/provider.dart';
 
@@ -48,7 +47,6 @@ class _SeacrhScreenState extends State<SeacrhScreen> {
           width: width,
           child: Stack(children: [
             Positioned.fill(
-              bottom: height - (height * 0.9),
               child: Image.asset(
                 'assets/imgs/bg3.jpg',
                 // fit image across its allowed space
@@ -56,8 +54,13 @@ class _SeacrhScreenState extends State<SeacrhScreen> {
               ),
             ),
             // App logo with padding at the all around
-            Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-              Center(
+            Column(children: [
+              Padding(
+                padding: EdgeInsets.only(
+                  top: height * 0.15,
+                  left: width * 0.02,
+                  right: width * 0.02,
+                ),
                 child: ClipOval(
                   child: Container(
                     width: width * 0.22,
@@ -75,12 +78,12 @@ class _SeacrhScreenState extends State<SeacrhScreen> {
                 ),
               ),
 
-              SizedBox(
-                height: height * 0.05,
-              ),
-
               Padding(
-                padding: const EdgeInsets.only(left: 15, right: 15),
+                padding: EdgeInsets.only(
+                  top: height * 0.05,
+                  left: width * 0.02,
+                  right: width * 0.02,
+                ),
                 child: Text(
                   mainText,
                   style: TextStyle(
@@ -91,12 +94,14 @@ class _SeacrhScreenState extends State<SeacrhScreen> {
                 ),
               ),
 
-              SizedBox(
-                height: height * 0.05,
-              ),
               // Text field for typing medicine name
               Padding(
-                padding: const EdgeInsets.all(10),
+                padding: EdgeInsets.only(
+                  top: height * 0.04,
+                  left: width * 0.02,
+                  right: width * 0.02,
+                  bottom: height * 0.03,
+                ),
                 child: TextField(
                   controller: searchController,
                   cursorColor: AppColors.MAIN_COLOR,
@@ -135,7 +140,7 @@ class _SeacrhScreenState extends State<SeacrhScreen> {
                   FocusManager.instance.primaryFocus?.unfocus();
                   if (widget.hintText == 'Generic name') {
                     await queryService
-                        .genericSearch(searchController.text)
+                        .genericSearch(searchController.text.toLowerCase())
                         .then((value) => {
                               if (value == "Success")
                                 {
@@ -143,7 +148,7 @@ class _SeacrhScreenState extends State<SeacrhScreen> {
                                       searchController.text, "Generic name"),
                                   Database.updateMedicineSearchCounter(
                                       searchController.text),
-                                  Navigator.push(
+                                  Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
@@ -158,7 +163,7 @@ class _SeacrhScreenState extends State<SeacrhScreen> {
                             });
                   } else {
                     await queryService
-                        .brandSearch(searchController.text)
+                        .brandSearch(searchController.text.toLowerCase())
                         .then((value) => {
                               if (value == "Success")
                                 {
@@ -166,7 +171,7 @@ class _SeacrhScreenState extends State<SeacrhScreen> {
                                       searchController.text, "Brand name"),
                                   Database.updateMedicineSearchCounter(
                                       searchController.text),
-                                  Navigator.push(
+                                  Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
@@ -206,7 +211,7 @@ class _SeacrhScreenState extends State<SeacrhScreen> {
                     "\nThe desired medicine is unavailable in all of the supported pharmacies!",
               ),
             ),
-            CustomBottomBar(),
+            // CustomBottomBar(),
           ]),
         ));
   }

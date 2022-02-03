@@ -6,7 +6,7 @@ import 'package:medicine/helpers/iconHelper.dart';
 import 'package:medicine/models/historyModel.dart';
 import 'package:medicine/services/database.dart';
 import 'package:medicine/widgets/IconFont.dart';
-import 'package:medicine/widgets/appBar.dart';
+import 'package:medicine/widgets/bottomNavBar.dart';
 import 'package:medicine/widgets/history.dart';
 import 'package:medicine/widgets/messageWidget.dart';
 import 'package:provider/provider.dart';

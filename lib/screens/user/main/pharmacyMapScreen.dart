@@ -5,7 +5,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:medicine/helpers/appColors.dart';
 import 'package:medicine/helpers/deviceDimensions.dart';
 import 'package:medicine/services/queryService.dart';
-import 'package:medicine/widgets/appBar.dart';
+import 'package:medicine/widgets/bottomNavBar.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 //import 'dart:ui' as ui;

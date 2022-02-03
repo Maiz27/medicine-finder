@@ -8,7 +8,7 @@ import 'package:medicine/helpers/deviceDimensions.dart';
 import 'package:medicine/helpers/iconHelper.dart';
 import 'package:medicine/services/queryService.dart';
 import 'package:medicine/widgets/IconFont.dart';
-import 'package:medicine/widgets/appBar.dart';
+import 'package:medicine/widgets/bottomNavBar.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 

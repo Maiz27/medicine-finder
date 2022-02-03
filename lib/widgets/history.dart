@@ -33,24 +33,26 @@ class SearchHistoryWidget extends StatelessWidget {
     return GestureDetector(
       onTap: () async {
         if (this.searchedBy == "Generic name") {
-          await queryService.genericSearch(this.medicine).then((value) => {
-                if (value == "Success")
-                  {
-                    Database.addSearchHistory(medicine, "Generic name"),
-                    Database.updateMedicineSearchCounter(medicine),
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ResultMapPage()))
-                  }
-                else
-                  {Fluttertoast.showToast(msg: "Medicine not available!")}
-              });
+          await queryService
+              .genericSearch(this.medicine.toLowerCase())
+              .then((value) => {
+                    if (value == "Success")
+                      {
+                        Database.addSearchHistory(medicine, "Generic name"),
+                        Database.updateMedicineSearchCounter(medicine),
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ResultMapPage()))
+                      }
+                    else
+                      {Fluttertoast.showToast(msg: "Medicine not available!")}
+                  });
         } else {
           await queryService.brandSearch(this.medicine).then((value) => {
                 if (value == "Success")
                   {
-                    Database.addSearchHistory(medicine, "Generic name"),
+                    Database.addSearchHistory(medicine, "Brand name"),
                     Database.updateMedicineSearchCounter(medicine),
                     Navigator.push(
                         context,

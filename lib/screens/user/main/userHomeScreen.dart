@@ -3,18 +3,17 @@ import 'package:medicine/helpers/appColors.dart';
 import 'package:medicine/helpers/deviceDimensions.dart';
 import 'package:medicine/helpers/iconHelper.dart';
 import 'package:medicine/screens/user/searchScreen.dart';
-import 'package:medicine/services/authService.dart';
 import 'package:medicine/widgets/searchCategories.dart';
-import 'package:medicine/widgets/appBar.dart';
+import 'package:medicine/widgets/bottomNavBar.dart';
 import 'package:provider/provider.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class UserHomeScreen extends StatelessWidget {
+  UserHomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final deviceDimensions = Provider.of<Dimension>(context);
-    final authService = Provider.of<AuthService>(context);
+    // final authService = Provider.of<AuthService>(context);
 
     double height = deviceDimensions.getDeviceHeight();
     double width = deviceDimensions.getDeviceWidth();
@@ -42,28 +41,28 @@ class HomeScreen extends StatelessWidget {
                       IConFontHelper.DR, SeacrhScreen('Generic name')),
                   SearchCategory('Brand Name', 'commonName',
                       IConFontHelper.LAB__BOTTLE, SeacrhScreen('Brand name')),
-                  Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        await authService.signOut();
-                        // Navigator.of(context).pushNamedAndRemoveUntil(
-                        //     '/wrapper', (Route<dynamic> route) => false);
-                        Navigator.pushReplacementNamed(context, '/wrapper');
-                      },
-                      child: Text(
-                        'Log out',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        primary: AppColors.MAIN_COLOR,
-                      ),
-                    ),
-                  ),
+                  // Padding(
+                  //   padding: const EdgeInsets.all(20),
+                  //   child: ElevatedButton(
+                  //     onPressed: () async {
+                  //       await authService.signOut();
+                  //       // Navigator.of(context).pushNamedAndRemoveUntil(
+                  //       //     '/wrapper', (Route<dynamic> route) => false);
+                  //       Navigator.pushReplacementNamed(context, '/wrapper');
+                  //     },
+                  //     child: Text(
+                  //       'Log out',
+                  //       style: TextStyle(
+                  //         color: Colors.white,
+                  //         fontSize: 16,
+                  //         fontWeight: FontWeight.bold,
+                  //       ),
+                  //     ),
+                  //     style: ElevatedButton.styleFrom(
+                  //       primary: AppColors.MAIN_COLOR,
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),

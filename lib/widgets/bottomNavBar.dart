@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:medicine/helpers/appColors.dart';
 import 'package:medicine/helpers/deviceDimensions.dart';
 import 'package:medicine/helpers/iconHelper.dart';
-import 'package:medicine/screens/user/main/homeScreen.dart';
+import 'package:medicine/screens/user/main/userHomeScreen.dart';
 import 'package:medicine/screens/user/main/pharmacyMapScreen.dart';
 import 'package:medicine/screens/user/main/searchHistoryScreen.dart';
 import 'package:medicine/screens/user/main/userScreen.dart';
@@ -51,7 +51,7 @@ class CustomBottomBar extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => HomeScreen(),
+                        builder: (context) => UserHomeScreen(),
                       ));
                 },
               ),

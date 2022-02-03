@@ -2,9 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:medicine/helpers/utility.dart';
 import 'package:medicine/models/pharmacyModel.dart';
-
 import 'package:medicine/models/userModel.dart';
 import 'package:medicine/services/database.dart';
 
@@ -15,8 +13,6 @@ class AuthService {
   late CurrUser _currUser;
 
   late Pharmacy _pharmacy;
-
-  Utility userType = new Utility();
 
   auth.User? _user(auth.User? user) {
     // ignore: unnecessary_null_comparison
@@ -42,7 +38,6 @@ class AuthService {
         credential = await _firebaseAuth.signInWithEmailAndPassword(
             email: email, password: password);
 
-        userType.setUserType(1);
         Database.getUserDoc(credential.user!.uid);
       } catch (e) {
         Fluttertoast.showToast(msg: e.toString());
@@ -71,7 +66,6 @@ class AuthService {
           accType: 'Email',
           imgURL: null,
         );
-        userType.setUserType(1);
         Database.createUser(_currUser);
         Database.setCurrUser(_currUser);
       } catch (e) {
@@ -112,12 +106,10 @@ class AuthService {
         tele: result.user!.phoneNumber,
         imgURL: result.user!.photoURL,
       );
-      userType.setUserType(1);
       Database.createUser(_currUser);
       Database.setCurrUser(_currUser);
     } else {
       // Retrieve user info for old users
-      userType.setUserType(1);
       Database.getUserDoc(result.user!.uid);
     }
   }
@@ -147,7 +139,6 @@ class AuthService {
           tele: phone,
           dateCreated: now,
         );
-        userType.setUserType(2);
         Database.createPharmacyDoc(pharmacy: _pharmacy);
       } catch (e) {
         Fluttertoast.showToast(msg: e.toString());
@@ -157,7 +148,6 @@ class AuthService {
   }
 
   Future<void> signOut() async {
-    userType.setUserType(0);
     return await _firebaseAuth.signOut();
   }
 }
