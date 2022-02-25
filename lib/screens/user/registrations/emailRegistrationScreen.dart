@@ -52,8 +52,8 @@ class _EmailRegistrationState extends State<EmailRegistration> {
                   Center(
                     child: ClipOval(
                       child: Container(
-                        width: width * 0.22,
-                        height: height * 0.22,
+                        width: width * 0.2,
+                        height: height * 0.2,
                         color: AppColors.MAIN_COLOR,
                         alignment: Alignment.center,
 
@@ -61,24 +61,34 @@ class _EmailRegistrationState extends State<EmailRegistration> {
                         child: IconFont(
                           color: Colors.white,
                           iconName: IConFontHelper.LOGO,
-                          size: 0.15,
+                          size: 0.14,
                         ),
                       ),
                     ),
                   ),
                   // SizedBox(height: 40),
-                  Text(
-                    isNewUser ? header2 : header1,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontFamily: 'Roboto',
-                        fontSize: height * 0.02,
-                        fontWeight: FontWeight.bold),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      top: height * 0.03,
+                    ),
+                    child: Text(
+                      isNewUser ? header2 : header1,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'Roboto',
+                          fontSize: height * 0.02,
+                          fontWeight: FontWeight.bold),
+                    ),
                   ),
 
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: EdgeInsets.only(
+                      left: width * 0.035,
+                      right: width * 0.035,
+                      top: height * 0.035,
+                      bottom: height * 0.03,
+                    ),
                     child: Visibility(
                       child: TextField(
                         controller: fullnameController,
@@ -108,7 +118,11 @@ class _EmailRegistrationState extends State<EmailRegistration> {
                   ),
 
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: EdgeInsets.only(
+                      left: width * 0.035,
+                      right: width * 0.035,
+                      bottom: height * 0.03,
+                    ),
                     child: TextField(
                       controller: emailController,
                       cursorColor: AppColors.ACCENT,
@@ -135,7 +149,11 @@ class _EmailRegistrationState extends State<EmailRegistration> {
                   ),
 
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: EdgeInsets.only(
+                      left: width * 0.035,
+                      right: width * 0.035,
+                      bottom: height * 0.03,
+                    ),
                     child: TextField(
                       controller: passwordController,
                       cursorColor: AppColors.ACCENT,
@@ -225,7 +243,7 @@ class _EmailRegistrationState extends State<EmailRegistration> {
                       //add padding to provide space between text
                       //and button borders
                       child: Padding(
-                        padding: EdgeInsets.all(height * 0.03),
+                        padding: EdgeInsets.all(height * 0.025),
                         child: Text(
                           isNewUser ? 'SIGN UP' : 'SIGN IN',
                           style: TextStyle(

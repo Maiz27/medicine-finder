@@ -8,7 +8,7 @@ import 'package:medicine/screens/pharmacist/registrations/pharmacistSignin.dart'
 import 'package:medicine/screens/pharmacist/pharmacistWelcomeScreen.dart';
 import 'package:medicine/screens/splachScreen.dart';
 import 'package:medicine/screens/user/main/pharmacyMapScreen.dart';
-import 'package:medicine/screens/user/main/userWelcomeScreen.dart';
+import 'package:medicine/screens/user/userWelcomeScreen.dart';
 import 'package:medicine/screens/user/registrations/emailRegistrationScreen.dart';
 import 'package:medicine/screens/user/registrations/phoneRegistrationScreen.dart';
 import 'package:medicine/services/authService.dart';

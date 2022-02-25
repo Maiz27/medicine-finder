@@ -26,7 +26,13 @@ class SearchCategory extends StatelessWidget {
       },
       child: Container(
         margin: EdgeInsets.all(20),
-        height: height * 0.25,
+        height: height * 0.23,
+        padding: EdgeInsets.only(
+          left: width * 0.02,
+          right: width * 0.02,
+          // top: height * 0.035,
+          // bottom: height * 0.03,
+        ),
         child: Stack(
           children: [
             Positioned.fill(
@@ -42,7 +48,7 @@ class SearchCategory extends StatelessWidget {
               left: 0,
               right: 0,
               child: Container(
-                height: height * 0.16,
+                height: height * 0.2,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(height * 0.03),

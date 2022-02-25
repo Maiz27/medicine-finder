@@ -210,16 +210,24 @@ class UserScreen extends StatelessWidget {
                         //     '/wrapper', (Route<dynamic> route) => false);
                         Navigator.pushReplacementNamed(context, '/wrapper');
                       },
-                      child: Text(
-                        'Log out',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
                       style: ElevatedButton.styleFrom(
                         primary: AppColors.MAIN_COLOR,
+                        onPrimary: AppColors.ACCENT,
+                        shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(width * 0.5)),
+                        ),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.all(height * 0.014),
+                        child: Text(
+                          'Log out',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: width * 0.02,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
                     ),
                   ),

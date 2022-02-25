@@ -33,7 +33,7 @@ class UserHomeScreen extends StatelessWidget {
                     textAlign: TextAlign.center,
                     softWrap: true,
                     style: TextStyle(
-                      fontSize: height * 0.023,
+                      fontSize: height * 0.02,
                       color: AppColors.MAIN_COLOR,
                     ),
                   ),

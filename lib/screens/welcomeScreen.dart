@@ -64,8 +64,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 Center(
                   child: ClipOval(
                     child: Container(
-                      width: width * 0.22,
-                      height: height * 0.22,
+                      width: width * 0.2,
+                      height: height * 0.2,
                       color: AppColors.MAIN_COLOR,
                       alignment: Alignment.center,
 
@@ -73,7 +73,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       child: IconFont(
                         color: Colors.white,
                         iconName: IConFontHelper.LOGO,
-                        size: 0.15,
+                        size: 0.14,
                       ),
                     ),
                   ),
@@ -82,8 +82,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
                 Padding(
                   padding: EdgeInsets.only(
-                    top: height * 0.04,
-                    bottom: height * 0.04,
+                    top: height * 0.03,
+                    bottom: height * 0.03,
                   ),
                   child: Text(
                     'Medicine Finder',
@@ -91,7 +91,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     style: TextStyle(
                         color: AppColors.ACCENT,
                         fontFamily: 'Roboto',
-                        fontSize: height * 0.055,
+                        fontSize: height * 0.05,
                         fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -99,15 +99,15 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
                 Padding(
                   padding: EdgeInsets.only(
-                    top: height * 0.05,
-                    bottom: height * 0.05,
+                    top: height * 0.04,
+                    bottom: height * 0.04,
                   ),
                   child: Text(
                     'Finding your desired medication,\nhas never been easier!\nOne click away!',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: AppColors.ACCENT,
-                      fontSize: height * 0.022,
+                      fontSize: height * 0.02,
                       fontFamily: 'Roboto',
                     ),
                   ),
@@ -127,7 +127,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     ),
                   ),
                   child: Padding(
-                    padding: EdgeInsets.all(width * 0.03),
+                    padding: EdgeInsets.all(width * 0.025),
                     child: Text(
                       'User',
                       style: TextStyle(
@@ -155,7 +155,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       ),
                     ),
                     child: Padding(
-                      padding: EdgeInsets.all(width * 0.03),
+                      padding: EdgeInsets.all(width * 0.025),
                       child: Text(
                         'Pharmacist',
                         style: TextStyle(

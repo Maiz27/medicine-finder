@@ -71,8 +71,8 @@ class _PhoneRegistrationScreenState extends State<PhoneRegistrationScreen> {
                 Center(
                   child: ClipOval(
                     child: Container(
-                      width: width * 0.22,
-                      height: height * 0.22,
+                      width: width * 0.2,
+                      height: height * 0.2,
                       color: AppColors.MAIN_COLOR,
                       alignment: Alignment.center,
 
@@ -80,28 +80,35 @@ class _PhoneRegistrationScreenState extends State<PhoneRegistrationScreen> {
                       child: IconFont(
                         color: Colors.white,
                         iconName: IConFontHelper.LOGO,
-                        size: 0.15,
+                        size: 0.14,
                       ),
                     ),
                   ),
                 ),
                 // use SizedBox to fake spacing and give roon for the desgin elements
-                SizedBox(
-                  height: 40,
+
+                Padding(
+                  padding: EdgeInsets.only(
+                    top: height * 0.03,
+                  ),
+                  child: Text(
+                    'Sign In To Your Account!',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: AppColors.ACCENT,
+                        fontFamily: 'Roboto',
+                        fontSize: height * 0.02,
+                        fontWeight: FontWeight.bold),
+                  ),
                 ),
-                Text(
-                  'Sign In To Your Account!',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      color: AppColors.ACCENT,
-                      fontFamily: 'Roboto',
-                      fontSize: height * 0.02,
-                      fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: 30),
+
                 Visibility(
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: EdgeInsets.only(
+                      left: width * 0.035,
+                      right: width * 0.035,
+                      top: height * 0.035,
+                    ),
                     child: TextField(
                       controller: fullnameController,
                       cursorColor: AppColors.ACCENT,
@@ -128,9 +135,23 @@ class _PhoneRegistrationScreenState extends State<PhoneRegistrationScreen> {
                   ),
                   visible: isNewUser,
                 ),
-
+                isNewUser
+                    ? Padding(
+                        padding: EdgeInsets.only(
+                          bottom: height * 0.03,
+                        ),
+                      )
+                    : Padding(
+                        padding: EdgeInsets.only(
+                          top: height * 0.035,
+                          bottom: height * 0.03,
+                        ),
+                      ),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: EdgeInsets.only(
+                    left: width * 0.035,
+                    right: width * 0.035,
+                  ),
                   child: TextField(
                     controller: phoneNumController,
                     cursorColor: AppColors.ACCENT,
@@ -155,30 +176,36 @@ class _PhoneRegistrationScreenState extends State<PhoneRegistrationScreen> {
                     ),
                   ),
                 ),
+
                 Visibility(
-                  child: TextField(
-                    controller: otpController,
-                    cursorColor: AppColors.ACCENT,
-                    decoration: InputDecoration(
-                      labelText: 'OTP Code',
-                      prefixIcon: Icon(
-                        Icons.sms,
-                        color: AppColors.ACCENT,
-                      ),
-                      labelStyle: TextStyle(
-                        fontSize: height * 0.02,
-                        color: AppColors.ACCENT,
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(50),
-                      ),
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      left: width * 0.035,
+                      right: width * 0.035,
+                      top: height * 0.035,
+                      bottom: height * 0.03,
                     ),
-                    keyboardType: TextInputType.number,
+                    child: TextField(
+                      controller: otpController,
+                      cursorColor: AppColors.ACCENT,
+                      decoration: InputDecoration(
+                        labelText: 'OTP Code',
+                        prefixIcon: Icon(
+                          Icons.sms,
+                          color: AppColors.ACCENT,
+                        ),
+                        labelStyle: TextStyle(
+                          fontSize: height * 0.02,
+                          color: AppColors.ACCENT,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                      ),
+                      keyboardType: TextInputType.number,
+                    ),
                   ),
                   visible: otpVisibility,
-                ),
-                SizedBox(
-                  height: 30,
                 ),
 
                 Row(
@@ -232,7 +259,7 @@ class _PhoneRegistrationScreenState extends State<PhoneRegistrationScreen> {
                     //add padding to provide space between text
                     //and button borders
                     child: Padding(
-                      padding: EdgeInsets.all(height * 0.03),
+                      padding: EdgeInsets.all(height * 0.025),
                       child: Text(
                         otpVisibility ? "Verify" : "Login / Signup",
                         style: TextStyle(

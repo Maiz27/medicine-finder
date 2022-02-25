@@ -50,8 +50,8 @@ class UserWelcomeScreen extends StatelessWidget {
                 Center(
                   child: ClipOval(
                     child: Container(
-                      width: width * 0.22,
-                      height: height * 0.22,
+                      width: width * 0.2,
+                      height: height * 0.2,
                       color: AppColors.MAIN_COLOR,
                       alignment: Alignment.center,
 
@@ -59,7 +59,7 @@ class UserWelcomeScreen extends StatelessWidget {
                       child: IconFont(
                         color: Colors.white,
                         iconName: IConFontHelper.LOGO,
-                        size: 0.15,
+                        size: 0.14,
                       ),
                     ),
                   ),
@@ -68,7 +68,7 @@ class UserWelcomeScreen extends StatelessWidget {
 
                 Padding(
                   padding: EdgeInsets.only(
-                    top: height * 0.05,
+                    top: height * 0.04,
                   ),
                   child: Text(
                     'Medicine Finder',
@@ -84,7 +84,7 @@ class UserWelcomeScreen extends StatelessWidget {
 
                 Padding(
                   padding: EdgeInsets.only(
-                    top: height * 0.05,
+                    top: height * 0.04,
                   ),
                   child: Text(
                     'Sign in to your Account as a User\nto find your desired medicine',

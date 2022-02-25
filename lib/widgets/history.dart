@@ -67,8 +67,8 @@ class SearchHistoryWidget extends StatelessWidget {
       child: Container(
         margin: EdgeInsets.only(
           top: height * 0.02,
-          left: width * 0.015,
-          right: height * 0.015,
+          left: width * 0.02,
+          right: height * 0.02,
         ),
         width: width * 0.45,
         height: height * 0.1,
