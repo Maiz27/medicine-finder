@@ -10,6 +10,8 @@ class CurrUser {
   Timestamp dateCreated;
   String accType;
   String? imgURL;
+  bool isPharmacist;
+  String pharmacyId;
 
   CurrUser({
     required this.uid,
@@ -19,17 +21,22 @@ class CurrUser {
     required this.dateCreated,
     required this.accType,
     required this.imgURL,
+    this.isPharmacist = false,
+    this.pharmacyId = "",
   });
 
   factory CurrUser.fromJson(Map<dynamic, dynamic> doc) {
     return CurrUser(
-        uid: doc['uid'],
-        fullName: doc['fullName'],
-        dateCreated: doc['createdOn'],
-        accType: doc['accType'],
-        email: doc['email'],
-        tele: doc['telephone'],
-        imgURL: doc['imgURL']);
+      uid: doc['uid'],
+      fullName: doc['fullName'],
+      dateCreated: doc['createdOn'],
+      accType: doc['accType'],
+      email: doc['email'],
+      tele: doc['telephone'],
+      imgURL: doc['imgURL'],
+      isPharmacist: doc['isPharmacist'],
+      pharmacyId: doc['pharmacyId'],
+    );
   }
 
   bool isGoogleAcc() {
@@ -44,5 +51,9 @@ class CurrUser {
       return true;
     }
     return false;
+  }
+
+  bool isPharmacistAcc() {
+    return this.isPharmacist;
   }
 }

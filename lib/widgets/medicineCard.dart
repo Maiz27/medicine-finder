@@ -1,69 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:intl/intl.dart';
-import 'package:medicine/helpers/appColors.dart';
-import 'package:medicine/helpers/deviceDimensions.dart';
-import 'package:medicine/helpers/iconHelper.dart';
-import 'package:medicine/screens/user/resultScreen.dart';
-import 'package:medicine/services/database.dart';
-import 'package:medicine/services/queryService.dart';
-import 'package:medicine/widgets/IconFont.dart';
 import 'package:provider/provider.dart';
+import '../helpers/appInfo.dart';
+import '../helpers/deviceDimensions.dart';
+import '../helpers/iconHelper.dart';
+import '../models/medicineModel.dart';
+import 'IconFont.dart';
 
-class SearchHistoryWidget extends StatelessWidget {
-  const SearchHistoryWidget({
+class MedicineCard extends StatelessWidget {
+  const MedicineCard({
     Key? key,
     required this.medicine,
-    required this.searchedBy,
-    required this.someDate,
   }) : super(key: key);
-
-  final String medicine;
-  final String searchedBy;
-  final DateTime someDate;
+  final Medicine medicine;
 
   @override
   Widget build(BuildContext context) {
     final deviceDimensions = Provider.of<Dimension>(context);
-    final queryService = Provider.of<QueryService>(context, listen: false);
-    if (someDate.isUtc) print("UTC UTC UTC UTC");
 
     double height = deviceDimensions.getDeviceHeight();
     double width = deviceDimensions.getDeviceWidth();
+
     return GestureDetector(
-      onTap: () async {
-        if (this.searchedBy == "Generic name") {
-          await queryService
-              .genericSearch(this.medicine.toLowerCase())
-              .then((value) => {
-                    if (value == "Success")
-                      {
-                        Database.addSearchHistory(medicine, "Generic name"),
-                        Database.updateMedicineSearchCounter(medicine),
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ResultMapPage()))
-                      }
-                    else
-                      {Fluttertoast.showToast(msg: "Medicine not available!")}
-                  });
-        } else {
-          await queryService.brandSearch(this.medicine).then((value) => {
-                if (value == "Success")
-                  {
-                    Database.addSearchHistory(medicine, "Brand name"),
-                    Database.updateMedicineSearchCounter(medicine),
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ResultMapPage()))
-                  }
-                else
-                  {Fluttertoast.showToast(msg: "Medicine not available!")}
-              });
-        }
-      },
+      onTap: () async {},
       child: Container(
         margin: EdgeInsets.only(
           top: height * 0.02,
@@ -73,7 +31,7 @@ class SearchHistoryWidget extends StatelessWidget {
         width: width * 0.45,
         height: height * 0.1,
         decoration: BoxDecoration(
-            color: AppColors.MAIN_COLOR,
+            color: AppInfo.MAIN_COLOR,
             borderRadius: BorderRadius.all(
               Radius.circular(height * 0.03),
             ),
@@ -93,12 +51,12 @@ class SearchHistoryWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               IconFont(
-                color: AppColors.ACCENT,
+                color: AppInfo.ACCENT,
                 size: 0.04,
-                iconName: IConFontHelper.SEARCH,
+                iconName: IConFontHelper.CAN,
               ),
               VerticalDivider(
-                color: AppColors.ACCENT,
+                color: AppInfo.ACCENT,
                 thickness: 2,
                 indent: height * 0.01,
                 endIndent: height * 0.01,
@@ -106,27 +64,27 @@ class SearchHistoryWidget extends StatelessWidget {
               Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Text(medicine,
+                    Text(medicine.name,
                         softWrap: true,
                         style: TextStyle(
                           fontSize: width * 0.02,
                           fontWeight: FontWeight.bold,
                           letterSpacing: width * 0.0005,
-                          color: AppColors.ACCENT,
+                          color: AppInfo.ACCENT,
                         )),
                     Text(
-                      searchedBy,
+                      "Price: " + medicine.price.toString(),
                       softWrap: true,
                       style: TextStyle(
                         fontSize: width * 0.02,
                         fontWeight: FontWeight.bold,
                         letterSpacing: width * 0.0005,
-                        color: AppColors.ACCENT,
+                        color: AppInfo.ACCENT,
                       ),
                     ),
                   ]),
               VerticalDivider(
-                color: AppColors.ACCENT,
+                color: AppInfo.ACCENT,
                 thickness: 2,
                 indent: height * 0.01,
                 endIndent: height * 0.01,
@@ -135,23 +93,23 @@ class SearchHistoryWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Text(
-                    DateFormat.jm().format(someDate),
+                    "In-Stock",
                     softWrap: true,
                     style: TextStyle(
                       fontSize: width * 0.02,
                       fontWeight: FontWeight.bold,
                       letterSpacing: width * 0.0005,
-                      color: AppColors.ACCENT,
+                      color: AppInfo.ACCENT,
                     ),
                   ),
                   Text(
-                    DateFormat.yMd().format(someDate),
+                    medicine.inStock.toString(),
                     softWrap: true,
                     style: TextStyle(
                       fontSize: width * 0.02,
                       fontWeight: FontWeight.bold,
                       letterSpacing: width * 0.0005,
-                      color: AppColors.ACCENT,
+                      color: AppInfo.ACCENT,
                     ),
                   ),
                 ],

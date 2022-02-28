@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:medicine/helpers/appColors.dart';
+import 'package:medicine/helpers/appInfo.dart';
 import 'package:medicine/helpers/deviceDimensions.dart';
 import 'package:medicine/helpers/iconHelper.dart';
 import 'package:medicine/services/authService.dart';
@@ -52,7 +52,7 @@ class UserWelcomeScreen extends StatelessWidget {
                     child: Container(
                       width: width * 0.2,
                       height: height * 0.2,
-                      color: AppColors.MAIN_COLOR,
+                      color: AppInfo.MAIN_COLOR,
                       alignment: Alignment.center,
 
                       // use self created 'IconFont class' to get icon from specified font
@@ -74,7 +74,7 @@ class UserWelcomeScreen extends StatelessWidget {
                     'Medicine Finder',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                        color: AppColors.ACCENT,
+                        color: AppInfo.ACCENT,
                         fontFamily: 'Roboto',
                         fontSize: height * 0.05,
                         fontWeight: FontWeight.bold),
@@ -87,11 +87,11 @@ class UserWelcomeScreen extends StatelessWidget {
                     top: height * 0.04,
                   ),
                   child: Text(
-                    'Sign in to your Account as a User\nto find your desired medicine',
+                    'Finding your desired medication,\nhas never been easier!\nOne click away!',
                     textAlign: TextAlign.center,
                     softWrap: true,
                     style: TextStyle(
-                      color: AppColors.ACCENT,
+                      color: AppInfo.ACCENT,
                       fontSize: height * 0.02,
                       fontFamily: 'Roboto',
                     ),
@@ -117,7 +117,7 @@ class UserWelcomeScreen extends StatelessWidget {
                             },
                             iconSize: 50,
                             icon: IconFont(
-                              color: AppColors.MAIN_COLOR,
+                              color: AppInfo.MAIN_COLOR,
                               iconName: IConFontHelper.GOOGLE,
                               size: 0.04,
                             ),
@@ -125,7 +125,7 @@ class UserWelcomeScreen extends StatelessWidget {
                           Text(
                             'Sign in with Google',
                             style: TextStyle(
-                              color: AppColors.ACCENT,
+                              color: AppInfo.ACCENT,
                             ),
                           ),
                         ],
@@ -139,14 +139,14 @@ class UserWelcomeScreen extends StatelessWidget {
                             },
                             iconSize: 50,
                             icon: IconFont(
-                                color: AppColors.MAIN_COLOR,
+                                color: AppInfo.MAIN_COLOR,
                                 size: 0.05,
                                 iconName: IConFontHelper.EMAIL),
                           ),
                           Text(
                             'Sign in with Email',
                             style: TextStyle(
-                              color: AppColors.ACCENT,
+                              color: AppInfo.ACCENT,
                             ),
                           ),
                         ],
@@ -168,9 +168,9 @@ class UserWelcomeScreen extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                       primary: Colors.transparent,
                       shadowColor: Colors.transparent,
-                      onPrimary: AppColors.MAIN_COLOR,
+                      onPrimary: AppInfo.MAIN_COLOR,
                       shape: RoundedRectangleBorder(
-                        side: BorderSide(width: 5, color: AppColors.MAIN_COLOR),
+                        side: BorderSide(width: 5, color: AppInfo.MAIN_COLOR),
                         borderRadius:
                             BorderRadius.all(Radius.circular(width * 0.5)),
                       ),
@@ -182,7 +182,7 @@ class UserWelcomeScreen extends StatelessWidget {
                       child: Text(
                         'Sign in with mobile number',
                         style: TextStyle(
-                          color: AppColors.ACCENT,
+                          color: AppInfo.ACCENT,
                           fontFamily: 'Roboto',
                           fontSize: height * 0.02,
                           fontWeight: FontWeight.bold,

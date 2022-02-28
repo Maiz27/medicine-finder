@@ -5,7 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class Pharmacy {
   String id;
   String name;
-  String email;
+  String pharmcistId;
   String tele;
   double lat;
   double lng;
@@ -14,7 +14,7 @@ class Pharmacy {
   Pharmacy(
       {required this.id,
       required this.name,
-      required this.email,
+      required this.pharmcistId,
       required this.tele,
       required this.lat,
       required this.lng,
@@ -25,7 +25,7 @@ class Pharmacy {
       id: json['id'],
       name: json['Pharmacy name'],
       tele: json['telephone'],
-      email: json['email'],
+      pharmcistId: json['pharmacistId'],
       lat: json['Lat'],
       lng: json['Lng'],
       dateCreated: json['dateCreated'],

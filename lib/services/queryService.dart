@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:medicine/models/pharmacyModel.dart';
-import 'package:medicine/models/searchResultModel.dart';
+import 'package:medicine/models/medicineModel.dart';
 
 class QueryService {
   final rootRef = FirebaseFirestore.instance;
@@ -99,7 +99,7 @@ class QueryService {
     }
     _pharmacies.forEach((element) {
       _results.forEach((e) {
-        if (e.Pname == element.name) {
+        if (e.pharmacyId == element.name) {
 //To avoid taking the complete list of brand names for all the pharmacies in
 //every instance, first find the index of the currently iterated element from
 //result then use it as an index to access each pharmacy's brand names separately
@@ -109,7 +109,7 @@ class QueryService {
             element.tele,
             element.lat,
             element.lng,
-            e.Mname.toString(),
+            e.name.toString(),
             e.price.toString(),
             e.brandNames[x],
           ));

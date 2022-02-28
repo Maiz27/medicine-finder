@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:marquee/marquee.dart';
-import 'package:medicine/helpers/appColors.dart';
+import 'package:medicine/helpers/appInfo.dart';
 import 'package:medicine/helpers/deviceDimensions.dart';
 import 'package:medicine/helpers/iconHelper.dart';
 import 'package:medicine/services/queryService.dart';
@@ -144,7 +144,7 @@ class _ResultMapPageState extends State<ResultMapPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   IconFont(
-                    color: AppColors.MAIN_COLOR,
+                    color: AppInfo.MAIN_COLOR,
                     size: 0.05,
                     iconName: IConFontHelper.PHARM_lOC,
                   ),
@@ -159,7 +159,7 @@ class _ResultMapPageState extends State<ResultMapPage> {
                     icon: Icon(
                       Icons.call,
                       size: 35,
-                      color: AppColors.MAIN_COLOR,
+                      color: AppInfo.MAIN_COLOR,
                     ),
                   ),
                 ],
@@ -184,7 +184,7 @@ class _ResultMapPageState extends State<ResultMapPage> {
                   icon: Icon(
                     Icons.directions,
                     size: 35,
-                    color: AppColors.MAIN_COLOR,
+                    color: AppInfo.MAIN_COLOR,
                   ),
                 ),
               ]),
@@ -196,7 +196,7 @@ class _ResultMapPageState extends State<ResultMapPage> {
                   Text(
                     "Brand names: ",
                     style: TextStyle(
-                        fontSize: height * 0.02, color: AppColors.MAIN_COLOR),
+                        fontSize: height * 0.02, color: AppInfo.MAIN_COLOR),
                   ),
                   Container(
                     margin: EdgeInsets.only(
@@ -275,7 +275,7 @@ class _ResultMapPageState extends State<ResultMapPage> {
   //       _polylines.add(Polyline(
   //         width: 10,
   //         polylineId: PolylineId("polyline"),
-  //         color: AppColors.MAIN_COLOR,
+  //         color: AppInfo.MAIN_COLOR,
   //         points: polylineCoordinates,
   //       ));
   //     });

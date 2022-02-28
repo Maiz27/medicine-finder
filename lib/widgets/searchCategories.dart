@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:medicine/helpers/appColors.dart';
+import 'package:medicine/helpers/appInfo.dart';
 import 'package:medicine/helpers/deviceDimensions.dart';
 import 'package:medicine/widgets/IconFont.dart';
 import 'package:provider/provider.dart';
@@ -78,7 +78,7 @@ class SearchCategory extends StatelessWidget {
                         alignment: Alignment.center,
                         child: IconFont(
                           size: 0.04,
-                          color: AppColors.MAIN_COLOR,
+                          color: AppInfo.MAIN_COLOR,
                           iconName: icon,
                         ),
                       ),

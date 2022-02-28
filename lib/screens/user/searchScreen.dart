@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:medicine/helpers/appColors.dart';
+import 'package:medicine/helpers/appInfo.dart';
 import 'package:medicine/helpers/deviceDimensions.dart';
 import 'package:medicine/helpers/iconHelper.dart';
 import 'package:medicine/screens/user/resultScreen.dart';
@@ -63,7 +62,7 @@ class _SeacrhScreenState extends State<SeacrhScreen> {
                           child: Container(
                             width: width * 0.2,
                             height: height * 0.2,
-                            color: AppColors.MAIN_COLOR,
+                            color: AppInfo.MAIN_COLOR,
                             alignment: Alignment.center,
                             child: IconFont(
                               color: Colors.white,
@@ -100,7 +99,7 @@ class _SeacrhScreenState extends State<SeacrhScreen> {
                         ),
                         child: TextField(
                           controller: searchController,
-                          cursorColor: AppColors.MAIN_COLOR,
+                          cursorColor: AppInfo.MAIN_COLOR,
                           style: TextStyle(
                             color: Colors.black,
                             letterSpacing: 3,
@@ -113,7 +112,7 @@ class _SeacrhScreenState extends State<SeacrhScreen> {
                               padding: const EdgeInsets.all(10),
                               //using self created IconFont class to use pre made icons
                               child: IconFont(
-                                color: AppColors.ACCENT,
+                                color: AppInfo.ACCENT,
                                 size: 0.05,
                                 iconName: IConFontHelper.CAN,
                               ),
@@ -142,10 +141,13 @@ class _SeacrhScreenState extends State<SeacrhScreen> {
                                       if (value == "Success")
                                         {
                                           Database.addSearchHistory(
-                                              searchController.text,
+                                              searchController.text
+                                                  .toLowerCase(),
                                               "Generic name"),
-                                          Database.updateMedicineSearchCounter(
-                                              searchController.text),
+                                          Database
+                                              .updatePopularMedicineCollection(
+                                                  searchController.text
+                                                      .toLowerCase()),
                                           Navigator.pushReplacement(
                                               context,
                                               MaterialPageRoute(
@@ -167,10 +169,13 @@ class _SeacrhScreenState extends State<SeacrhScreen> {
                                       if (value == "Success")
                                         {
                                           Database.addSearchHistory(
-                                              searchController.text,
+                                              searchController.text
+                                                  .toLowerCase(),
                                               "Brand name"),
-                                          Database.updateMedicineSearchCounter(
-                                              searchController.text),
+                                          Database
+                                              .updatePopularMedicineCollection(
+                                            searchController.text.toLowerCase(),
+                                          ),
                                           Navigator.pushReplacement(
                                               context,
                                               MaterialPageRoute(
@@ -198,8 +203,8 @@ class _SeacrhScreenState extends State<SeacrhScreen> {
                           ),
                         ),
                         style: ElevatedButton.styleFrom(
-                          primary: AppColors.MAIN_COLOR,
-                          onPrimary: AppColors.ACCENT,
+                          primary: AppInfo.MAIN_COLOR,
+                          onPrimary: AppInfo.ACCENT,
                           shape: RoundedRectangleBorder(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(width * 0.5)),

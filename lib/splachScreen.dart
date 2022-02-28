@@ -1,27 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:medicine/helpers/appColors.dart';
+import 'package:medicine/helpers/appInfo.dart';
 import 'package:medicine/helpers/deviceDimensions.dart';
 import 'package:medicine/helpers/iconHelper.dart';
 import 'package:medicine/services/queryService.dart';
 import 'package:medicine/widgets/IconFont.dart';
 import 'package:provider/provider.dart';
 
+import 'services/database.dart';
+
 // ignore: must_be_immutable
-class SplachPage extends StatelessWidget {
+class SplachScreen extends StatelessWidget {
   int duration = 0;
   Widget goTopage;
 
-  SplachPage({required this.duration, required this.goTopage});
+  SplachScreen({required this.duration, required this.goTopage});
 
   @override
   Widget build(BuildContext context) {
     final qs = Provider.of<QueryService>(context, listen: false);
 
-    Future.delayed(Duration(seconds: this.duration), () {
-      //Fetch pharmacy data from the cloud before starting the app
-      qs.getPharmaciesFromFirestore().then((value) => Navigator.push(
-          context, MaterialPageRoute(builder: (context) => this.goTopage)));
-    });
+    if (Database.isPharmacist == false) {
+      Future.delayed(Duration(seconds: this.duration), () {
+        //Fetch pharmacy data from the cloud before starting the app
+        qs.getPharmaciesFromFirestore().then((value) => Navigator.push(
+            context, MaterialPageRoute(builder: (context) => this.goTopage)));
+      });
+    } else {
+      Future.delayed(Duration(seconds: this.duration), () {
+        //Fetch pharmacy data from the cloud before starting the app
+        // Navigator.pop(context);
+        Database.getMedicineFromFirestore().then((value) =>
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => this.goTopage)));
+      });
+    }
 
     final deviceDimensions = Provider.of<Dimension>(context);
 
@@ -30,7 +42,7 @@ class SplachPage extends StatelessWidget {
 
     return Scaffold(
       body: Container(
-        color: AppColors.MAIN_COLOR,
+        color: AppInfo.MAIN_COLOR,
         alignment: Alignment.center,
         child: Stack(children: [
           Align(

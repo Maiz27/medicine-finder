@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:medicine/helpers/appColors.dart';
+import 'package:medicine/helpers/appInfo.dart';
 import 'package:medicine/helpers/deviceDimensions.dart';
 import 'package:medicine/helpers/iconHelper.dart';
 import 'package:medicine/models/userModel.dart';
@@ -73,7 +73,7 @@ class _PhoneRegistrationScreenState extends State<PhoneRegistrationScreen> {
                     child: Container(
                       width: width * 0.2,
                       height: height * 0.2,
-                      color: AppColors.MAIN_COLOR,
+                      color: AppInfo.MAIN_COLOR,
                       alignment: Alignment.center,
 
                       // use self created 'IconFont class' to get icon from specified font
@@ -95,7 +95,7 @@ class _PhoneRegistrationScreenState extends State<PhoneRegistrationScreen> {
                     'Sign In To Your Account!',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                        color: AppColors.ACCENT,
+                        color: AppInfo.ACCENT,
                         fontFamily: 'Roboto',
                         fontSize: height * 0.02,
                         fontWeight: FontWeight.bold),
@@ -111,7 +111,7 @@ class _PhoneRegistrationScreenState extends State<PhoneRegistrationScreen> {
                     ),
                     child: TextField(
                       controller: fullnameController,
-                      cursorColor: AppColors.ACCENT,
+                      cursorColor: AppInfo.ACCENT,
                       style: TextStyle(
                         color: Colors.white,
                         letterSpacing: 1.5,
@@ -121,11 +121,11 @@ class _PhoneRegistrationScreenState extends State<PhoneRegistrationScreen> {
                         labelText: 'Full name',
                         prefixIcon: Icon(
                           Icons.person,
-                          color: AppColors.ACCENT,
+                          color: AppInfo.ACCENT,
                         ),
                         labelStyle: TextStyle(
                           fontSize: height * 0.02,
-                          color: AppColors.ACCENT,
+                          color: AppInfo.ACCENT,
                         ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(50),
@@ -154,21 +154,21 @@ class _PhoneRegistrationScreenState extends State<PhoneRegistrationScreen> {
                   ),
                   child: TextField(
                     controller: phoneNumController,
-                    cursorColor: AppColors.ACCENT,
+                    cursorColor: AppInfo.ACCENT,
                     keyboardType: TextInputType.phone,
                     style: TextStyle(
-                      color: AppColors.ACCENT,
+                      color: AppInfo.ACCENT,
                       letterSpacing: 1.5,
                     ),
                     decoration: InputDecoration(
                       labelText: 'Phone number',
                       prefixIcon: Icon(
                         Icons.phone_android,
-                        color: AppColors.ACCENT,
+                        color: AppInfo.ACCENT,
                       ),
                       labelStyle: TextStyle(
                         fontSize: height * 0.02,
-                        color: AppColors.ACCENT,
+                        color: AppInfo.ACCENT,
                       ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(50),
@@ -187,16 +187,16 @@ class _PhoneRegistrationScreenState extends State<PhoneRegistrationScreen> {
                     ),
                     child: TextField(
                       controller: otpController,
-                      cursorColor: AppColors.ACCENT,
+                      cursorColor: AppInfo.ACCENT,
                       decoration: InputDecoration(
                         labelText: 'OTP Code',
                         prefixIcon: Icon(
                           Icons.sms,
-                          color: AppColors.ACCENT,
+                          color: AppInfo.ACCENT,
                         ),
                         labelStyle: TextStyle(
                           fontSize: height * 0.02,
-                          color: AppColors.ACCENT,
+                          color: AppInfo.ACCENT,
                         ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(50),
@@ -217,12 +217,12 @@ class _PhoneRegistrationScreenState extends State<PhoneRegistrationScreen> {
                         fontSize: width * 0.02,
                         fontWeight: FontWeight.bold,
                         letterSpacing: width * 0.0005,
-                        color: AppColors.ACCENT,
+                        color: AppInfo.ACCENT,
                       ),
                     ),
                     Switch(
-                        activeColor: AppColors.ACCENT,
-                        activeTrackColor: AppColors.MAIN_COLOR,
+                        activeColor: AppInfo.ACCENT,
+                        activeTrackColor: AppInfo.MAIN_COLOR,
                         value: isNewUser,
                         onChanged: (newValue) {
                           setState(() {
@@ -249,8 +249,8 @@ class _PhoneRegistrationScreenState extends State<PhoneRegistrationScreen> {
                       }
                     },
                     style: ElevatedButton.styleFrom(
-                      primary: AppColors.MAIN_COLOR,
-                      onPrimary: AppColors.ACCENT,
+                      primary: AppInfo.MAIN_COLOR,
+                      onPrimary: AppInfo.ACCENT,
                       shape: RoundedRectangleBorder(
                         borderRadius:
                             BorderRadius.all(Radius.circular(width * 0.5)),
@@ -263,7 +263,7 @@ class _PhoneRegistrationScreenState extends State<PhoneRegistrationScreen> {
                       child: Text(
                         otpVisibility ? "Verify" : "Login / Signup",
                         style: TextStyle(
-                          color: AppColors.ACCENT,
+                          color: AppInfo.ACCENT,
                           fontFamily: 'Roboto',
                           fontSize: height * 0.02,
                           fontWeight: FontWeight.bold,

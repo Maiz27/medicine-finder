@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:medicine/helpers/appColors.dart';
+import 'package:medicine/helpers/appInfo.dart';
 import 'package:medicine/helpers/deviceDimensions.dart';
 import 'package:medicine/services/queryService.dart';
 import 'package:medicine/widgets/bottomNavBar.dart';
@@ -149,7 +149,7 @@ class _PharmacyMapScreenState extends State<PharmacyMapScreen> {
                         icon: Icon(
                           Icons.directions,
                           size: height * 0.05,
-                          color: AppColors.MAIN_COLOR,
+                          color: AppInfo.MAIN_COLOR,
                         ),
                         tooltip: "Directions",
                       ),
@@ -158,7 +158,7 @@ class _PharmacyMapScreenState extends State<PharmacyMapScreen> {
                         icon: Icon(
                           Icons.call,
                           size: height * 0.05,
-                          color: AppColors.MAIN_COLOR,
+                          color: AppInfo.MAIN_COLOR,
                         ),
                         tooltip: "Call",
                       ),

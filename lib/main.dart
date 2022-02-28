@@ -3,10 +3,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:medicine/helpers/deviceDimensions.dart';
-import 'package:medicine/screens/pharmacist/pharmacistSignup.dart';
-import 'package:medicine/screens/pharmacist/registrations/pharmacistSignin.dart';
-import 'package:medicine/screens/pharmacist/pharmacistWelcomeScreen.dart';
-import 'package:medicine/screens/splachScreen.dart';
 import 'package:medicine/screens/user/main/pharmacyMapScreen.dart';
 import 'package:medicine/screens/user/userWelcomeScreen.dart';
 import 'package:medicine/screens/user/registrations/emailRegistrationScreen.dart';
@@ -15,6 +11,7 @@ import 'package:medicine/services/authService.dart';
 import 'package:medicine/helpers/wrapper.dart';
 import 'package:medicine/services/database.dart';
 import 'package:medicine/services/queryService.dart';
+import 'package:medicine/splachScreen.dart';
 import 'package:provider/provider.dart';
 
 Future<void> main() async {
@@ -59,11 +56,8 @@ Future<void> main() async {
               //'/': (context) => Wrapper(),
               '/wrapper': (context) => Wrapper(),
               '/Userwelcome': (context) => UserWelcomeScreen(),
-              '/PharmacistWelcome': (context) => PharmacistWelcomeScreen(),
               '/EmailRegister': (context) => EmailRegistration(),
               '/PhoneRegister': (context) => PhoneRegistrationScreen(),
-              '/PharmacistSignup': (context) => PharmacistSignup(),
-              '/PharmacistSignin': (context) => PharmacistSignin(),
               '/map': (context) => PharmacyMapScreen(),
             },
 
@@ -71,7 +65,7 @@ Future<void> main() async {
             //when starting the app
 
             // home: PharmacistSignup(),
-            home: SplachPage(
+            home: SplachScreen(
               duration: 2,
               goTopage: Wrapper(),
             ),

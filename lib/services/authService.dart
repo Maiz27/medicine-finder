@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:medicine/models/pharmacyModel.dart';
 import 'package:medicine/models/userModel.dart';
 import 'package:medicine/services/database.dart';
 
@@ -11,8 +10,6 @@ class AuthService {
   final rootRef = FirebaseFirestore.instance;
 
   late CurrUser _currUser;
-
-  late Pharmacy _pharmacy;
 
   auth.User? _user(auth.User? user) {
     // ignore: unnecessary_null_comparison
@@ -112,39 +109,7 @@ class AuthService {
       // Retrieve user info for old users
       Database.getUserDoc(result.user!.uid);
     }
-  }
-
-  Future createPharmacy(
-      {required String name,
-      required String email,
-      required String password,
-      required String phone,
-      required double lat,
-      required double lng}) async {
-    var credential;
-    Timestamp now = Timestamp.now();
-    if (email == '' || password == '' || phone == '' || lat == 0 || lng == 0) {
-      Fluttertoast.showToast(msg: 'Please fill out the entire form!');
-    } else {
-      try {
-        credential = await _firebaseAuth.createUserWithEmailAndPassword(
-            email: email, password: password);
-
-        _pharmacy = Pharmacy(
-          id: credential.user.uid,
-          email: email,
-          name: name,
-          lat: lat,
-          lng: lng,
-          tele: phone,
-          dateCreated: now,
-        );
-        Database.createPharmacyDoc(pharmacy: _pharmacy);
-      } catch (e) {
-        Fluttertoast.showToast(msg: e.toString());
-      }
-      return _user(credential.user);
-    }
+    return null;
   }
 
   Future<void> signOut() async {

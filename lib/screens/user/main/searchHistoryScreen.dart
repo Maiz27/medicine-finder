@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:medicine/helpers/appColors.dart';
+import 'package:medicine/helpers/appInfo.dart';
 import 'package:medicine/helpers/deviceDimensions.dart';
 import 'package:medicine/helpers/iconHelper.dart';
 import 'package:medicine/models/historyModel.dart';
 import 'package:medicine/services/database.dart';
 import 'package:medicine/widgets/IconFont.dart';
 import 'package:medicine/widgets/bottomNavBar.dart';
-import 'package:medicine/widgets/history.dart';
+import 'package:medicine/widgets/historyCard.dart';
 import 'package:medicine/widgets/messageWidget.dart';
 import 'package:provider/provider.dart';
 
@@ -43,7 +43,7 @@ class _SearchHistoryScreenState extends State<SearchHistoryScreen> {
             top: height * 0.035,
             child: IconButton(
               icon: IconFont(
-                color: AppColors.MAIN_COLOR,
+                color: AppInfo.MAIN_COLOR,
                 size: 0.03,
                 iconName: IConFontHelper.Delete,
               ),

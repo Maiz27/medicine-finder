@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:medicine/helpers/appColors.dart';
+import 'package:medicine/helpers/appInfo.dart';
 import 'package:medicine/helpers/deviceDimensions.dart';
 import 'package:medicine/helpers/iconHelper.dart';
 import 'package:medicine/services/authService.dart';
@@ -54,7 +54,7 @@ class _EmailRegistrationState extends State<EmailRegistration> {
                       child: Container(
                         width: width * 0.2,
                         height: height * 0.2,
-                        color: AppColors.MAIN_COLOR,
+                        color: AppInfo.MAIN_COLOR,
                         alignment: Alignment.center,
 
                         // use self created 'IconFont class' to get icon from specified font
@@ -92,7 +92,7 @@ class _EmailRegistrationState extends State<EmailRegistration> {
                     child: Visibility(
                       child: TextField(
                         controller: fullnameController,
-                        cursorColor: AppColors.ACCENT,
+                        cursorColor: AppInfo.ACCENT,
                         style: TextStyle(
                           color: Colors.white,
                           letterSpacing: 1.5,
@@ -102,11 +102,11 @@ class _EmailRegistrationState extends State<EmailRegistration> {
                           labelText: 'Full name',
                           prefixIcon: Icon(
                             Icons.person,
-                            color: AppColors.ACCENT,
+                            color: AppInfo.ACCENT,
                           ),
                           labelStyle: TextStyle(
                             fontSize: height * 0.02,
-                            color: AppColors.ACCENT,
+                            color: AppInfo.ACCENT,
                           ),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(50),
@@ -125,7 +125,7 @@ class _EmailRegistrationState extends State<EmailRegistration> {
                     ),
                     child: TextField(
                       controller: emailController,
-                      cursorColor: AppColors.ACCENT,
+                      cursorColor: AppInfo.ACCENT,
                       style: TextStyle(
                         color: Colors.white,
                         letterSpacing: 1.5,
@@ -135,11 +135,11 @@ class _EmailRegistrationState extends State<EmailRegistration> {
                         labelText: 'Email',
                         prefixIcon: Icon(
                           Icons.email,
-                          color: AppColors.ACCENT,
+                          color: AppInfo.ACCENT,
                         ),
                         labelStyle: TextStyle(
                           fontSize: height * 0.02,
-                          color: AppColors.ACCENT,
+                          color: AppInfo.ACCENT,
                         ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(50),
@@ -156,7 +156,7 @@ class _EmailRegistrationState extends State<EmailRegistration> {
                     ),
                     child: TextField(
                       controller: passwordController,
-                      cursorColor: AppColors.ACCENT,
+                      cursorColor: AppInfo.ACCENT,
                       style: TextStyle(
                         color: Colors.white,
                         letterSpacing: 1.5,
@@ -165,7 +165,7 @@ class _EmailRegistrationState extends State<EmailRegistration> {
                         labelText: 'Password',
                         prefixIcon: Icon(
                           Icons.password,
-                          color: AppColors.ACCENT,
+                          color: AppInfo.ACCENT,
                         ),
                         suffixIcon: IconButton(
                           icon: isHiddenPW
@@ -179,7 +179,7 @@ class _EmailRegistrationState extends State<EmailRegistration> {
                         ),
                         labelStyle: TextStyle(
                           fontSize: height * 0.02,
-                          color: AppColors.ACCENT,
+                          color: AppInfo.ACCENT,
                         ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(50),
@@ -198,12 +198,12 @@ class _EmailRegistrationState extends State<EmailRegistration> {
                           fontSize: width * 0.02,
                           fontWeight: FontWeight.bold,
                           letterSpacing: width * 0.0005,
-                          color: AppColors.ACCENT,
+                          color: AppInfo.ACCENT,
                         ),
                       ),
                       Switch(
-                          activeColor: AppColors.ACCENT,
-                          activeTrackColor: AppColors.MAIN_COLOR,
+                          activeColor: AppInfo.ACCENT,
+                          activeTrackColor: AppInfo.MAIN_COLOR,
                           value: isNewUser,
                           onChanged: (newValue) {
                             setState(() {
@@ -233,8 +233,8 @@ class _EmailRegistrationState extends State<EmailRegistration> {
                         Navigator.pushReplacementNamed(context, '/wrapper');
                       },
                       style: ElevatedButton.styleFrom(
-                        primary: AppColors.MAIN_COLOR,
-                        onPrimary: AppColors.ACCENT,
+                        primary: AppInfo.MAIN_COLOR,
+                        onPrimary: AppInfo.ACCENT,
                         shape: RoundedRectangleBorder(
                           borderRadius:
                               BorderRadius.all(Radius.circular(width * 0.5)),
@@ -247,7 +247,7 @@ class _EmailRegistrationState extends State<EmailRegistration> {
                         child: Text(
                           isNewUser ? 'SIGN UP' : 'SIGN IN',
                           style: TextStyle(
-                            color: AppColors.ACCENT,
+                            color: AppInfo.ACCENT,
                             fontFamily: 'Roboto',
                             fontSize: height * 0.02,
                             fontWeight: FontWeight.bold,

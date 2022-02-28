@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:medicine/helpers/appColors.dart';
+import 'package:medicine/helpers/appInfo.dart';
 import 'package:medicine/helpers/deviceDimensions.dart';
 import 'package:medicine/helpers/iconHelper.dart';
 import 'package:medicine/screens/user/searchScreen.dart';
@@ -34,7 +34,7 @@ class UserHomeScreen extends StatelessWidget {
                     softWrap: true,
                     style: TextStyle(
                       fontSize: height * 0.02,
-                      color: AppColors.MAIN_COLOR,
+                      color: AppInfo.MAIN_COLOR,
                     ),
                   ),
                   SearchCategory('Generic Name', 'scientificName',

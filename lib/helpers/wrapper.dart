@@ -1,10 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:medicine/screens/pharmacist/main/medicineListScreen.dart';
 import 'package:medicine/screens/user/main/userHomeScreen.dart';
-import 'package:medicine/screens/welcomeScreen.dart';
 import 'package:medicine/services/authService.dart';
 import 'package:medicine/services/database.dart';
 import 'package:provider/provider.dart';
+
+import '../screens/user/userWelcomeScreen.dart';
 
 class Wrapper extends StatelessWidget {
   @override
@@ -21,9 +23,14 @@ class Wrapper extends StatelessWidget {
               Database.getUserDoc(user!.uid);
               Database.setUserSubCollectionRef(user.uid);
               Database().getUserHistory();
-              return UserHomeScreen();
+
+              if (Database.isPharmacist == true) {
+                return MedicineListScreen();
+              } else {
+                return UserHomeScreen();
+              }
             } catch (e) {
-              return WelcomeScreen();
+              return UserWelcomeScreen();
             }
             //   if (authService.isUser() == true) {
             //     Utility.getUserData(user.uid);

@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:medicine/helpers/appColors.dart';
+import 'package:medicine/helpers/appInfo.dart';
 import 'package:medicine/helpers/deviceDimensions.dart';
 import 'package:medicine/helpers/iconHelper.dart';
 import 'package:medicine/models/userModel.dart';
+import 'package:medicine/screens/pharmacist/main/medicineListScreen.dart';
 import 'package:medicine/services/authService.dart';
 import 'package:medicine/services/database.dart';
 import 'package:medicine/widgets/IconFont.dart';
 import 'package:medicine/widgets/bottomNavBar.dart';
 import 'package:provider/provider.dart';
+import '../../../helpers/wrapper.dart';
+import '../../../splachScreen.dart';
 
 class UserScreen extends StatelessWidget {
   const UserScreen({Key? key}) : super(key: key);
@@ -50,7 +53,7 @@ class UserScreen extends StatelessWidget {
                       : Center(
                           child: ClipOval(
                             child: IconFont(
-                              color: AppColors.ACCENT,
+                              color: AppInfo.ACCENT,
                               iconName: IConFontHelper.USER,
                               size: 0.1,
                             ),
@@ -63,7 +66,7 @@ class UserScreen extends StatelessWidget {
                       // width: width * 0.8,
                       // height: height * 0.4,
                       decoration: BoxDecoration(
-                          color: AppColors.ACCENT.withOpacity(0.3),
+                          color: AppInfo.ACCENT.withOpacity(0.3),
                           borderRadius: BorderRadius.circular(30),
                           boxShadow: [
                             BoxShadow(
@@ -100,7 +103,7 @@ class UserScreen extends StatelessWidget {
                                 Text(
                                   'Account Type: ',
                                   style: TextStyle(
-                                    color: AppColors.MAIN_COLOR,
+                                    color: AppInfo.MAIN_COLOR,
                                     fontSize: width * 0.025,
                                     letterSpacing: width * 0.000005,
                                   ),
@@ -129,7 +132,7 @@ class UserScreen extends StatelessWidget {
                                       Text(
                                         'Email: ',
                                         style: TextStyle(
-                                          color: AppColors.MAIN_COLOR,
+                                          color: AppInfo.MAIN_COLOR,
                                           fontSize: width * 0.025,
                                           letterSpacing: width * 0.000005,
                                         ),
@@ -151,7 +154,7 @@ class UserScreen extends StatelessWidget {
                                       Text(
                                         'Telephone: ',
                                         style: TextStyle(
-                                          color: AppColors.MAIN_COLOR,
+                                          color: AppInfo.MAIN_COLOR,
                                           fontSize: width * 0.025,
                                           letterSpacing: width * 0.000005,
                                         ),
@@ -179,7 +182,7 @@ class UserScreen extends StatelessWidget {
                                 Text(
                                   'Created on: ',
                                   style: TextStyle(
-                                    color: AppColors.MAIN_COLOR,
+                                    color: AppInfo.MAIN_COLOR,
                                     fontSize: width * 0.025,
                                     letterSpacing: width * 0.000005,
                                   ),
@@ -201,18 +204,61 @@ class UserScreen extends StatelessWidget {
                       ),
                     ),
                   ),
+                  Visibility(
+                    visible: _user.isPharmacist,
+                    child: Padding(
+                      padding: EdgeInsets.only(top: height * 0.014),
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          await Database.getPharmacyDoc(_user.pharmacyId);
+                          Database.isPharmacist = true;
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      SplachScreen(
+                                        duration: 2,
+                                        goTopage: MedicineListScreen(),
+                                      )),
+                              (Route<dynamic> route) => route.isFirst);
+                        },
+                        style: ElevatedButton.styleFrom(
+                          primary: AppInfo.MAIN_COLOR,
+                          onPrimary: AppInfo.ACCENT,
+                          shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(width * 0.5)),
+                          ),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.all(height * 0.014),
+                          child: Text(
+                            'Manage Pharmacy',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: width * 0.02,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                   Padding(
-                    padding: const EdgeInsets.all(20),
+                    padding: EdgeInsets.only(top: height * 0.014),
                     child: ElevatedButton(
                       onPressed: () async {
                         await authService.signOut();
-                        // Navigator.of(context).pushNamedAndRemoveUntil(
-                        //     '/wrapper', (Route<dynamic> route) => false);
-                        Navigator.pushReplacementNamed(context, '/wrapper');
+                        await authService.signOut();
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                                builder: (BuildContext context) => Wrapper()),
+                            (Route<dynamic> route) => route.isFirst);
                       },
                       style: ElevatedButton.styleFrom(
-                        primary: AppColors.MAIN_COLOR,
-                        onPrimary: AppColors.ACCENT,
+                        primary: AppInfo.MAIN_COLOR,
+                        onPrimary: AppInfo.ACCENT,
                         shape: RoundedRectangleBorder(
                           borderRadius:
                               BorderRadius.all(Radius.circular(width * 0.5)),

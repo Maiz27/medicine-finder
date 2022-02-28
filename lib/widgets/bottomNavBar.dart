@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:medicine/helpers/appColors.dart';
+import 'package:medicine/helpers/appInfo.dart';
 import 'package:medicine/helpers/deviceDimensions.dart';
 import 'package:medicine/helpers/iconHelper.dart';
 import 'package:medicine/screens/user/main/userHomeScreen.dart';
@@ -44,7 +44,7 @@ class CustomBottomBar extends StatelessWidget {
                 iconSize: 50,
                 tooltip: "Home",
                 icon: IconFont(
-                    color: AppColors.MAIN_COLOR,
+                    color: AppInfo.MAIN_COLOR,
                     size: 0.05,
                     iconName: IConFontHelper.LOGO),
                 onPressed: () {
@@ -63,7 +63,7 @@ class CustomBottomBar extends StatelessWidget {
                 iconSize: 50,
                 tooltip: "Map",
                 icon: IconFont(
-                    color: AppColors.MAIN_COLOR,
+                    color: AppInfo.MAIN_COLOR,
                     size: 0.045,
                     iconName: IConFontHelper.PHARM_lOC),
                 onPressed: () {
@@ -81,7 +81,7 @@ class CustomBottomBar extends StatelessWidget {
                 iconSize: 50,
                 tooltip: "Search History",
                 icon: IconFont(
-                    color: AppColors.MAIN_COLOR,
+                    color: AppInfo.MAIN_COLOR,
                     size: 0.045,
                     iconName: IConFontHelper.HISTORY),
                 onPressed: () async {
@@ -101,7 +101,7 @@ class CustomBottomBar extends StatelessWidget {
                 iconSize: 50,
                 tooltip: "Profile",
                 icon: IconFont(
-                    color: AppColors.MAIN_COLOR,
+                    color: AppInfo.MAIN_COLOR,
                     size: 0.045,
                     iconName: IConFontHelper.USER),
                 onPressed: () {

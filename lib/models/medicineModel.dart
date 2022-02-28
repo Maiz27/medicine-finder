@@ -1,23 +1,29 @@
 // ignore_for_file: non_constant_identifier_names
 
 class Medicine {
-  String? Pname;
-
-  String? Mname;
-  int? price;
+  String pharmacyId;
+  String id;
+  String name;
+  int price;
   List brandNames;
+  bool inStock;
 
-  Medicine(
-      {required this.Pname,
-      required this.Mname,
-      required this.price,
-      required this.brandNames});
+  Medicine({
+    required this.pharmacyId,
+    required this.name,
+    required this.price,
+    required this.brandNames,
+    required this.id,
+    required this.inStock,
+  });
 
   factory Medicine.fromJson(Map<String, dynamic> json) {
     return Medicine(
-      Pname: json['PharmacyID'],
-      Mname: json['generic name'],
+      pharmacyId: json['pharmacyId'],
+      name: json['generic name'],
       price: json['price'],
+      id: json['pharmacyId'],
+      inStock: json['inStock'],
       brandNames: fromJsonArr(json['brand names']),
     );
   }
@@ -44,4 +50,18 @@ class FinalSearchResult {
 
   FinalSearchResult(this.pharmacyName, this.tele, this.lat, this.lng,
       this.medicine, this.price, this.brandNames);
+}
+
+class PopularMedicine {
+  String name;
+  int count;
+
+  PopularMedicine({required this.name, required this.count});
+
+  factory PopularMedicine.fromJson(Map<dynamic, dynamic> json) {
+    return PopularMedicine(
+      name: json['medicine name'],
+      count: json['search counter'],
+    );
+  }
 }

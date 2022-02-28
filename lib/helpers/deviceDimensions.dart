@@ -21,6 +21,7 @@ class Dimension {
 //Safe area paddings in logical pixels
     var paddingLeft = padding.left / window.devicePixelRatio;
     var paddingRight = padding.right / window.devicePixelRatio;
+    // ignore: unused_local_variable
     var paddingTop = window.padding.top / window.devicePixelRatio;
     var paddingBottom = window.padding.bottom / window.devicePixelRatio;
 
