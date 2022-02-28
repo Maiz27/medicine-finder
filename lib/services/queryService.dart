@@ -99,7 +99,7 @@ class QueryService {
     }
     _pharmacies.forEach((element) {
       _results.forEach((e) {
-        if (e.pharmacyId == element.name) {
+        if (e.pharmacyId == element.id) {
 //To avoid taking the complete list of brand names for all the pharmacies in
 //every instance, first find the index of the currently iterated element from
 //result then use it as an index to access each pharmacy's brand names separately
