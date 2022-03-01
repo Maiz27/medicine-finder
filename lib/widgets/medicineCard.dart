@@ -4,14 +4,17 @@ import '../helpers/appInfo.dart';
 import '../helpers/deviceDimensions.dart';
 import '../helpers/iconHelper.dart';
 import '../models/medicineModel.dart';
+import '../screens/pharmacist/editMedicineScreen.dart';
 import 'IconFont.dart';
 
 class MedicineCard extends StatelessWidget {
   const MedicineCard({
     Key? key,
     required this.medicine,
+    required this.index,
   }) : super(key: key);
   final Medicine medicine;
+  final int index;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +24,17 @@ class MedicineCard extends StatelessWidget {
     double width = deviceDimensions.getDeviceWidth();
 
     return GestureDetector(
-      onTap: () async {},
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (BuildContext context) => EditMedicineScreen(
+                    medicine: medicine,
+                    isEdit: "true",
+                    index: index,
+                  )),
+        );
+      },
       child: Container(
         margin: EdgeInsets.only(
           top: height * 0.02,

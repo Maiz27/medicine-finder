@@ -10,6 +10,7 @@ class Database {
   static Pharmacy? _currPharmacy;
   static bool isPharmacist = false;
   static var _subCollectionRef;
+  static var _medicineSubCollectionRef;
 
   static final _popularMedicineRef =
       FirebaseFirestore.instance.collection('PopularMedicine');
@@ -75,8 +76,11 @@ class Database {
   }
 
   static addSearchHistory(String medicine, String searchedBy) async {
+    String docId = _subCollectionRef.doc().id;
+
     try {
-      _subCollectionRef.add({
+      _subCollectionRef.doc(docId).set({
+        'id': docId,
         'name': medicine,
         'searchedOn': Timestamp.now(),
         'searchedBy': searchedBy,
@@ -132,7 +136,15 @@ class Database {
     }
   }
 
-  Future deleteSearchHistory() async {
+  Future deleteSearchHistory(String id) async {
+    try {
+      _subCollectionRef.doc(id).delete();
+    } catch (e) {
+      Fluttertoast.showToast(msg: e.toString());
+    }
+  }
+
+  Future deleteAllSearchHistory() async {
     await _subCollectionRef.get().then((collection) {
       final batch = FirebaseFirestore.instance.batch();
       for (final doc in collection.docs) {
@@ -176,14 +188,14 @@ class Database {
   }
 
   static setPharmacySubCollectionRef(String currPharmacyID) {
-    _subCollectionRef = FirebaseFirestore.instance
+    _medicineSubCollectionRef = FirebaseFirestore.instance
         .collection('Pharmacies')
         .doc(currPharmacyID)
         .collection('medicine');
   }
 
   static Future getMedicineFromFirestore() async {
-    var q = await _subCollectionRef
+    var q = await _medicineSubCollectionRef
         .orderBy('generic name', descending: false)
         .get();
 
@@ -207,8 +219,18 @@ class Database {
     }
   }
 
+  Future deleteMedcineDoc(String id) async {
+    try {
+      _medicineSubCollectionRef.doc(id).delete();
+    } catch (e) {
+      Fluttertoast.showToast(msg: e.toString());
+    }
+  }
+
   static Future getPopularMedicineCollection() async {
-    var q = await _popularMedicineRef.get();
+    var q = await _popularMedicineRef
+        .orderBy("search counter", descending: true)
+        .get();
     if (q.size > 0) {
       //Convert query result to a list to loop through them
       List results = q.docs.map((e) => e.data()).toList();
@@ -226,6 +248,78 @@ class Database {
       return "Success";
     } else {
       return "Failure";
+    }
+  }
+
+  static Future updateMedicineDoc(
+      {required Medicine? medicine,
+      required int localListIndex,
+      required List<bool> operation,
+      List? removedBrandNames}) async {
+    try {
+      await _medicineSubCollectionRef.doc(medicine!.id).get().then((value) {
+        if (value["generic name"] == medicine.name &&
+            value["price"] == medicine.price &&
+            value["inStock"] == medicine.inStock &&
+            value["brand names"] == medicine.brandNames) {
+          Fluttertoast.showToast(
+              msg: "Updated Failed! No changes to document.");
+          return "Error";
+        }
+        if (value["generic name"] != medicine.name) {
+          _medicineSubCollectionRef.doc(medicine.id).update(
+            {
+              "generic name": medicine.name,
+            },
+          );
+        }
+        if (value["price"] != medicine.price) {
+          _medicineSubCollectionRef.doc(medicine.id).update({
+            "price": medicine.price,
+          });
+        }
+        if (value["inStock"] != medicine.inStock) {
+          _medicineSubCollectionRef.doc(medicine.id).update({
+            "inStock": medicine.inStock,
+          });
+        }
+        if (value["brand names"] != medicine.brandNames) {
+          Database.updateBrandNamesArry(medicine, removedBrandNames, operation);
+        }
+
+        Fluttertoast.showToast(msg: "Document updated successfully!");
+        _medicine[localListIndex].name = medicine.name;
+        return "Success";
+      });
+    } catch (e) {
+      Fluttertoast.showToast(msg: e.toString());
+      return "Error";
+    }
+  }
+
+  static Future updateBrandNamesArry(
+      Medicine medicine, List? removedBrandNames, List<bool> operation) async {
+    if (operation[0] == true) {
+      await _medicineSubCollectionRef
+          .doc(medicine.id)
+          .update({"brand names": FieldValue.arrayUnion(medicine.brandNames)});
+    } else if (operation[1] == true) {
+      for (int i = 0; i < removedBrandNames!.length; i++) {
+        await _medicineSubCollectionRef.doc(medicine.id).update({
+          "brand names": FieldValue.arrayRemove([removedBrandNames[i]])
+        });
+      }
+    } else {
+      //Both
+      await _medicineSubCollectionRef
+          .doc(medicine.id)
+          .update({"brand names": FieldValue.arrayUnion(medicine.brandNames)});
+
+      for (int i = 0; i < removedBrandNames!.length; i++) {
+        await _medicineSubCollectionRef.doc(medicine.id).update({
+          "brand names": FieldValue.arrayRemove([removedBrandNames[i]])
+        });
+      }
     }
   }
 }

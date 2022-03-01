@@ -10,30 +10,30 @@ import 'services/database.dart';
 
 // ignore: must_be_immutable
 class SplachScreen extends StatelessWidget {
-  int duration = 0;
+  int duration;
   Widget goTopage;
+  Future<dynamic> function;
 
-  SplachScreen({required this.duration, required this.goTopage});
+  SplachScreen(
+      {this.duration = 0, required this.goTopage, required this.function});
 
   @override
   Widget build(BuildContext context) {
     final qs = Provider.of<QueryService>(context, listen: false);
 
-    if (Database.isPharmacist == false) {
-      Future.delayed(Duration(seconds: this.duration), () {
-        //Fetch pharmacy data from the cloud before starting the app
-        qs.getPharmaciesFromFirestore().then((value) => Navigator.push(
-            context, MaterialPageRoute(builder: (context) => this.goTopage)));
-      });
-    } else {
-      Future.delayed(Duration(seconds: this.duration), () {
-        //Fetch pharmacy data from the cloud before starting the app
-        // Navigator.pop(context);
-        Database.getMedicineFromFirestore().then((value) =>
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => this.goTopage)));
-      });
-    }
+    // if (Database.isPharmacist == false) {
+    //   Future.delayed(Duration(seconds: this.duration), () {
+    //     //Fetch pharmacy data from the cloud before starting the app
+    //     qs.getPharmaciesFromFirestore().then((value) => Navigator.push(
+    //         context, MaterialPageRoute(builder: (context) => this.goTopage)));
+    //   });
+    // } else {
+    Future.delayed(Duration(seconds: this.duration), () {
+      //Fetch pharmacy data from the cloud before starting the app
+      // Navigator.pop(context);
+      function.then((value) => Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => this.goTopage)));
+    });
 
     final deviceDimensions = Provider.of<Dimension>(context);
 

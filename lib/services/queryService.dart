@@ -26,14 +26,18 @@ class QueryService {
 
     //First check if the list is empty or not before converting
     //results to dart models
-    if (_pharmacies.isNotEmpty) {
-      _pharmacies.clear();
+    if (query.size > 0) {
+      if (_pharmacies.isNotEmpty) {
+        _pharmacies.clear();
+      }
+      results.forEach((element) {
+        //Convert list of results to model dart models
+        Pharmacy r = Pharmacy.fromJson(element);
+        _pharmacies.add(r);
+      });
+      return "Success";
     }
-    results.forEach((element) {
-      //Convert list of results to model dart models
-      Pharmacy r = Pharmacy.fromJson(element);
-      _pharmacies.add(r);
-    });
+    return "Error";
   }
 
   //search for medicine by scientific name
@@ -111,7 +115,7 @@ class QueryService {
             element.lng,
             e.name.toString(),
             e.price.toString(),
-            e.brandNames[x],
+            e.brandNames,
           ));
         }
       });

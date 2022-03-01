@@ -49,7 +49,7 @@ class _SearchHistoryScreenState extends State<SearchHistoryScreen> {
               ),
               tooltip: "Clear History",
               onPressed: () async {
-                await Database().deleteSearchHistory();
+                await Database().deleteAllSearchHistory();
                 setState(() {
                   history.clear();
                   Fluttertoast.showToast(msg: "Search history deleted!");
@@ -80,14 +80,26 @@ class _SearchHistoryScreenState extends State<SearchHistoryScreen> {
                       child: ListView.builder(
                           itemCount: history.length,
                           itemBuilder: (BuildContext ctx, int index) {
-                            return SearchHistoryWidget(
-                              medicine: history[index].name.toString(),
-                              searchedBy: history[index].searchedBy.toString(),
-                              someDate: history[index]
-                                  .searchedOn!
-                                  .toDate()
-                                  .toUtc()
-                                  .add(Duration(hours: 2)),
+                            return Dismissible(
+                              key: Key(history[index].hashCode.toString()),
+                              direction: DismissDirection.horizontal,
+                              onDismissed: (DismissDirection d) async {
+                                await Database().deleteSearchHistory(
+                                    history[index].id.toString());
+                                setState(() {
+                                  history.removeAt(index);
+                                });
+                              },
+                              child: SearchHistoryWidget(
+                                medicine: history[index].name.toString(),
+                                searchedBy:
+                                    history[index].searchedBy.toString(),
+                                someDate: history[index]
+                                    .searchedOn!
+                                    .toDate()
+                                    .toUtc()
+                                    .add(Duration(hours: 2)),
+                              ),
                             );
                           }),
                     )

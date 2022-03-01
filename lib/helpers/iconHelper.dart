@@ -15,4 +15,6 @@ class IConFontHelper {
   static const String Delete = 'n';
   static const String USER = 'o';
   static const String ADD = 'p';
+  static const String CASH = 'q';
+  static const String REMOVE = 'r';
 }

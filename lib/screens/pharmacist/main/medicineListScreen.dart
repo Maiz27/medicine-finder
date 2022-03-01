@@ -10,7 +10,7 @@ import '../../../widgets/IconFont.dart';
 import '../../../widgets/medicineCard.dart';
 import '../../../widgets/messageWidget.dart';
 import '../../../widgets/pharmacyDrawer.dart';
-import '../addNewMedicineScreen.dart';
+import '../editMedicineScreen.dart';
 
 class MedicineListScreen extends StatefulWidget {
   const MedicineListScreen({Key? key}) : super(key: key);
@@ -42,7 +42,10 @@ class _MedicineListScreenState extends State<MedicineListScreen> {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (BuildContext context) => AddNewMedicineScreen()),
+                builder: (BuildContext context) => EditMedicineScreen(
+                      isEdit: "",
+                      index: 0,
+                    )),
           );
         },
       ),
@@ -78,6 +81,7 @@ class _MedicineListScreenState extends State<MedicineListScreen> {
                       itemBuilder: (BuildContext ctx, int index) {
                         return MedicineCard(
                           medicine: _medicineList[index],
+                          index: index,
                         );
                       }),
                 )
@@ -89,3 +93,67 @@ class _MedicineListScreenState extends State<MedicineListScreen> {
     );
   }
 }
+
+// showDialog(
+//                                 context: context,
+//                                 builder: (BuildContext context) {
+//                                   return Dialog(
+//                                     child: Container(
+//                                       width: width * 0.3,
+//                                       height: height * 0.35,
+//                                       child: Column(
+//                                         children: [
+//                                           Padding(
+//                                             padding: EdgeInsets.only(
+//                                               top: height * 0.05,
+//                                               bottom: height * 0.05,
+//                                             ),
+//                                             child: Text(
+//                                               "Are you sure you want to Delete this Document?\n\n" +
+//                                                   _medicineList[index].name,
+//                                               softWrap: true,
+//                                               style: TextStyle(
+//                                                 fontSize: height * 0.02,
+//                                                 letterSpacing: width * 0.0005,
+//                                               ),
+//                                               textAlign: TextAlign.center,
+//                                             ),
+//                                           ),
+//                                           Row(
+//                                               mainAxisAlignment:
+//                                                   MainAxisAlignment.spaceEvenly,
+//                                               children: [
+//                                                 IconButton(
+//                                                   icon: Icon(
+//                                                     Icons.done,
+//                                                     size: width * 0.05,
+//                                                   ),
+//                                                   onPressed: () async {
+//                                                     await Database()
+//                                                         .deleteMedcineDoc(
+//                                                             _medicineList[index]
+//                                                                 .id
+//                                                                 .toString());
+//                                                     setState(() {
+//                                                       _medicineList
+//                                                           .removeAt(index);
+//                                                     });
+//                                                   },
+//                                                 ),
+//                                                 IconButton(
+//                                                   icon: Icon(
+//                                                     Icons.cancel,
+//                                                     size: width * 0.05,
+//                                                   ),
+//                                                   onPressed: () {
+//                                                     Navigator.pop(context);
+//                                                     setState(() {
+//                                                       dismissed = !dismissed;
+//                                                     });
+//                                                   },
+//                                                 ),
+//                                               ]),
+//                                         ],
+//                                       ),
+//                                     ),
+//                                   );

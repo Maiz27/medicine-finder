@@ -68,6 +68,7 @@ Future<void> main() async {
             home: SplachScreen(
               duration: 2,
               goTopage: Wrapper(),
+              function: QueryService().getPharmaciesFromFirestore(),
             ),
           )));
 }

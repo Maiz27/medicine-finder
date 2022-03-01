@@ -219,6 +219,8 @@ class UserScreen extends StatelessWidget {
                                       SplachScreen(
                                         duration: 2,
                                         goTopage: MedicineListScreen(),
+                                        function:
+                                            Database.getMedicineFromFirestore(),
                                       )),
                               (Route<dynamic> route) => route.isFirst);
                         },

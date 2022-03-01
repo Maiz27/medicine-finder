@@ -22,7 +22,7 @@ class Medicine {
       pharmacyId: json['pharmacyId'],
       name: json['generic name'],
       price: json['price'],
-      id: json['pharmacyId'],
+      id: json['id'],
       inStock: json['inStock'],
       brandNames: fromJsonArr(json['brand names']),
     );
@@ -34,7 +34,7 @@ class Medicine {
 List fromJsonArr(List<dynamic> jsonArray) {
   List brandNames = [];
   jsonArray.forEach((element) {
-    brandNames.add(jsonArray);
+    brandNames.add(element);
   });
   return brandNames;
 }
