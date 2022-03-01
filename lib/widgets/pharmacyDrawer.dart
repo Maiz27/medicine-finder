@@ -136,40 +136,40 @@ class PharmacyDrawer extends StatelessWidget {
             indent: height * 0.01,
             endIndent: height * 0.01,
           ),
-          Padding(
-            padding: EdgeInsets.only(top: width * 0.01),
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (BuildContext context) => PharmacyInfoScreen()),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                primary: AppInfo.MAIN_COLOR,
-                onPrimary: AppInfo.ACCENT,
-              ),
-              child: Padding(
-                padding:
-                    EdgeInsets.only(left: width * 0.06, right: width * 0.06),
-                child: Text(
-                  'Pharmacy Info',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: width * 0.02,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Divider(
-            color: AppInfo.ACCENT,
-            thickness: 2,
-            indent: height * 0.01,
-            endIndent: height * 0.01,
-          ),
+          // Padding(
+          //   padding: EdgeInsets.only(top: width * 0.01),
+          //   child: ElevatedButton(
+          //     onPressed: () {
+          //       Navigator.push(
+          //         context,
+          //         MaterialPageRoute(
+          //             builder: (BuildContext context) => PharmacyInfoScreen()),
+          //       );
+          //     },
+          //     style: ElevatedButton.styleFrom(
+          //       primary: AppInfo.MAIN_COLOR,
+          //       onPrimary: AppInfo.ACCENT,
+          //     ),
+          //     child: Padding(
+          //       padding:
+          //           EdgeInsets.only(left: width * 0.06, right: width * 0.06),
+          //       child: Text(
+          //         'Pharmacy Info',
+          //         style: TextStyle(
+          //           color: Colors.white,
+          //           fontSize: width * 0.02,
+          //           fontWeight: FontWeight.bold,
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+          // ),
+          // Divider(
+          //   color: AppInfo.ACCENT,
+          //   thickness: 2,
+          //   indent: height * 0.01,
+          //   endIndent: height * 0.01,
+          // ),
           Padding(
             padding: EdgeInsets.only(top: width * 0.01),
             child: ElevatedButton(

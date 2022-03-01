@@ -57,56 +57,61 @@ class _SearchHistoryScreenState extends State<SearchHistoryScreen> {
               },
             ),
           ),
-          Column(
-            children: [
-              Center(
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    top: height * 0.05,
-                    bottom: height * 0.02,
-                  ),
-                  child: Text(
-                    'Search History: ',
-                    style: TextStyle(
-                      fontSize: width * 0.025,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: width * 0.0005,
+          Padding(
+            padding: EdgeInsets.only(
+              bottom: height * 0.1,
+            ),
+            child: Column(
+              children: [
+                Center(
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      top: height * 0.05,
+                      bottom: height * 0.02,
+                    ),
+                    child: Text(
+                      'Search History: ',
+                      style: TextStyle(
+                        fontSize: width * 0.025,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: width * 0.0005,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              hasHistory
-                  ? Expanded(
-                      child: ListView.builder(
-                          itemCount: history.length,
-                          itemBuilder: (BuildContext ctx, int index) {
-                            return Dismissible(
-                              key: Key(history[index].hashCode.toString()),
-                              direction: DismissDirection.horizontal,
-                              onDismissed: (DismissDirection d) async {
-                                await Database().deleteSearchHistory(
-                                    history[index].id.toString());
-                                setState(() {
-                                  history.removeAt(index);
-                                });
-                              },
-                              child: SearchHistoryWidget(
-                                medicine: history[index].name.toString(),
-                                searchedBy:
-                                    history[index].searchedBy.toString(),
-                                someDate: history[index]
-                                    .searchedOn!
-                                    .toDate()
-                                    .toUtc()
-                                    .add(Duration(hours: 2)),
-                              ),
-                            );
-                          }),
-                    )
-                  : MessageWidget(
-                      message:
-                          "Search history is currently empty!\n\nSuccessfully searched medicine will appear here!\n ")
-            ],
+                hasHistory
+                    ? Expanded(
+                        child: ListView.builder(
+                            itemCount: history.length,
+                            itemBuilder: (BuildContext ctx, int index) {
+                              return Dismissible(
+                                key: Key(history[index].hashCode.toString()),
+                                direction: DismissDirection.horizontal,
+                                onDismissed: (DismissDirection d) async {
+                                  await Database().deleteSearchHistory(
+                                      history[index].id.toString());
+                                  setState(() {
+                                    history.removeAt(index);
+                                  });
+                                },
+                                child: SearchHistoryWidget(
+                                  medicine: history[index].name.toString(),
+                                  searchedBy:
+                                      history[index].searchedBy.toString(),
+                                  someDate: history[index]
+                                      .searchedOn!
+                                      .toDate()
+                                      .toUtc()
+                                      .add(Duration(hours: 2)),
+                                ),
+                              );
+                            }),
+                      )
+                    : MessageWidget(
+                        message:
+                            "Search history is currently empty!\n\nSuccessfully searched medicine will appear here!\n ")
+              ],
+            ),
           ),
           CustomBottomBar()
         ],

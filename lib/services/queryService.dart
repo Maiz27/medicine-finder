@@ -4,9 +4,9 @@ import 'package:medicine/models/medicineModel.dart';
 
 class QueryService {
   final rootRef = FirebaseFirestore.instance;
-  List<Pharmacy> _pharmacies = [];
-  List<Medicine> _results = [];
-  List<FinalSearchResult> _finalSearchResult = [];
+  static List<Pharmacy> _pharmacies = [];
+  static List<Medicine> _results = [];
+  static List<FinalSearchResult> _finalSearchResult = [];
 
   //Getters for pharmacies & search SearchResults
   List<FinalSearchResult> getResults() {

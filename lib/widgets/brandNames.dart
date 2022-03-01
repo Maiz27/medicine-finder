@@ -7,21 +7,23 @@ import '../helpers/iconHelper.dart';
 import 'IconFont.dart';
 
 class BrandNamesWidget extends StatelessWidget {
-  BrandNamesWidget({Key? key, required this.brandName, required this.index})
+  BrandNamesWidget(
+      {Key? key,
+      required this.brandName,
+      required this.index,
+      required this.controller})
       : super(key: key);
   final String brandName;
   final int index;
-
-  final TextEditingController _brandNamesController =
-      new TextEditingController();
+  final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
-    _brandNamesController.text = brandName;
     final deviceDimensions = Provider.of<Dimension>(context);
-
+    controller.text = brandName;
     double height = deviceDimensions.getDeviceHeight();
     double width = deviceDimensions.getDeviceWidth();
+
     return Padding(
       padding: EdgeInsets.only(
         top: height * 0.04,
@@ -29,7 +31,7 @@ class BrandNamesWidget extends StatelessWidget {
         right: height * 0.025,
       ),
       child: TextField(
-        controller: _brandNamesController,
+        controller: controller,
         cursorColor: Colors.black,
         style: TextStyle(
           color: AppInfo.MAIN_COLOR,

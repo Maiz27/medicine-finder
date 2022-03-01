@@ -55,40 +55,45 @@ class _MedicineListScreenState extends State<MedicineListScreen> {
         centerTitle: true,
       ),
       drawer: PharmacyDrawer(),
-      body: Column(
-        children: [
-          Center(
-            child: Padding(
-              padding: EdgeInsets.only(
-                top: height * 0.02,
-                bottom: height * 0.02,
-              ),
-              child: Text(
-                'Sorted by: Generic Name',
-                softWrap: true,
-                style: TextStyle(
-                  fontSize: width * 0.025,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: width * 0.0005,
+      body: Padding(
+        padding: EdgeInsets.only(
+          bottom: height * 0.1,
+        ),
+        child: Column(
+          children: [
+            Center(
+              child: Padding(
+                padding: EdgeInsets.only(
+                  top: height * 0.02,
+                  bottom: height * 0.02,
+                ),
+                child: Text(
+                  'Sorted by: Generic Name',
+                  softWrap: true,
+                  style: TextStyle(
+                    fontSize: width * 0.025,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: width * 0.0005,
+                  ),
                 ),
               ),
             ),
-          ),
-          _medicineList.isNotEmpty
-              ? Expanded(
-                  child: ListView.builder(
-                      itemCount: _medicineList.length,
-                      itemBuilder: (BuildContext ctx, int index) {
-                        return MedicineCard(
-                          medicine: _medicineList[index],
-                          index: index,
-                        );
-                      }),
-                )
-              : MessageWidget(
-                  message:
-                      "Medicine List is currently empty!\n\nCreate a New Medicine Document!\n ")
-        ],
+            _medicineList.isNotEmpty
+                ? Expanded(
+                    child: ListView.builder(
+                        itemCount: _medicineList.length,
+                        itemBuilder: (BuildContext ctx, int index) {
+                          return MedicineCard(
+                            medicine: _medicineList[index],
+                            index: index,
+                          );
+                        }),
+                  )
+                : MessageWidget(
+                    message:
+                        "Medicine List is currently empty!\n\nCreate a New Medicine Document!\n ")
+          ],
+        ),
       ),
     );
   }

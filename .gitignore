@@ -3009,3 +3009,7 @@ build/app/intermediates/incremental/debug-mergeJavaRes/zip-cache/E9IIa6N9rX_JbCI
 build/app/intermediates/incremental/debug-mergeNativeLibs/zip-cache/E9IIa6N9rX_JbCIRIt6DmZuYUJE=
 build/app/intermediates/incremental/debug-mergeJavaRes/zip-cache/5dPPGHuP2z93sxibpFri2VDci1E=
 build/app/intermediates/incremental/debug-mergeNativeLibs/zip-cache/5dPPGHuP2z93sxibpFri2VDci1E=
+ios/Flutter/flutter_export_environment.sh
+ios/Flutter/Generated.xcconfig
+ios/Runner/GeneratedPluginRegistrant.h
+ios/Runner/GeneratedPluginRegistrant.m
