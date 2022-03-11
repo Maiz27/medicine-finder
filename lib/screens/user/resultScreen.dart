@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:marquee/marquee.dart';
 import 'package:medicine/helpers/appInfo.dart';
 import 'package:medicine/helpers/deviceDimensions.dart';
 import 'package:medicine/helpers/iconHelper.dart';
@@ -41,7 +40,7 @@ class _ResultMapPageState extends State<ResultMapPage> {
     target: LatLng(15.577004480574697, 32.56923054149381),
     zoom: 16,
     tilt: 80,
-    bearing: 30,
+    bearing: 40,
   );
   late BitmapDescriptor icon;
   Set<Marker> _markers = new Set<Marker>();
@@ -103,8 +102,8 @@ class _ResultMapPageState extends State<ResultMapPage> {
             },
             onMapCreated: (GoogleMapController controller) {
               setState(() {
-                showPharmaciesOnMap();
                 _controller.complete(controller);
+                showPharmaciesOnMap();
               });
             },
           ),
@@ -117,9 +116,9 @@ class _ResultMapPageState extends State<ResultMapPage> {
           bottom: this.resultsCardVis,
           child: Container(
             width: width * 0.2,
-            height: height * 0.25,
+            height: height * 0.4,
             margin: EdgeInsets.only(
-              bottom: height * 0.02,
+              bottom: height * 0.0001,
               left: width * 0.04,
               right: width * 0.04,
             ),
@@ -164,18 +163,15 @@ class _ResultMapPageState extends State<ResultMapPage> {
                   ),
                 ],
               ),
-              SizedBox(
-                height: height * 0.02,
-              ),
               Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
                 Text(
                   searchedMedicine,
                   style: TextStyle(fontSize: height * 0.02),
                 ),
-                Text(
-                  currPharmacyPrice,
-                  style: TextStyle(fontSize: height * 0.02),
-                ),
+                // Text(
+                //   currPharmacyPrice,
+                //   style: TextStyle(fontSize: height * 0.02),
+                // ),
                 IconButton(
                   onPressed: () => {
                     launch(
@@ -188,30 +184,48 @@ class _ResultMapPageState extends State<ResultMapPage> {
                   ),
                 ),
               ]),
-              SizedBox(
-                height: height * 0.02,
-              ),
-              Row(
-                children: [
-                  Text(
+              Padding(
+                padding: EdgeInsets.only(top: height * 0.01),
+                child: Center(
+                  child: Text(
                     "Brand names: ",
                     style: TextStyle(
                         fontSize: height * 0.02, color: AppInfo.MAIN_COLOR),
                   ),
-                  Container(
-                    margin: EdgeInsets.only(
-                      left: width * 0.01,
-                      right: width * 0.01,
-                    ),
-                    height: height * 0.03,
-                    width: width * 0.18,
-                    child: Marquee(
-                      text: _brandNames.toString(),
-                      style: TextStyle(fontSize: height * 0.02),
-                      blankSpace: width * 0.02,
-                    ),
-                  ),
-                ],
+                ),
+              ),
+              Container(
+                height: height * 0.18,
+                child: ListView.builder(
+                    itemCount: _brandNames.length,
+                    itemBuilder: (BuildContext context, index) {
+                      return Padding(
+                        padding: EdgeInsets.only(
+                          top: height * 0.01,
+                          // bottom: height * 0.01,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text(_brandNames[index]['name'],
+                                style: TextStyle(fontSize: height * 0.022)),
+                            _brandNames[index]['inStock']
+                                ? IconFont(
+                                    color: AppInfo.MAIN_COLOR,
+                                    size: 0.045,
+                                    iconName: IConFontHelper.INSTOCK)
+                                : IconFont(
+                                    color: AppInfo.MAIN_COLOR,
+                                    size: 0.045,
+                                    iconName: IConFontHelper.OUTSTOCK),
+                            Text(
+                              _brandNames[index]['price'].toString() + " SDG",
+                              style: TextStyle(fontSize: height * 0.022),
+                            )
+                          ],
+                        ),
+                      );
+                    }),
               ),
             ]),
           ),
@@ -234,7 +248,6 @@ class _ResultMapPageState extends State<ResultMapPage> {
               currPharmacyName = element.pharmacyName;
               currPharmacyNum = element.tele;
               searchedMedicine = element.medicine;
-              currPharmacyPrice = element.price + " SDG";
               if (_brandNames.isNotEmpty) {
                 _brandNames.clear();
               }

@@ -28,13 +28,19 @@ class UserHomeScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    'Please provide either the "Generic" or the "Brand" name of the medicine you are looking for!\n\nSearch for medicine by',
-                    textAlign: TextAlign.center,
-                    softWrap: true,
-                    style: TextStyle(
-                      fontSize: height * 0.02,
-                      color: AppInfo.MAIN_COLOR,
+                  Padding(
+                    padding: EdgeInsets.only(
+                      left: width * 0.005,
+                      right: width * 0.005,
+                    ),
+                    child: Text(
+                      'Please provide either the "Generic" or the "Brand" name of the medicine you are looking for!\n\nSearch for medicine by',
+                      textAlign: TextAlign.center,
+                      softWrap: true,
+                      style: TextStyle(
+                        fontSize: height * 0.02,
+                        color: AppInfo.MAIN_COLOR,
+                      ),
                     ),
                   ),
                   SearchCategory('Generic Name', 'scientificName',

@@ -48,7 +48,7 @@ class CustomBottomBar extends StatelessWidget {
                     size: 0.05,
                     iconName: IConFontHelper.LOGO),
                 onPressed: () {
-                  Navigator.push(
+                  Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
                         builder: (context) => UserHomeScreen(),
@@ -67,7 +67,7 @@ class CustomBottomBar extends StatelessWidget {
                     size: 0.045,
                     iconName: IConFontHelper.PHARM_lOC),
                 onPressed: () {
-                  Navigator.push(
+                  Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
                           builder: (context) => PharmacyMapScreen()));
@@ -86,7 +86,7 @@ class CustomBottomBar extends StatelessWidget {
                     iconName: IConFontHelper.HISTORY),
                 onPressed: () async {
                   await Database().getUserHistory().then((value) {
-                    Navigator.push(
+                    Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                             builder: (context) => SearchHistoryScreen()));
@@ -105,7 +105,7 @@ class CustomBottomBar extends StatelessWidget {
                     size: 0.045,
                     iconName: IConFontHelper.USER),
                 onPressed: () {
-                  Navigator.push(context,
+                  Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) => UserScreen()));
                 },
               ),

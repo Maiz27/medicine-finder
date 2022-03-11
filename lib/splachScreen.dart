@@ -2,11 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:medicine/helpers/appInfo.dart';
 import 'package:medicine/helpers/deviceDimensions.dart';
 import 'package:medicine/helpers/iconHelper.dart';
-import 'package:medicine/services/queryService.dart';
 import 'package:medicine/widgets/IconFont.dart';
 import 'package:provider/provider.dart';
-
-import 'services/database.dart';
 
 // ignore: must_be_immutable
 class SplachScreen extends StatelessWidget {
@@ -19,8 +16,6 @@ class SplachScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final qs = Provider.of<QueryService>(context, listen: false);
-
     // if (Database.isPharmacist == false) {
     //   Future.delayed(Duration(seconds: this.duration), () {
     //     //Fetch pharmacy data from the cloud before starting the app

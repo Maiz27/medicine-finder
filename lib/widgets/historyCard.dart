@@ -41,7 +41,7 @@ class SearchHistoryWidget extends StatelessWidget {
                             medicine.toLowerCase(), "Generic name"),
                         Database.updatePopularMedicineCollection(
                             medicine.toLowerCase()),
-                        Navigator.push(
+                        Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => ResultMapPage()))

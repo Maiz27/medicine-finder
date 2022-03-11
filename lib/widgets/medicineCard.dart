@@ -86,7 +86,8 @@ class MedicineCard extends StatelessWidget {
                           color: AppInfo.ACCENT,
                         )),
                     Text(
-                      "Price: " + medicine.price.toString(),
+                      medicine.brandNames.length.toString() +
+                          " medicine brands",
                       softWrap: true,
                       style: TextStyle(
                         fontSize: width * 0.02,

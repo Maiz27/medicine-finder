@@ -12,10 +12,9 @@ import '../../splachScreen.dart';
 import '../../widgets/IconFont.dart';
 import '../../widgets/brandNames.dart';
 
-// String name = "";
-// bool inStock = true;
-// double price = 0.0;
-// List<String> brandnames = [];
+List<bool> _inStockList = [];
+List<bool> operations = [false, false];
+List brandList = [];
 
 class EditMedicineScreen extends StatefulWidget {
   const EditMedicineScreen(
@@ -27,6 +26,10 @@ class EditMedicineScreen extends StatefulWidget {
 
   @override
   _EditMedicineScreenState createState() => _EditMedicineScreenState();
+
+  static void setinStock(int index, bool value) {
+    _inStockList[index] = value;
+  }
 }
 
 class _EditMedicineScreenState extends State<EditMedicineScreen> {
@@ -34,14 +37,11 @@ class _EditMedicineScreenState extends State<EditMedicineScreen> {
   late String _isEdit;
   final TextEditingController _genericNameController =
       new TextEditingController();
-  final TextEditingController _priceController = new TextEditingController();
   List _brandnames = [];
   List _removedBrandnames = [];
-  List _addBrandnames = [];
   bool _inStock = true;
   int _localListIndex = 0;
-  List<TextEditingController> _controllers = [];
-  List<bool> operations = [false, false];
+  final List _brandControllers = [];
 
   @override
   void initState() {
@@ -127,43 +127,6 @@ class _EditMedicineScreenState extends State<EditMedicineScreen> {
               ),
               Padding(
                 padding: EdgeInsets.only(
-                  top: height * 0.035,
-                ),
-                child: TextField(
-                  controller: _priceController,
-                  cursorColor: Colors.black,
-                  style: TextStyle(
-                    color: AppInfo.MAIN_COLOR,
-                    letterSpacing: 1.5,
-                  ),
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    constraints: BoxConstraints(maxWidth: width * 0.45),
-                    labelText: 'Price SSD',
-                    prefixIcon: Padding(
-                      padding: EdgeInsets.only(
-                        left: height * 0.01,
-                        right: height * 0.01,
-                        top: height * 0.005,
-                      ),
-                      child: IconFont(
-                        color: AppInfo.MAIN_COLOR,
-                        iconName: IConFontHelper.CASH,
-                        size: 0.043,
-                      ),
-                    ),
-                    labelStyle: TextStyle(
-                      fontSize: height * 0.03,
-                      color: AppInfo.MAIN_COLOR,
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(50),
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(
                   top: height * 0.02,
                   bottom: height * 0.005,
                 ),
@@ -181,6 +144,13 @@ class _EditMedicineScreenState extends State<EditMedicineScreen> {
                         activeColor: AppInfo.MAIN_COLOR,
                         value: _inStock,
                         onChanged: (value) {
+                          _brandControllers.clear();
+                          _inStockList.clear();
+
+                          _brandnames.forEach((element) {
+                            element['inStock'] = value;
+                          });
+
                           setState(() {
                             _inStock = value;
                           });
@@ -222,7 +192,7 @@ class _EditMedicineScreenState extends State<EditMedicineScreen> {
                             offset: Offset.zero,
                           )
                         ]),
-                    height: height * 0.3,
+                    height: height * 0.4,
                     width: width * 0.45,
                     child: Padding(
                       padding: EdgeInsets.only(
@@ -232,13 +202,23 @@ class _EditMedicineScreenState extends State<EditMedicineScreen> {
                       child: ListView.builder(
                           itemCount: _brandnames.length,
                           itemBuilder: (BuildContext ctx, int index) {
-                            TextEditingController ctrl =
+                            TextEditingController nctrl =
                                 TextEditingController();
-                            _controllers.add(ctrl);
+                            TextEditingController pctrl =
+                                TextEditingController();
+                            bool inStock = _brandnames[index]['inStock'];
+                            _inStockList.add(inStock);
+                            _brandControllers.add({
+                              'nameCtrl': nctrl,
+                              'priceCtrl': pctrl,
+                              'inStock': inStock
+                            });
                             return BrandNamesWidget(
-                              brandName: _brandnames[index].toString(),
+                              brandName: _brandnames[index],
                               index: index,
-                              controller: ctrl,
+                              nameController: nctrl,
+                              priceController: pctrl,
+                              inStock: inStock,
                             );
                           }),
                     ),
@@ -258,15 +238,16 @@ class _EditMedicineScreenState extends State<EditMedicineScreen> {
                         if (!_brandnames.contains(_medicine!.brandNames)) {
                           operations[0] = true;
                         }
-
-                        setState(() {
-                          _brandnames.add("New brand name");
-                        });
-                      } else {
-                        setState(() {
-                          _brandnames.add("New brand name");
-                        });
                       }
+                      _inStockList.clear();
+                      _brandControllers.clear();
+                      setState(() {
+                        _brandnames.add({
+                          "name": "New brand name",
+                          "price": 0,
+                          "inStock": true
+                        });
+                      });
                     },
                     tooltip: "Add new brand names",
                   ),
@@ -281,11 +262,16 @@ class _EditMedicineScreenState extends State<EditMedicineScreen> {
                       size: 0.041,
                     ),
                     onPressed: () {
-                      if (_medicine!.brandNames.contains(_brandnames.last)) {
-                        operations[1] = true;
-                        _removedBrandnames.add(_brandnames.last);
+                      if (isEditOperation()) {
+                        if (_medicine!.brandNames.contains(_brandnames.last)) {
+                          operations[1] = true;
+                          _removedBrandnames.add(_brandnames.last);
+                        }
                       }
-                      _controllers.removeLast();
+
+                      _brandControllers.clear();
+                      _inStockList.clear();
+
                       setState(() {
                         _brandnames.removeLast();
                       });
@@ -331,22 +317,28 @@ class _EditMedicineScreenState extends State<EditMedicineScreen> {
                     child: ElevatedButton(
                       onPressed: () {
                         if (_genericNameController.text != "" &&
-                            _priceController.text != "" &&
                             _brandnames.isNotEmpty) {
-                          for (var ctrl in _controllers) {
-                            if (!_brandnames.contains(ctrl.text)) {
-                              _brandnames.add(ctrl.text);
-                            }
-                          }
+                          _brandnames.clear();
+                          brandList.clear();
+                          int x = 0;
+                          _brandControllers.forEach((item) => {
+                                _brandnames.add({
+                                  'name': item['nameCtrl'].text,
+                                  'price': int.parse(item['priceCtrl'].text),
+                                  'inStock': _inStockList[x],
+                                }),
+                                brandList.add(
+                                  item['nameCtrl'].text,
+                                ),
+                                x++,
+                              });
                           //Check if the its an edit or creation
                           if (isEditOperation()) {
                             _medicine!.name = _genericNameController.text;
-                            _medicine!.price = int.parse(_priceController.text);
                             _medicine!.inStock = _inStock;
                             _medicine!.brandNames.clear();
                             _medicine!.brandNames.addAll(_brandnames);
-                            _brandnames.removeWhere(
-                                (item) => item == "New brand name");
+
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
@@ -359,19 +351,19 @@ class _EditMedicineScreenState extends State<EditMedicineScreen> {
                                             operation: operations,
                                             removedBrandNames:
                                                 _removedBrandnames,
+                                            brandList: brandList,
                                           ),
                                           goTopage: MedicineListScreen(),
                                         )));
                           } else {
-                            _brandnames.removeWhere(
-                                (item) => item == "New brand name");
                             Medicine med = Medicine(
-                                brandNames: _brandnames,
-                                id: '',
-                                inStock: _inStock,
-                                pharmacyId: '',
-                                name: _genericNameController.text,
-                                price: int.parse(_priceController.text));
+                              brandNames: _brandnames,
+                              id: '',
+                              inStock: _inStock,
+                              pharmacyId: '',
+                              name: _genericNameController.text,
+                              brandList: brandList,
+                            );
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
@@ -471,7 +463,6 @@ class _EditMedicineScreenState extends State<EditMedicineScreen> {
     if (isEditOperation()) {
       //Add the data from the medicine object to the variables used in the fields
       _genericNameController.text = _medicine!.name;
-      _priceController.text = _medicine!.price.toString();
 
       //The UI needs to update appropriately for both editting & adding,
       //Since _brandnames can only have data when the operation is editing,

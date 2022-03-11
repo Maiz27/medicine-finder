@@ -7,7 +7,6 @@ import '../helpers/iconHelper.dart';
 import '../helpers/wrapper.dart';
 import '../models/pharmacyModel.dart';
 import '../screens/pharmacist/main/medicineListScreen.dart';
-import '../screens/pharmacist/main/pharmacyInfoScreen.dart';
 import '../screens/pharmacist/main/popularMedicinesScreen.dart';
 import '../screens/user/main/userHomeScreen.dart';
 import '../services/authService.dart';

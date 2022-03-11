@@ -6,7 +6,6 @@ import 'package:medicine/services/authService.dart';
 import 'package:medicine/widgets/IconFont.dart';
 import 'package:provider/provider.dart';
 
-// First page after splash, shows the login & register options and redirects accordingly
 class UserWelcomeScreen extends StatelessWidget {
   const UserWelcomeScreen({Key? key}) : super(key: key);
 

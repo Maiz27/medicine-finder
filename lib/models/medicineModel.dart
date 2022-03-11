@@ -4,26 +4,25 @@ class Medicine {
   String pharmacyId;
   String id;
   String name;
-  int price;
   List brandNames;
+  List brandList;
   bool inStock;
 
-  Medicine({
-    required this.pharmacyId,
-    required this.name,
-    required this.price,
-    required this.brandNames,
-    required this.id,
-    required this.inStock,
-  });
+  Medicine(
+      {required this.pharmacyId,
+      required this.name,
+      required this.brandNames,
+      required this.id,
+      required this.inStock,
+      required this.brandList});
 
   factory Medicine.fromJson(Map<String, dynamic> json) {
     return Medicine(
       pharmacyId: json['pharmacyId'],
       name: json['generic name'],
-      price: json['price'],
       id: json['id'],
       inStock: json['inStock'],
+      brandList: json['brandList'],
       brandNames: fromJsonArr(json['brand names']),
     );
   }
@@ -45,11 +44,10 @@ class FinalSearchResult {
   double lat;
   double lng;
   String medicine;
-  String price;
   List brandNames;
 
   FinalSearchResult(this.pharmacyName, this.tele, this.lat, this.lng,
-      this.medicine, this.price, this.brandNames);
+      this.medicine, this.brandNames);
 }
 
 class PopularMedicine {

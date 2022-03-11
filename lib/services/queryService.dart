@@ -72,7 +72,7 @@ class QueryService {
   Future brandSearch(String name) async {
     var query = (await rootRef
         .collectionGroup("medicine")
-        .where("brand names", arrayContains: name)
+        .where("brandList", arrayContains: name)
         .where("inStock", isEqualTo: true)
         .get());
 
@@ -107,14 +107,12 @@ class QueryService {
 //To avoid taking the complete list of brand names for all the pharmacies in
 //every instance, first find the index of the currently iterated element from
 //result then use it as an index to access each pharmacy's brand names separately
-          int x = _results.indexOf(e);
           _finalSearchResult.add(FinalSearchResult(
             element.name,
             element.tele,
             element.lat,
             element.lng,
             e.name.toString(),
-            e.price.toString(),
             e.brandNames,
           ));
         }

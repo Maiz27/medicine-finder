@@ -255,15 +255,16 @@ class Database {
     }
   }
 
-  static Future updateMedicineDoc(
-      {required Medicine? medicine,
-      required int localListIndex,
-      required List<bool> operation,
-      List? removedBrandNames}) async {
+  static Future updateMedicineDoc({
+    required Medicine? medicine,
+    required int localListIndex,
+    required List<bool> operation,
+    List? removedBrandNames,
+    required List brandList,
+  }) async {
     try {
       await _medicineSubCollectionRef.doc(medicine!.id).get().then((value) {
         if (value["generic name"] == medicine.name &&
-            value["price"] == medicine.price &&
             value["inStock"] == medicine.inStock &&
             value["brand names"] == medicine.brandNames) {
           Fluttertoast.showToast(
@@ -278,16 +279,17 @@ class Database {
           );
           _medicine[localListIndex].name = medicine.name;
         }
-        if (value["price"] != medicine.price) {
-          _medicineSubCollectionRef.doc(medicine.id).update({
-            "price": medicine.price,
-          });
-          _medicine[localListIndex].price = medicine.price;
-        }
+
         if (value["inStock"] != medicine.inStock) {
           _medicineSubCollectionRef.doc(medicine.id).update({
             "inStock": medicine.inStock,
           });
+          _medicine[localListIndex].inStock = medicine.inStock;
+        }
+        if (value["brandList"] != medicine.brandList) {
+          _medicineSubCollectionRef
+              .doc(medicine.id)
+              .update({"brandList": brandList});
           _medicine[localListIndex].inStock = medicine.inStock;
         }
         if (value["brand names"] != medicine.brandNames) {
@@ -307,63 +309,46 @@ class Database {
 
   static Future updateBrandNamesArry(Medicine medicine, List? removedBrandNames,
       List<bool> operation, int index) async {
-    if (operation[0] == true && operation[1] == false) {
-      //Add
-      await _medicineSubCollectionRef
-          .doc(medicine.id)
-          .update({"brand names": FieldValue.arrayUnion(medicine.brandNames)});
+    await _medicineSubCollectionRef
+        .doc(medicine.id)
+        .update({"brand names": medicine.brandNames});
 
-      //Update local list
+    //Update local list
+    if (operation[0] == true) {
       for (int i = 0; i < medicine.brandNames.length; i++) {
         if (!_medicine[index].brandNames.contains(medicine.brandNames[i])) {
           _medicine[index].brandNames.add(medicine.brandNames[i]);
         }
       }
-    } else if (operation[1] == true && operation[0] == false) {
-      //Remove
-      for (int i = 0; i < removedBrandNames!.length; i++) {
-        await _medicineSubCollectionRef.doc(medicine.id).update({
-          "brand names": FieldValue.arrayRemove([removedBrandNames[i]])
-        });
-        //Update local list
-        _medicine[index].brandNames.remove(removedBrandNames[i]);
-      }
-    } else if (operation[0] == true && operation[1] == true) {
-      //Both
-      await _medicineSubCollectionRef
-          .doc(medicine.id)
-          .update({"brand names": FieldValue.arrayUnion(medicine.brandNames)});
+    }
 
-      //Update local list
-      for (int i = 0; i < medicine.brandNames.length; i++) {
-        if (!_medicine[index].brandNames.contains(medicine.brandNames[i])) {
-          _medicine[index].brandNames.add(medicine.brandNames[i]);
-        }
-      }
-
+    //Update local list
+    if (operation[1] == true) {
       for (int i = 0; i < removedBrandNames!.length; i++) {
-        await _medicineSubCollectionRef.doc(medicine.id).update({
-          "brand names": FieldValue.arrayRemove([removedBrandNames[i]])
-        });
-        //Update local list
-        _medicine[index].brandNames.remove(removedBrandNames[i]);
+        _medicine[index]
+            .brandNames
+            .removeWhere((item) => item == removedBrandNames[i]);
       }
     }
   }
 
   static Future createMedicineDoc({
-    required Medicine? medicine,
+    required Medicine medicine,
   }) async {
+    List brandList = [];
+    medicine.brandNames.forEach((brand) {
+      brandList.add(brand['name']);
+    });
     try {
       String docId = _medicineSubCollectionRef.doc().id;
-      medicine!.id = docId;
+      medicine.id = docId;
       await _medicineSubCollectionRef.doc(docId).set({
         "id": docId,
         "generic name": medicine.name,
         "inStock": medicine.inStock,
         "pharmacyId": _currPharmacy!.id,
-        "price": medicine.price,
         "brand names": FieldValue.arrayUnion(medicine.brandNames),
+        "brandList": brandList,
       });
 
       Fluttertoast.showToast(msg: "Medicine added successfully!");
