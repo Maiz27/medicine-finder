@@ -8,7 +8,7 @@ import '../../helpers/appInfo.dart';
 import '../../helpers/deviceDimensions.dart';
 import '../../models/medicineModel.dart';
 import '../../services/database.dart';
-import '../../splachScreen.dart';
+import '../splachScreen.dart';
 import '../../widgets/IconFont.dart';
 import '../../widgets/brandNames.dart';
 
@@ -37,6 +37,7 @@ class _EditMedicineScreenState extends State<EditMedicineScreen> {
   late String _isEdit;
   final TextEditingController _genericNameController =
       new TextEditingController();
+  final TextEditingController _descController = new TextEditingController();
   List _brandnames = [];
   List _removedBrandnames = [];
   bool _inStock = true;
@@ -104,6 +105,44 @@ class _EditMedicineScreenState extends State<EditMedicineScreen> {
                   decoration: InputDecoration(
                     constraints: BoxConstraints(maxWidth: width * 0.45),
                     labelText: 'Generic name',
+                    prefixIcon: Padding(
+                      padding: EdgeInsets.only(
+                        left: height * 0.01,
+                        right: height * 0.01,
+                      ),
+                      child: IconFont(
+                        color: AppInfo.MAIN_COLOR,
+                        iconName: IConFontHelper.CAN,
+                        size: 0.045,
+                      ),
+                    ),
+                    labelStyle: TextStyle(
+                      fontSize: height * 0.03,
+                      color: AppInfo.MAIN_COLOR,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(50),
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                  top: height * 0.035,
+                ),
+                child: TextField(
+                  controller: _descController,
+                  cursorColor: Colors.black,
+                  style: TextStyle(
+                    color: AppInfo.MAIN_COLOR,
+                    letterSpacing: 1.5,
+                  ),
+                  keyboardType: TextInputType.multiline,
+                  minLines: 1,
+                  maxLines: 3,
+                  decoration: InputDecoration(
+                    constraints: BoxConstraints(maxWidth: width * 0.45),
+                    labelText: 'Description',
                     prefixIcon: Padding(
                       padding: EdgeInsets.only(
                         left: height * 0.01,
@@ -336,6 +375,7 @@ class _EditMedicineScreenState extends State<EditMedicineScreen> {
                           if (isEditOperation()) {
                             _medicine!.name = _genericNameController.text;
                             _medicine!.inStock = _inStock;
+                            _medicine!.desc = _descController.text;
                             _medicine!.brandNames.clear();
                             _medicine!.brandNames.addAll(_brandnames);
 
@@ -363,6 +403,7 @@ class _EditMedicineScreenState extends State<EditMedicineScreen> {
                               pharmacyId: '',
                               name: _genericNameController.text,
                               brandList: brandList,
+                              desc: _descController.text,
                             );
                             Navigator.pushReplacement(
                                 context,
@@ -463,7 +504,7 @@ class _EditMedicineScreenState extends State<EditMedicineScreen> {
     if (isEditOperation()) {
       //Add the data from the medicine object to the variables used in the fields
       _genericNameController.text = _medicine!.name;
-
+      _descController.text = _medicine!.desc;
       //The UI needs to update appropriately for both editting & adding,
       //Since _brandnames can only have data when the operation is editing,
       //and this Function is executed only when its editting,add data to list

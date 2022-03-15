@@ -1,9 +1,12 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Medicine {
   String pharmacyId;
   String id;
   String name;
+  String desc;
   List brandNames;
   List brandList;
   bool inStock;
@@ -14,13 +17,15 @@ class Medicine {
       required this.brandNames,
       required this.id,
       required this.inStock,
-      required this.brandList});
+      required this.brandList,
+      required this.desc});
 
   factory Medicine.fromJson(Map<String, dynamic> json) {
     return Medicine(
       pharmacyId: json['pharmacyId'],
       name: json['generic name'],
       id: json['id'],
+      desc: json['desc'],
       inStock: json['inStock'],
       brandList: json['brandList'],
       brandNames: fromJsonArr(json['brand names']),
@@ -44,22 +49,29 @@ class FinalSearchResult {
   double lat;
   double lng;
   String medicine;
+  String desc;
   List brandNames;
 
   FinalSearchResult(this.pharmacyName, this.tele, this.lat, this.lng,
-      this.medicine, this.brandNames);
+      this.medicine, this.brandNames, this.desc);
 }
 
 class PopularMedicine {
   String name;
   int count;
+  Timestamp? date;
 
-  PopularMedicine({required this.name, required this.count});
+  PopularMedicine({
+    required this.name,
+    required this.count,
+    this.date,
+  });
 
   factory PopularMedicine.fromJson(Map<dynamic, dynamic> json) {
     return PopularMedicine(
-      name: json['medicine name'],
+      name: json['name'],
       count: json['search counter'],
+      date: json['date'],
     );
   }
 }

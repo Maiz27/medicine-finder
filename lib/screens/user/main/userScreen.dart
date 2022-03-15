@@ -11,7 +11,7 @@ import 'package:medicine/widgets/IconFont.dart';
 import 'package:medicine/widgets/bottomNavBar.dart';
 import 'package:provider/provider.dart';
 import '../../../helpers/wrapper.dart';
-import '../../../splachScreen.dart';
+import '../../splachScreen.dart';
 
 class UserScreen extends StatelessWidget {
   const UserScreen({Key? key}) : super(key: key);

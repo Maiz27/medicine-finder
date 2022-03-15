@@ -11,6 +11,7 @@ import 'package:url_launcher/url_launcher.dart';
 //import 'dart:ui' as ui;
 
 List _pharmacies = [];
+List<LatLng> _LatLng = [];
 const double PHARMACY_CARD_VISIBLE = 100;
 const double PHARMACY_CARD_INVISIBLE = -500;
 
@@ -30,8 +31,8 @@ class PharmacyMapScreen extends StatefulWidget {
 class _PharmacyMapScreenState extends State<PharmacyMapScreen> {
   //setting the initial Camera position for the map view
   //Using project site's location coordinates 'Abeerna Pharmacy'
-  static const _initialCameraPosition = CameraPosition(
-    target: LatLng(15.577004480574697, 32.56923054149381),
+  static var _initialCameraPosition = CameraPosition(
+    target: _LatLng[0],
     zoom: 16,
     tilt: 80,
     bearing: 30,
@@ -41,11 +42,16 @@ class _PharmacyMapScreenState extends State<PharmacyMapScreen> {
   double pharmacyCardVis = PHARMACY_CARD_INVISIBLE;
   String currPharmacyName = "";
   String currPharmacyNum = "";
+  int index = 0;
+
+  late GoogleMapController _controller;
 
   @override
   void initState() {
     super.initState();
-
+    _pharmacies = QueryService.pharmacies;
+    setLatLng();
+    getCurrLoc();
     this.setSourceIcon();
   }
 
@@ -58,13 +64,16 @@ class _PharmacyMapScreenState extends State<PharmacyMapScreen> {
     );
   }
 
+  onMapCreated(GoogleMapController controller) {
+    setState(() {
+      _controller = controller;
+
+      showPharmaciesOnMap();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    final qs = Provider.of<QueryService>(context, listen: false);
-    _pharmacies = qs.getPharmacy();
-    //Create a google map controller to control the instance of the google map
-    Completer<GoogleMapController> _controller = Completer();
-
     final deviceDimensions = Provider.of<Dimension>(context);
 
     double height = deviceDimensions.getDeviceHeight();
@@ -88,11 +97,7 @@ class _PharmacyMapScreenState extends State<PharmacyMapScreen> {
                   pharmacyCardVis = PHARMACY_CARD_INVISIBLE;
                 });
               },
-              onMapCreated: (GoogleMapController controller) {
-                _controller.complete(controller);
-
-                showPharmaciesOnMap();
-              },
+              onMapCreated: onMapCreated,
             ),
           ),
           AnimatedPositioned(
@@ -168,6 +173,62 @@ class _PharmacyMapScreenState extends State<PharmacyMapScreen> {
               ),
             ),
           ),
+          Positioned(
+            top: height * 0.08,
+            left: width * 0.05,
+            child: Container(
+              width: width * 0.4,
+              height: height * 0.1,
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(30),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.3),
+                      blurRadius: 10,
+                      offset: Offset.zero,
+                    )
+                  ]),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  IconButton(
+                      onPressed: () {
+                        setState(() {
+                          _controller.animateCamera(CameraUpdate.newLatLng(
+                              _LatLng[(index - 1) % _LatLng.length]));
+                          index = (index - 1) % _LatLng.length;
+                          pharmacyCardVis = PHARMACY_CARD_INVISIBLE;
+                        });
+                      },
+                      icon: Icon(
+                        Icons.arrow_back,
+                      )),
+                  Text(
+                    (index + 1 % _LatLng.length).toString() +
+                        " Of " +
+                        _LatLng.length.toString(),
+                    style: TextStyle(
+                      fontSize: height * 0.022,
+                      color: AppInfo.MAIN_COLOR,
+                    ),
+                  ),
+                  IconButton(
+                      onPressed: () {
+                        setState(() {
+                          _controller.animateCamera(CameraUpdate.newLatLng(
+                              _LatLng[(index + 1) % _LatLng.length]));
+                          index = (index + 1) % _LatLng.length;
+                          pharmacyCardVis = PHARMACY_CARD_INVISIBLE;
+                        });
+                      },
+                      icon: Icon(
+                        Icons.arrow_forward,
+                      )),
+                ],
+              ),
+            ),
+          ),
           CustomBottomBar(),
         ],
       ),
@@ -175,23 +236,23 @@ class _PharmacyMapScreenState extends State<PharmacyMapScreen> {
   }
 
   showPharmaciesOnMap() {
-    setState(() {
-      _pharmacies.forEach((element) {
-        currPharmacyLat = element.lat;
-        currPharmacyLon = element.lng;
-        LatLng pin = new LatLng(currPharmacyLat, currPharmacyLon);
-        _markers.add(Marker(
-            markerId: MarkerId(element.name),
-            position: pin,
-            icon: icon,
-            onTap: () {
-              setState(() {
-                currPharmacyName = element.name;
-                currPharmacyNum = element.tele;
-                this.pharmacyCardVis = PHARMACY_CARD_VISIBLE;
-              });
-            }));
-      });
+    _pharmacies.forEach((element) {
+      currPharmacyLat = element.lat;
+      currPharmacyLon = element.lng;
+      LatLng pin = new LatLng(currPharmacyLat, currPharmacyLon);
+
+      _markers.add(Marker(
+          markerId: MarkerId(element.name),
+          position: pin,
+          icon: icon,
+          onTap: () {
+            setState(() {
+              currPharmacyName = element.name;
+              currPharmacyNum = element.tele;
+              index = _pharmacies.indexOf(element);
+              this.pharmacyCardVis = PHARMACY_CARD_VISIBLE;
+            });
+          }));
     });
   }
 
@@ -201,6 +262,15 @@ class _PharmacyMapScreenState extends State<PharmacyMapScreen> {
 
     userLat = position.latitude;
     userLon = position.longitude;
+  }
+
+  void setLatLng() {
+    if (_LatLng.isNotEmpty) {
+      _LatLng.clear();
+    }
+    _pharmacies.forEach((element) {
+      _LatLng.add(new LatLng(element.lat, element.lng));
+    });
   }
 }
 

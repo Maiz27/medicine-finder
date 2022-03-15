@@ -44,6 +44,8 @@ dependencies:
   marquee: ^2.2.0
   intl: ^0.17.0
   flutter_google_places: ^0.3.0
+  flutter_speed_dial: ^5.0.0+1
+  jiffy: ^5.0.0
 
 
 dev_dependencies:

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:location/location.dart';
 import 'package:medicine/helpers/appInfo.dart';
 import 'package:medicine/helpers/deviceDimensions.dart';
 import 'package:medicine/helpers/iconHelper.dart';
@@ -6,8 +8,22 @@ import 'package:medicine/services/authService.dart';
 import 'package:medicine/widgets/IconFont.dart';
 import 'package:provider/provider.dart';
 
-class UserWelcomeScreen extends StatelessWidget {
-  const UserWelcomeScreen({Key? key}) : super(key: key);
+class WelcomeScreen extends StatefulWidget {
+  const WelcomeScreen({Key? key}) : super(key: key);
+
+  @override
+  State<WelcomeScreen> createState() => _WelcomeScreenState();
+}
+
+class _WelcomeScreenState extends State<WelcomeScreen> {
+  //Override the initial State of the widget to ask user for their location
+  @override
+  void initState() {
+    //call the getlocation function
+    _getLocationPermission();
+    //then resume the already defined state for Welcome using 'super' keyword
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -196,5 +212,18 @@ class UserWelcomeScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+//Enable location permissions function
+void _getLocationPermission() async {
+  var location = new Location();
+  try {
+    location.requestPermission(); //to lunch location permission popup
+
+  } on PlatformException catch (e) {
+    if (e.code == 'PERMISSION_DENIED') {
+      print('Permission denied');
+    }
   }
 }

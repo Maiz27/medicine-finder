@@ -11,6 +11,7 @@ import '../../../widgets/medicineCard.dart';
 import '../../../widgets/messageWidget.dart';
 import '../../../widgets/pharmacyDrawer.dart';
 import '../editMedicineScreen.dart';
+import 'package:collection/src/iterable_extensions.dart';
 
 class MedicineListScreen extends StatefulWidget {
   const MedicineListScreen({Key? key}) : super(key: key);
@@ -20,11 +21,14 @@ class MedicineListScreen extends StatefulWidget {
 }
 
 class _MedicineListScreenState extends State<MedicineListScreen> {
+  final TextEditingController searchController = new TextEditingController();
+  bool isSearching = false;
+
+  List<Medicine> _medicineList = Database.getMedicineList();
+  List<Medicine> searchedList = [];
   @override
   Widget build(BuildContext context) {
     final deviceDimensions = Provider.of<Dimension>(context);
-
-    List<Medicine> _medicineList = Database.getMedicineList();
 
     double height = deviceDimensions.getDeviceHeight();
     double width = deviceDimensions.getDeviceWidth();
@@ -51,8 +55,59 @@ class _MedicineListScreenState extends State<MedicineListScreen> {
       ),
       appBar: AppBar(
         backgroundColor: AppInfo.MAIN_COLOR,
-        title: Text("Medicine List"),
+        title: isSearching
+            ? TextField(
+                style: TextStyle(color: Colors.white),
+                decoration: InputDecoration(
+                    hintText: 'Search Medicine',
+                    hintStyle: TextStyle(color: Colors.white)),
+                controller: searchController,
+                onChanged: (value) {
+                  if (value != "" || value.isNotEmpty) {
+                    searchedList.clear();
+                    var r = _medicineList
+                        .where((element) => element.name.startsWith(value));
+                    r.forEach((element) => {searchedList.add(element)});
+                    setState(() {});
+                  } else {
+                    setState(() {
+                      searchedList.clear();
+                    });
+                  }
+                },
+              )
+            : Text("Medicine List"),
         centerTitle: true,
+        actions: [
+          isSearching
+              ? IconButton(
+                  icon: Padding(
+                      padding: EdgeInsets.only(right: width * 0.05),
+                      child: Icon(Icons.cancel)),
+                  onPressed: () {
+                    setState(() {
+                      searchController.text = "";
+                      searchedList.clear();
+                      isSearching = !isSearching;
+                    });
+                  },
+                )
+              : IconButton(
+                  icon: Padding(
+                    padding: EdgeInsets.only(right: width * 0.05),
+                    child: IconFont(
+                      color: Colors.white,
+                      size: 0.04,
+                      iconName: IConFontHelper.SEARCH,
+                    ),
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      isSearching = !isSearching;
+                    });
+                  },
+                )
+        ],
       ),
       drawer: PharmacyDrawer(),
       body: Padding(
@@ -81,10 +136,14 @@ class _MedicineListScreenState extends State<MedicineListScreen> {
             _medicineList.isNotEmpty
                 ? Expanded(
                     child: ListView.builder(
-                        itemCount: _medicineList.length,
+                        itemCount: searchedList.isNotEmpty
+                            ? searchedList.length
+                            : _medicineList.length,
                         itemBuilder: (BuildContext ctx, int index) {
                           return MedicineCard(
-                            medicine: _medicineList[index],
+                            medicine: searchedList.isNotEmpty
+                                ? searchedList[index]
+                                : _medicineList[index],
                             index: index,
                           );
                         }),

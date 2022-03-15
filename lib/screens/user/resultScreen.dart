@@ -13,6 +13,8 @@ import 'package:url_launcher/url_launcher.dart';
 
 List _finalResult = [];
 List _brandNames = [];
+List<LatLng> _LatLng = [];
+
 const double RESULTS_CARD_VISIBLE = 100;
 const double RESULTS_CARD_INVISIBLE = -500;
 
@@ -20,6 +22,7 @@ String currPharmacyName = "";
 String currPharmacyNum = "";
 String currPharmacyPrice = "";
 String searchedMedicine = "";
+String medicineDesc = "";
 double currPharmacyLat = 0.0;
 double currPharmacyLon = 0.0;
 
@@ -36,8 +39,9 @@ class ResultMapPage extends StatefulWidget {
 class _ResultMapPageState extends State<ResultMapPage> {
   //setting the initial Camera position for the map view
   //Using project site's location coordinates 'Abeerna Pharmacy'
-  static const _initialCameraPosition = CameraPosition(
-    target: LatLng(15.577004480574697, 32.56923054149381),
+
+  static var _initialCameraPosition = CameraPosition(
+    target: _LatLng[0],
     zoom: 16,
     tilt: 80,
     bearing: 40,
@@ -50,10 +54,17 @@ class _ResultMapPageState extends State<ResultMapPage> {
   // List<LatLng> polylineCoordinates = [];
   // late PolylinePoints polylinePoints;
   double resultsCardVis = RESULTS_CARD_INVISIBLE;
+  bool descOn = false;
+  int index = 0;
+
+  //Create a google map controller to control the instance of the google map
+  late GoogleMapController _controller;
 
   @override
   void initState() {
     super.initState();
+    _finalResult = QueryService.finalSearchResult;
+    setLatLng();
     getCurrLoc();
     // polylinePoints = PolylinePoints();
 
@@ -69,44 +80,40 @@ class _ResultMapPageState extends State<ResultMapPage> {
     );
   }
 
+  onMapCreated(GoogleMapController controller) {
+    setState(() {
+      _controller = controller;
+
+      showPharmaciesOnMap();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final deviceDimensions = Provider.of<Dimension>(context);
-    final qs = Provider.of<QueryService>(context, listen: false);
-
-    _finalResult = qs.getResults();
 
     double height = deviceDimensions.getDeviceHeight();
     double width = deviceDimensions.getDeviceWidth();
-
-    //Create a google map controller to control the instance of the google map
-    Completer<GoogleMapController> _controller = Completer();
 
     return Scaffold(
       body: Stack(children: [
         Positioned.fill(
           child: GoogleMap(
-            myLocationButtonEnabled: true,
-            myLocationEnabled: true,
-            compassEnabled: false,
-            tiltGesturesEnabled: false,
-            zoomControlsEnabled: false,
-            // polylines: _polylines,
-            markers: _markers,
-            initialCameraPosition: _initialCameraPosition,
-            onTap: (LatLng loc) {
-              //Tap to dismiss pharmacy card
-              setState(() {
-                resultsCardVis = RESULTS_CARD_INVISIBLE;
-              });
-            },
-            onMapCreated: (GoogleMapController controller) {
-              setState(() {
-                _controller.complete(controller);
-                showPharmaciesOnMap();
-              });
-            },
-          ),
+              myLocationButtonEnabled: true,
+              myLocationEnabled: true,
+              compassEnabled: false,
+              tiltGesturesEnabled: false,
+              zoomControlsEnabled: false,
+              // polylines: _polylines,
+              markers: _markers,
+              initialCameraPosition: _initialCameraPosition,
+              onTap: (LatLng loc) {
+                //Tap to dismiss pharmacy card
+                setState(() {
+                  resultsCardVis = RESULTS_CARD_INVISIBLE;
+                });
+              },
+              onMapCreated: onMapCreated),
         ),
         AnimatedPositioned(
           duration: const Duration(milliseconds: 500),
@@ -116,7 +123,7 @@ class _ResultMapPageState extends State<ResultMapPage> {
           bottom: this.resultsCardVis,
           child: Container(
             width: width * 0.2,
-            height: height * 0.4,
+            height: descOn ? height * 0.6 : height * 0.4,
             margin: EdgeInsets.only(
               bottom: height * 0.0001,
               left: width * 0.04,
@@ -184,6 +191,36 @@ class _ResultMapPageState extends State<ResultMapPage> {
                   ),
                 ),
               ]),
+              Visibility(
+                child: Padding(
+                  padding: EdgeInsets.all(height * 0.01),
+                  child: Text(
+                    medicineDesc,
+                    softWrap: true,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: height * 0.02),
+                  ),
+                ),
+                visible: descOn,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Description",
+                    style: TextStyle(fontSize: height * 0.02),
+                  ),
+                  Switch(
+                    activeColor: AppInfo.MAIN_COLOR,
+                    onChanged: (bool value) {
+                      setState(() {
+                        descOn = value;
+                      });
+                    },
+                    value: descOn,
+                  ),
+                ],
+              ),
               Padding(
                 padding: EdgeInsets.only(top: height * 0.01),
                 child: Center(
@@ -195,7 +232,7 @@ class _ResultMapPageState extends State<ResultMapPage> {
                 ),
               ),
               Container(
-                height: height * 0.18,
+                height: height * 0.14,
                 child: ListView.builder(
                     itemCount: _brandNames.length,
                     itemBuilder: (BuildContext context, index) {
@@ -230,6 +267,62 @@ class _ResultMapPageState extends State<ResultMapPage> {
             ]),
           ),
         ),
+        Positioned(
+          top: height * 0.08,
+          left: width * 0.05,
+          child: Container(
+            width: width * 0.4,
+            height: height * 0.1,
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(30),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.3),
+                    blurRadius: 10,
+                    offset: Offset.zero,
+                  )
+                ]),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                IconButton(
+                    onPressed: () {
+                      setState(() {
+                        _controller.animateCamera(CameraUpdate.newLatLng(
+                            _LatLng[(index - 1) % _LatLng.length]));
+                        index = (index - 1) % _LatLng.length;
+                        this.resultsCardVis = RESULTS_CARD_INVISIBLE;
+                      });
+                    },
+                    icon: Icon(
+                      Icons.arrow_back,
+                    )),
+                Text(
+                  (index + 1 % _LatLng.length).toString() +
+                      " Of " +
+                      _LatLng.length.toString(),
+                  style: TextStyle(
+                    fontSize: height * 0.022,
+                    color: AppInfo.MAIN_COLOR,
+                  ),
+                ),
+                IconButton(
+                    onPressed: () {
+                      setState(() {
+                        _controller.animateCamera(CameraUpdate.newLatLng(
+                            _LatLng[(index + 1) % _LatLng.length]));
+                        index = (index + 1) % _LatLng.length;
+                        this.resultsCardVis = RESULTS_CARD_INVISIBLE;
+                      });
+                    },
+                    icon: Icon(
+                      Icons.arrow_forward,
+                    )),
+              ],
+            ),
+          ),
+        ),
         CustomBottomBar()
       ]),
     );
@@ -237,6 +330,7 @@ class _ResultMapPageState extends State<ResultMapPage> {
 
   showPharmaciesOnMap() {
     _finalResult.forEach((element) {
+      searchedMedicine = element.medicine;
       currPharmacyLat = element.lat;
       currPharmacyLon = element.lng;
       _markers.add(Marker(
@@ -244,17 +338,19 @@ class _ResultMapPageState extends State<ResultMapPage> {
           position: new LatLng(currPharmacyLat, currPharmacyLon),
           icon: icon,
           onTap: () {
+            medicineDesc = element.desc;
+            currPharmacyName = element.pharmacyName;
+            currPharmacyNum = element.tele;
+            currPharmacyLat = element.lat;
+            currPharmacyLon = element.lng;
+            index = _finalResult.indexOf(element);
+            if (_brandNames.isNotEmpty) {
+              _brandNames.clear();
+            }
+            element.brandNames.forEach((e) {
+              _brandNames.add(e);
+            });
             setState(() {
-              currPharmacyName = element.pharmacyName;
-              currPharmacyNum = element.tele;
-              searchedMedicine = element.medicine;
-              if (_brandNames.isNotEmpty) {
-                _brandNames.clear();
-              }
-              element.brandNames.forEach((e) {
-                _brandNames.add(e);
-              });
-
               this.resultsCardVis = RESULTS_CARD_VISIBLE;
             });
           }));
@@ -267,6 +363,15 @@ class _ResultMapPageState extends State<ResultMapPage> {
 
     userLat = position.latitude;
     userLon = position.longitude;
+  }
+
+  void setLatLng() {
+    if (_LatLng.isNotEmpty) {
+      _LatLng.clear();
+    }
+    _finalResult.forEach((element) {
+      _LatLng.add(new LatLng(element.lat, element.lng));
+    });
   }
 
   //Due to Google Directions API needing a Billing account with credit card info,
@@ -294,4 +399,12 @@ class _ResultMapPageState extends State<ResultMapPage> {
   //     });
   //   }
   // }
+
+  // Visibility(
+  //               child: Text(
+  //                 "sdasdw",
+  //                 style: TextStyle(fontSize: height * 0.02),
+  //               ),
+  //               visible: descOn,
+  //             ),
 }

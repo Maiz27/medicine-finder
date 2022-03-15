@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intl/intl.dart';
 import 'package:medicine/models/historyModel.dart';
 import 'package:medicine/models/pharmacyModel.dart';
 import 'package:medicine/models/medicineModel.dart';
@@ -91,21 +92,63 @@ class Database {
   }
 
   static updatePopularMedicineCollection(String medicine) async {
+    var t = DateTime.now();
+    DateFormat formatter = DateFormat('yyyy-MM-dd');
+    var date = formatter.format(t);
+    print(date);
+
     try {
-      var snap = await _popularMedicineRef
-          .where('medicine name', isEqualTo: medicine)
-          .get();
+      var snap =
+          await _popularMedicineRef.where('name', isEqualTo: medicine).get();
 
       if (snap.size > 0) {
         String docID = snap.docs[0].id;
-        _popularMedicineRef
+        await _popularMedicineRef
             .doc(docID)
             .update({'search counter': FieldValue.increment(1)});
+
+        await _popularMedicineRef
+            .doc(docID)
+            .collection("dates")
+            .doc(date)
+            .get()
+            .then((value) => {
+                  if (value.exists)
+                    {
+                      _popularMedicineRef
+                          .doc(docID)
+                          .collection("dates")
+                          .doc(date)
+                          .update({'search counter': FieldValue.increment(1)})
+                    }
+                  else
+                    {
+                      _popularMedicineRef
+                          .doc(docID)
+                          .collection("dates")
+                          .doc(date)
+                          .set({
+                        'date': t,
+                        'name': medicine,
+                        'search counter': FieldValue.increment(1)
+                      })
+                    }
+                });
       } else {
         _popularMedicineRef.add({
-          'medicine name': medicine,
+          'name': medicine,
           'search counter': FieldValue.increment(1)
-        });
+        }).then((value) => {
+              _popularMedicineRef
+                  .doc(value.id)
+                  .collection("dates")
+                  .doc(date)
+                  .set({
+                'search counter': FieldValue.increment(1),
+                'date': t,
+                'name': medicine
+              })
+            });
       }
     } catch (e) {
       Fluttertoast.showToast(msg: e.toString());
@@ -183,7 +226,7 @@ class Database {
     return _medicine;
   }
 
-  static List<PopularMedicine>? getPopularList() {
+  static List<PopularMedicine> getPopularList() {
     return _popular;
   }
 
@@ -266,7 +309,8 @@ class Database {
       await _medicineSubCollectionRef.doc(medicine!.id).get().then((value) {
         if (value["generic name"] == medicine.name &&
             value["inStock"] == medicine.inStock &&
-            value["brand names"] == medicine.brandNames) {
+            value["brand names"] == medicine.brandNames &&
+            value["desc"] == medicine.desc) {
           Fluttertoast.showToast(
               msg: "Updated Failed! No changes to document.");
           return "Error";
@@ -278,6 +322,15 @@ class Database {
             },
           );
           _medicine[localListIndex].name = medicine.name;
+        }
+
+        if (value["desc"] != medicine.desc) {
+          _medicineSubCollectionRef.doc(medicine.id).update(
+            {
+              "desc": medicine.desc,
+            },
+          );
+          _medicine[localListIndex].desc = medicine.desc;
         }
 
         if (value["inStock"] != medicine.inStock) {

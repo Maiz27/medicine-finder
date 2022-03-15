@@ -6,7 +6,7 @@ import 'package:medicine/services/authService.dart';
 import 'package:medicine/services/database.dart';
 import 'package:provider/provider.dart';
 
-import '../screens/user/userWelcomeScreen.dart';
+import '../screens/welcomeScreen.dart';
 
 class Wrapper extends StatelessWidget {
   @override
@@ -30,7 +30,7 @@ class Wrapper extends StatelessWidget {
                 return UserHomeScreen();
               }
             } catch (e) {
-              return UserWelcomeScreen();
+              return WelcomeScreen();
             }
             //   if (authService.isUser() == true) {
             //     Utility.getUserData(user.uid);

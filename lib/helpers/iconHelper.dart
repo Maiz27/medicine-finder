@@ -19,4 +19,6 @@ class IConFontHelper {
   static const String REMOVE = 'r';
   static const String INSTOCK = 's';
   static const String OUTSTOCK = 't';
+  static const String INFO = 'u';
+  static const String SORT = 'v';
 }
