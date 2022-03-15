@@ -10958,3 +10958,7 @@ build/url_launcher_android/intermediates/symbol_list_with_package_name/release/p
 build/url_launcher_android/outputs/aar/url_launcher_android-release.aar
 build/url_launcher_android/outputs/logs/manifest-merger-release-report.txt
 build/url_launcher_android/tmp/compileReleaseJavaWithJavac/source-classes-mapping.txt
+build/app/intermediates/incremental/debug-mergeJavaRes/zip-cache/usOA3If0Y3pNgL4dyXjyQfKgamI=
+build/app/intermediates/incremental/debug-mergeNativeLibs/zip-cache/usOA3If0Y3pNgL4dyXjyQfKgamI=
+build/app/intermediates/incremental/release-mergeJavaRes/zip-cache/zfqXD3hiwX9CPy5NLp18sb6IGd8=
+build/app/intermediates/incremental/release-mergeNativeLibs/zip-cache/zfqXD3hiwX9CPy5NLp18sb6IGd8=

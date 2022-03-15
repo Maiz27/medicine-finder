@@ -46,7 +46,7 @@ class _BrandNamesWidgetState extends State<BrandNamesWidget> {
       child: Column(
         children: [
           Text(
-            'Brand name: ' + widget.index.toString(),
+            'Brand name: ' + (widget.index + 1).toString(),
             style: TextStyle(
               fontSize: height * 0.02,
               color: AppInfo.MAIN_COLOR,

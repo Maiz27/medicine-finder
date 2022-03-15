@@ -312,7 +312,11 @@ class _EditMedicineScreenState extends State<EditMedicineScreen> {
                       _inStockList.clear();
 
                       setState(() {
-                        _brandnames.removeLast();
+                        if (_brandnames.length == 1) {
+                          _brandnames.clear();
+                        } else {
+                          _brandnames.removeLast();
+                        }
                       });
                     },
                     tooltip: "Remove Last Entry",
@@ -346,120 +350,94 @@ class _EditMedicineScreenState extends State<EditMedicineScreen> {
                   ),
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(
-                      top: height * 0.02,
-                    ),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        if (_genericNameController.text != "" &&
-                            _brandnames.isNotEmpty) {
-                          _brandnames.clear();
-                          brandList.clear();
-                          int x = 0;
-                          _brandControllers.forEach((item) => {
-                                _brandnames.add({
-                                  'name': item['nameCtrl'].text,
-                                  'price': int.parse(item['priceCtrl'].text),
-                                  'inStock': _inStockList[x],
-                                }),
-                                brandList.add(
-                                  item['nameCtrl'].text,
-                                ),
-                                x++,
-                              });
-                          //Check if the its an edit or creation
-                          if (isEditOperation()) {
-                            _medicine!.name = _genericNameController.text;
-                            _medicine!.inStock = _inStock;
-                            _medicine!.desc = _descController.text;
-                            _medicine!.brandNames.clear();
-                            _medicine!.brandNames.addAll(_brandnames);
-
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                        SplachScreen(
-                                          duration: 2,
-                                          function: Database.updateMedicineDoc(
-                                            medicine: _medicine,
-                                            localListIndex: _localListIndex,
-                                            operation: operations,
-                                            removedBrandNames:
-                                                _removedBrandnames,
-                                            brandList: brandList,
-                                          ),
-                                          goTopage: MedicineListScreen(),
-                                        )));
-                          } else {
-                            Medicine med = Medicine(
-                              brandNames: _brandnames,
-                              id: '',
-                              inStock: _inStock,
-                              pharmacyId: '',
-                              name: _genericNameController.text,
-                              brandList: brandList,
-                              desc: _descController.text,
-                            );
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                        SplachScreen(
-                                          duration: 2,
-                                          function: Database.createMedicineDoc(
-                                            medicine: med,
-                                          ),
-                                          goTopage: MedicineListScreen(),
-                                        )));
-                          }
-                        } else {
-                          Fluttertoast.showToast(
-                              msg: 'Please fill out the fields correctly!');
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        primary: AppInfo.MAIN_COLOR,
-                        onPrimary: AppInfo.ACCENT,
-                        shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(width * 0.5)),
-                        ),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.all(height * 0.014),
-                        child: Text(
-                          'Save',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: width * 0.02,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Visibility(
-                    visible: isEditOperation(),
-                    child: Padding(
+              Padding(
+                padding: EdgeInsets.only(bottom: height * 0.04),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
                       padding: EdgeInsets.only(
-                          top: height * 0.02, left: width * 0.03),
+                        top: height * 0.02,
+                      ),
                       child: ElevatedButton(
-                        onPressed: () async {
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (BuildContext context) =>
-                                      SplachScreen(
-                                        duration: 2,
-                                        function: Database.deleteMedcineDoc(
-                                            _medicine!.id),
-                                        goTopage: MedicineListScreen(),
-                                      )));
+                        onPressed: () {
+                          if (_genericNameController.text != "" &&
+                              _brandnames.isNotEmpty) {
+                            _brandnames.clear();
+                            brandList.clear();
+
+                            for (int i = 0; i < _brandControllers.length; i++) {
+                              if (_brandControllers[i]['nameCtrl'].text ==
+                                  "New brand name") {
+                                continue;
+                              }
+                              _brandnames.add({
+                                'name': _brandControllers[i]['nameCtrl']
+                                    .text
+                                    .toLowerCase(),
+                                'price': int.parse(
+                                    _brandControllers[i]['priceCtrl'].text),
+                                'inStock': _inStockList[i],
+                              });
+                              brandList.add(
+                                _brandControllers[i]['nameCtrl']
+                                    .text
+                                    .toLowerCase(),
+                              );
+                            }
+                            //Check if the its an edit or creation
+                            if (isEditOperation()) {
+                              _medicine!.name =
+                                  _genericNameController.text.toLowerCase();
+                              _medicine!.inStock = _inStock;
+                              _medicine!.desc = _descController.text;
+                              _medicine!.brandNames.clear();
+                              _medicine!.brandNames.addAll(_brandnames);
+
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          SplachScreen(
+                                            duration: 2,
+                                            function:
+                                                Database.updateMedicineDoc(
+                                              medicine: _medicine,
+                                              localListIndex: _localListIndex,
+                                              operation: operations,
+                                              removedBrandNames:
+                                                  _removedBrandnames,
+                                              brandList: brandList,
+                                            ),
+                                            goTopage: MedicineListScreen(),
+                                          )));
+                            } else {
+                              Medicine med = Medicine(
+                                brandNames: _brandnames,
+                                id: '',
+                                inStock: _inStock,
+                                pharmacyId: '',
+                                name: _genericNameController.text.toLowerCase(),
+                                brandList: brandList,
+                                desc: _descController.text,
+                              );
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          SplachScreen(
+                                            duration: 2,
+                                            function:
+                                                Database.createMedicineDoc(
+                                              medicine: med,
+                                            ),
+                                            goTopage: MedicineListScreen(),
+                                          )));
+                            }
+                          } else {
+                            Fluttertoast.showToast(
+                                msg: 'Please fill out the fields correctly!');
+                          }
                         },
                         style: ElevatedButton.styleFrom(
                           primary: AppInfo.MAIN_COLOR,
@@ -472,7 +450,7 @@ class _EditMedicineScreenState extends State<EditMedicineScreen> {
                         child: Padding(
                           padding: EdgeInsets.all(height * 0.014),
                           child: Text(
-                            'Delete',
+                            'Save',
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: width * 0.02,
@@ -482,8 +460,48 @@ class _EditMedicineScreenState extends State<EditMedicineScreen> {
                         ),
                       ),
                     ),
-                  ),
-                ],
+                    Visibility(
+                      visible: isEditOperation(),
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                            top: height * 0.02, left: width * 0.03),
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        SplachScreen(
+                                          duration: 2,
+                                          function: Database.deleteMedcineDoc(
+                                              _medicine!.id),
+                                          goTopage: MedicineListScreen(),
+                                        )));
+                          },
+                          style: ElevatedButton.styleFrom(
+                            primary: AppInfo.MAIN_COLOR,
+                            onPrimary: AppInfo.ACCENT,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(
+                                  Radius.circular(width * 0.5)),
+                            ),
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.all(height * 0.014),
+                            child: Text(
+                              'Delete',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: width * 0.02,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

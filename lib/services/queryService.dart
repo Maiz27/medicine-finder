@@ -3,8 +3,6 @@ import 'package:medicine/models/pharmacyModel.dart';
 import 'package:medicine/models/medicineModel.dart';
 import 'package:jiffy/jiffy.dart';
 
-import 'database.dart';
-
 class QueryService {
   final rootRef = FirebaseFirestore.instance;
   static List<Pharmacy> pharmacies = [];
@@ -53,7 +51,7 @@ class QueryService {
   Future genericSearch(String name) async {
     var query = (await rootRef
         .collectionGroup("medicine")
-        .where("generic name", isEqualTo: name)
+        .where("generic name", isEqualTo: name.toLowerCase())
         .where("inStock", isEqualTo: true)
         .get());
 
@@ -81,7 +79,7 @@ class QueryService {
   Future brandSearch(String name) async {
     var query = (await rootRef
         .collectionGroup("medicine")
-        .where("brandList", arrayContains: name)
+        .where("brandList", arrayContains: name.toLowerCase())
         .where("inStock", isEqualTo: true)
         .get());
 

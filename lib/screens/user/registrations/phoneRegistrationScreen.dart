@@ -294,6 +294,7 @@ class _PhoneRegistrationScreenState extends State<PhoneRegistrationScreen> {
               accType: 'Telephone',
               tele: phoneNumController.text,
               imgURL: null,
+              isPharmacist: false,
             );
             Database.createUser(currUser!);
           } else {
@@ -330,6 +331,7 @@ class _PhoneRegistrationScreenState extends State<PhoneRegistrationScreen> {
           accType: 'tele',
           tele: phoneNumController.text,
           imgURL: null,
+          isPharmacist: false,
         );
         Database.createUser(currUser!);
       } else {

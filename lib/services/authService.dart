@@ -56,13 +56,14 @@ class AuthService {
             email: email, password: password);
 
         _currUser = CurrUser(
-          email: credential.user.email,
-          uid: credential.user.uid,
-          dateCreated: now,
-          fullName: '$fullName',
-          accType: 'Email',
-          imgURL: null,
-        );
+            email: credential.user.email,
+            uid: credential.user.uid,
+            dateCreated: now,
+            fullName: '$fullName',
+            accType: 'Email',
+            imgURL: null,
+            isPharmacist: false,
+            pharmacyId: "");
         Database.createUser(_currUser);
         Database.setCurrUser(_currUser);
       } catch (e) {
@@ -95,14 +96,15 @@ class AuthService {
     if (result.additionalUserInfo!.isNewUser) {
       Timestamp now = Timestamp.now();
       _currUser = CurrUser(
-        email: result.user!.email,
-        uid: result.user!.uid,
-        dateCreated: now,
-        fullName: result.user!.displayName.toString(),
-        accType: 'Google',
-        tele: result.user!.phoneNumber,
-        imgURL: result.user!.photoURL,
-      );
+          email: result.user!.email,
+          uid: result.user!.uid,
+          dateCreated: now,
+          fullName: result.user!.displayName.toString(),
+          accType: 'Google',
+          tele: result.user!.phoneNumber,
+          imgURL: result.user!.photoURL,
+          isPharmacist: false,
+          pharmacyId: "");
       Database.createUser(_currUser);
       Database.setCurrUser(_currUser);
     } else {

@@ -54,6 +54,8 @@ class Database {
           'telephone': _user.tele,
           'accType': _user.accType,
           'imgURL': _user.imgURL,
+          'isPharmacist': _user.isPharmacist,
+          'pharmacyId': ""
         },
       );
       retVal = "success";
@@ -343,7 +345,7 @@ class Database {
           _medicineSubCollectionRef
               .doc(medicine.id)
               .update({"brandList": brandList});
-          _medicine[localListIndex].inStock = medicine.inStock;
+          _medicine[localListIndex].brandList = medicine.brandList;
         }
         if (value["brand names"] != medicine.brandNames) {
           Database.updateBrandNamesArry(
@@ -402,6 +404,7 @@ class Database {
         "pharmacyId": _currPharmacy!.id,
         "brand names": FieldValue.arrayUnion(medicine.brandNames),
         "brandList": brandList,
+        "desc": medicine.desc,
       });
 
       Fluttertoast.showToast(msg: "Medicine added successfully!");
