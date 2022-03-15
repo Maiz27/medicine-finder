@@ -20,8 +20,9 @@
 
 
 ### Screenshots
-<img src="https://user-images.githubusercontent.com/91534137/158451595-fba0f8d6-9cfc-4c2c-8cf6-2e40e0334636.png">
-
+<p>
+<a src="https://user-images.githubusercontent.com/91534137/158451595-fba0f8d6-9cfc-4c2c-8cf6-2e40e0334636.png">
+</p>
 
 ### Releases
 <p>
