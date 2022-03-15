@@ -10,11 +10,11 @@
 ### Unique Features
 <p>
     <ul>
-        <li>"Search for medicine using generic name"</li>
-        <li>"Search for medicine using brand names"</li>
-        <li>"Locate pharmacies where the medicine is available"</li>
-        <li>"Manage Pharmacy Database"</li>
-        <li>"View Frequently requested medicines (Popular)"</li>
+        <li>Search for medicine using generic name</li>
+        <li>Search for medicine using brand names</li>
+        <li>Locate pharmacies where the medicine is available</li>
+        <li>Manage Pharmacy Database</li>
+        <li>View Frequently requested medicines (Popular)</li>
     </ul>
 </p>
 
@@ -26,7 +26,7 @@
 
 ### Releases
 <p>
-    <a href="https://github.com/Maiz27/medicine-finder/tree/main/build/app/outputs/apk/release">"Download APK here"</a>
+    <a href="https://github.com/Maiz27/medicine-finder/tree/main/build/app/outputs/apk/release">Download APK here</a>
 </p>
 
 ## Author
