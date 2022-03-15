@@ -26,7 +26,7 @@
 
 ### Releases
 <p>
-    <a href="https://github.com/Maiz27/medicine-finder/tree/main/build/app/outputs/apk/release">
+    "Download APK here"<a href="https://github.com/Maiz27/medicine-finder/tree/main/build/app/outputs/apk/release">
 </p>
 
 ## Author
