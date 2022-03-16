@@ -248,6 +248,8 @@ class _PharmacyMapScreenState extends State<PharmacyMapScreen> {
             setState(() {
               currPharmacyName = element.name;
               currPharmacyNum = element.tele;
+              currPharmacyLat = element.lat;
+              currPharmacyLon = element.lng;
               index = _pharmacies.indexOf(element);
               this.pharmacyCardVis = PHARMACY_CARD_VISIBLE;
             });

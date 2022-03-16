@@ -40,7 +40,8 @@ class _PopularMedicinesScreenState extends State<PopularMedicinesScreen> {
         floatingActionButton: SpeedDial(
             animatedIcon: AnimatedIcons.menu_close,
             overlayOpacity: 0.5,
-            backgroundColor: AppInfo.MAIN_COLOR,
+            backgroundColor: AppInfo.ACCENT,
+            foregroundColor: AppInfo.MAIN_COLOR,
             children: [
               SpeedDialChild(
                 label: "This Week",
