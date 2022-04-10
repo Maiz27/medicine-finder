@@ -4,6 +4,7 @@ import 'package:medicine/helpers/appInfo.dart';
 import 'package:medicine/helpers/deviceDimensions.dart';
 import 'package:medicine/helpers/iconHelper.dart';
 import 'package:medicine/models/userModel.dart';
+import 'package:medicine/screens/about.dart';
 import 'package:medicine/screens/pharmacist/main/medicineListScreen.dart';
 import 'package:medicine/services/authService.dart';
 import 'package:medicine/services/database.dart';
@@ -38,6 +39,21 @@ class UserScreen extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
+            Positioned(
+                top: height * 0.04,
+                left: width * 0.43,
+                child: IconButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  AboutScreen()));
+                    },
+                    icon: IconFont(
+                        color: AppInfo.MAIN_COLOR,
+                        size: 0.035,
+                        iconName: IConFontHelper.INFO))),
             Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,

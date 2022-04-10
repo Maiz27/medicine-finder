@@ -270,7 +270,7 @@ class _EditMedicineScreenState extends State<EditMedicineScreen> {
                     icon: IconFont(
                       color: AppInfo.MAIN_COLOR,
                       iconName: IConFontHelper.ADD,
-                      size: 0.041,
+                      size: 0.035,
                     ),
                     onPressed: () {
                       if (isEditOperation()) {
@@ -298,7 +298,7 @@ class _EditMedicineScreenState extends State<EditMedicineScreen> {
                     icon: IconFont(
                       color: AppInfo.MAIN_COLOR,
                       iconName: IConFontHelper.REMOVE,
-                      size: 0.041,
+                      size: 0.035,
                     ),
                     onPressed: () {
                       if (isEditOperation()) {

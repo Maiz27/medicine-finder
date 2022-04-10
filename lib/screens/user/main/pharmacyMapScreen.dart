@@ -204,9 +204,7 @@ class _PharmacyMapScreenState extends State<PharmacyMapScreen> {
                         Icons.arrow_back,
                       )),
                   Text(
-                    (index + 1 % _LatLng.length).toString() +
-                        " Of " +
-                        _LatLng.length.toString(),
+                    (index + 1).toString() + " Of " + _LatLng.length.toString(),
                     style: TextStyle(
                       fontSize: height * 0.022,
                       color: AppInfo.MAIN_COLOR,
